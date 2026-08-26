@@ -1,0 +1,9 @@
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# Generated single-file build for Artifact publishing (800KB of inlined base64)
+artifact.html

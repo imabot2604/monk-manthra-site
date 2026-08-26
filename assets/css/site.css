@@ -1,0 +1,533 @@
+/* ==========================================================================
+   monk manthra — site stylesheet
+   Built to Brand & Visual Guidelines v1.0 (2026)
+
+   Rules encoded here, do not break them casually:
+   · 60/30/10 — half white ground, purple structure, gold accent only
+   · Body text is ALWAYS Deep Purple or Ink. #7A5CA8 never carries running text
+   · Gold never fills more than a tenth of a surface
+   · Headlines are never bold. Emphasis is space, not weight
+   · Every number a customer might check is set in IBM Plex Mono
+   · The mark draws once, outward, 1.4s. It never loops, never pulses
+   ========================================================================== */
+
+/* --------------------------------------------------------------- tokens -- */
+:root {
+  /* Colour — section five */
+  --deep-purple: #3A1F5C;
+  --royal-purple: #7A5CA8;
+  --pale-lilac: #CBBFE0;
+  --gold: #C2A053;
+  --light-gold: #E0C88C;
+  --half-white: #F4F1EC;
+  --ink: #241B33;
+  --paper: #FFFFFF;
+  --amber: #A9702F; /* amber glass, packaging only */
+
+  /* Type — section six */
+  --display: "Fraunces", "Times New Roman", serif;
+  --body: "Karla", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* The seed radius is the unit. Clear space follows from it. */
+  --seed: 10px;
+  --clear: calc(var(--seed) * 2);
+
+  --measure: 62ch;
+  --gutter: clamp(20px, 5vw, 64px);
+  --rule: 1px solid rgba(122, 92, 168, 0.28);
+  --rule-dark: 1px solid rgba(224, 200, 140, 0.22);
+
+  --ease-calm: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ---------------------------------------------------------------- reset -- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--half-white);
+  color: var(--deep-purple);
+  font-family: var(--body);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ------------------------------------------------------------ typography -- */
+h1, h2, h3, h4 {
+  font-family: var(--display);
+  font-weight: 300;          /* never bold a headline */
+  font-optical-sizing: auto;
+  margin: 0;
+  line-height: 1.16;
+  letter-spacing: 0.005em;
+}
+
+.display {                   /* Display · Fraunces 200 · 34–56px */
+  font-family: var(--display);
+  font-weight: 200;
+  font-size: clamp(34px, 5.2vw, 56px);
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+}
+.heading {                   /* Heading · Fraunces 300 · 20–26px */
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(20px, 2.4vw, 26px);
+  line-height: 1.25;
+}
+.body, p {                   /* Body · Karla 300 · 15–17px */
+  font-family: var(--body);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.75;
+  margin: 0 0 1.1em;
+  max-width: var(--measure);
+}
+.lede {
+  font-size: 17px;
+  line-height: 1.72;
+  max-width: 54ch;
+}
+.label {                     /* Label · Karla 500 · 10–11px · .2em */
+  font-family: var(--body);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--royal-purple);
+  margin: 0;
+  line-height: 1.6;
+}
+.data {                      /* Data · Plex Mono 400 · 10–12px */
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.01em;
+  color: var(--deep-purple);
+  margin: 0;
+}
+.data--sm { font-size: 11px; }
+/* A heading followed straight by copy needs the gap the head block gives it */
+h1 + p, h2 + p, h3 + p, h4 + p { margin-top: 20px; }
+em { font-style: italic; }
+strong { font-weight: 500; }  /* Karla 500, never a bold headline */
+
+/* ------------------------------------------------------------- the mark -- */
+/* Gold seed, two purple rings, gold outer ring. Gap at the top, 20°–340°.
+   Ring radii step 1.6×. One stroke weight per ring, round caps.
+   Nothing ever sits inside the rings. */
+.mark { display: block; overflow: visible; }
+.mark .ring { fill: none; stroke-linecap: round; }
+.mark .ring--1 { stroke: var(--royal-purple); stroke-width: 2.4; }
+.mark .ring--2 { stroke: var(--royal-purple); stroke-width: 2.4; }
+.mark .ring--3 { stroke: var(--gold); stroke-width: 2.4; }
+.mark .seed { fill: var(--gold); stroke: none; }
+
+/* Reversed on deep purple — gold stays gold, purple lifts to lilac */
+.on-purple .mark .ring--1,
+.on-purple .mark .ring--2 { stroke: var(--pale-lilac); }
+.on-purple .mark .ring--3 { stroke: var(--light-gold); }
+.on-purple .mark .seed { fill: var(--light-gold); }
+
+/* One colour on gold */
+.on-gold .mark .ring--1,
+.on-gold .mark .ring--2,
+.on-gold .mark .ring--3 { stroke: var(--deep-purple); }
+.on-gold .mark .seed { fill: var(--deep-purple); }
+
+/* Reduction — ≥96px three rings · 48–95px two rings · ≤32px one ring + seed */
+.mark[data-rings="2"] .ring--1 { display: none; }
+.mark[data-rings="1"] .ring--1,
+.mark[data-rings="1"] .ring--2 { display: none; }
+
+/* Draw once, outward, 1.4s total. Then never again. */
+.mark[data-draw] .ring,
+.mark[data-draw] .seed { opacity: 0; }
+.mark.is-drawn .seed {
+  opacity: 1;
+  animation: seed-in 0.34s var(--ease-calm) both;
+}
+.mark.is-drawn .ring {
+  opacity: 1;
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: var(--len);
+  animation: ripple-out 0.62s var(--ease-calm) both;
+}
+.mark.is-drawn .ring--1 { animation-delay: 0.22s; }
+.mark.is-drawn .ring--2 { animation-delay: 0.46s; }
+.mark.is-drawn .ring--3 { animation-delay: 0.70s; }
+@keyframes seed-in { from { opacity: 0; transform: scale(0.4); } to { opacity: 1; transform: scale(1); } }
+@keyframes ripple-out { to { stroke-dashoffset: 0; } }
+.mark.is-drawn .seed { transform-origin: 50% 50%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mark[data-draw] .ring, .mark[data-draw] .seed { opacity: 1; }
+  .mark.is-drawn .ring { stroke-dashoffset: 0; }
+}
+
+/* -------------------------------------------------------------- lockups -- */
+/* Clear space: one seed diameter on all four sides. Nothing enters it. */
+.lockup { display: inline-flex; align-items: center; gap: 14px; text-decoration: none; padding: var(--seed); }
+.lockup__type { display: block; }
+.wordmark {
+  font-family: var(--display);
+  font-weight: 200;
+  text-transform: lowercase;
+  letter-spacing: 0.15em;   /* .13–.16em */
+  color: var(--deep-purple);
+  line-height: 1;
+  white-space: nowrap;
+}
+.on-purple .wordmark { color: var(--half-white); }
+.lockup .wordmark { font-size: 19px; }
+.lockup__sub {
+  font-family: var(--body);
+  font-weight: 500;
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--royal-purple);
+  margin-top: 5px;
+  display: block;
+}
+.on-purple .lockup__sub { color: var(--light-gold); }
+
+.lockup--stacked { flex-direction: column; gap: 16px; text-align: center; padding: var(--clear); }
+.lockup--stacked .wordmark { font-size: clamp(22px, 3vw, 30px); }
+
+/* --------------------------------------------------------------- layout -- */
+.wrap { width: min(1160px, 100% - (var(--gutter) * 2)); margin-inline: auto; }
+.wrap--narrow { width: min(760px, 100% - (var(--gutter) * 2)); margin-inline: auto; }
+.section { padding-block: clamp(64px, 9vw, 128px); }
+.section--tight { padding-block: clamp(44px, 6vw, 76px); }
+.section--purple { background: var(--deep-purple); color: var(--half-white); }
+.section--purple p { color: rgba(244, 241, 236, 0.82); }
+.section--purple .label { color: var(--light-gold); }
+.section--purple .data { color: rgba(244, 241, 236, 0.82); }
+.section--gold { background: var(--gold); color: var(--deep-purple); }
+.section--gold .label { color: rgba(58, 31, 92, 0.62); }
+.section--paper { background: var(--paper); }
+
+.section__head { margin-bottom: clamp(32px, 4vw, 56px); }
+.section__head .label { margin-bottom: 14px; }
+.section__head h2 { max-width: 20ch; }
+.section__head p { margin-top: 18px; }
+
+.stack > * + * { margin-top: 18px; }
+.rule { border: 0; border-top: var(--rule); margin: 0; }
+.section--purple .rule { border-top: var(--rule-dark); }
+
+/* Short gold rule — the one accent, used sparingly */
+.gold-rule { width: 34px; height: 2px; background: var(--gold); border: 0; margin: 0 0 22px; }
+.section--purple .gold-rule { background: var(--light-gold); }
+.gold-rule--center { margin-inline: auto; }
+
+/* --------------------------------------------------------------- header -- */
+.site-header {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(244, 241, 236, 0.94);
+  backdrop-filter: saturate(140%) blur(8px);
+  border-bottom: var(--rule);
+}
+.site-header__inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 10px; }
+.nav { display: flex; align-items: center; gap: clamp(18px, 2.4vw, 34px); }
+.nav a {
+  font-family: var(--body);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--deep-purple);
+  text-decoration: none;
+  padding-block: 6px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s var(--ease-calm);
+}
+.nav a:hover, .nav a[aria-current="page"] { border-bottom-color: var(--gold); }
+.nav__toggle { display: none; }
+
+@media (max-width: 800px) {
+  .nav { gap: 16px; }
+  .nav a { font-size: 10px; letter-spacing: 0.14em; }
+  .nav__hide-sm { display: none; }
+}
+/* Below 700 the lockup and the nav stop competing for one line */
+@media (max-width: 700px) {
+  .site-header__inner { flex-direction: column; align-items: stretch; gap: 4px; padding-block: 8px 10px; }
+  .lockup { padding: 4px 0; gap: 10px; align-self: flex-start; }
+  .lockup .wordmark { font-size: 16px; letter-spacing: 0.13em; }
+  .nav { width: 100%; justify-content: space-between; gap: 8px; }
+  .nav a { font-size: 9.5px; letter-spacing: 0.12em; padding-block: 4px; }
+}
+
+/* --------------------------------------------------------------- button -- */
+.btn {
+  display: inline-block;
+  font-family: var(--body);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 15px 30px;
+  background: var(--gold);
+  color: var(--deep-purple);
+  border: 1px solid var(--gold);
+  border-radius: 0;
+  cursor: pointer;
+  transition: background 0.3s var(--ease-calm), color 0.3s var(--ease-calm);
+}
+.btn:hover { background: var(--light-gold); border-color: var(--light-gold); }
+.btn--quiet {
+  background: transparent;
+  color: var(--deep-purple);
+  border-color: rgba(122, 92, 168, 0.45);
+}
+.btn--quiet:hover { background: transparent; border-color: var(--gold); color: var(--deep-purple); }
+.on-purple .btn--quiet, .section--purple .btn--quiet {
+  color: var(--half-white);
+  border-color: rgba(224, 200, 140, 0.4);
+}
+.on-purple .btn--quiet:hover, .section--purple .btn--quiet:hover { border-color: var(--light-gold); color: var(--light-gold); }
+
+.textlink {
+  font-family: var(--body); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--deep-purple); text-decoration: none;
+  border-bottom: 1px solid var(--gold); padding-bottom: 4px;
+  transition: color 0.3s var(--ease-calm);
+}
+.textlink:hover { color: var(--royal-purple); }
+.section--purple .textlink { color: var(--half-white); border-bottom-color: var(--light-gold); }
+.section--purple .textlink:hover { color: var(--light-gold); }
+
+/* ----------------------------------------------------------------- hero -- */
+.hero {
+  background: var(--deep-purple);
+  color: var(--half-white);
+  text-align: center;
+  padding-block: clamp(80px, 13vw, 168px);
+}
+.hero .mark { margin: 0 auto var(--clear); width: 104px; height: 104px; }
+.hero h1 { color: var(--half-white); max-width: 16ch; margin-inline: auto; }
+.hero p {
+  color: rgba(244, 241, 236, 0.78);
+  max-width: 46ch;
+  margin: 26px auto 40px;
+  font-size: 17px;
+}
+.hero__note { margin-top: 34px; }
+.hero__note .data { color: rgba(203, 191, 224, 0.72); }
+
+/* ------------------------------------------------------------ principles -- */
+.principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 4vw, 64px); }
+.principle .heading { margin-bottom: 12px; }
+.principle p { font-size: 15px; margin: 0; }
+@media (max-width: 780px) { .principles { grid-template-columns: 1fr; gap: 36px; } }
+
+/* --------------------------------------------------------------- range -- */
+.range { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.4vw, 34px); }
+@media (max-width: 900px) { .range { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .range { grid-template-columns: 1fr; } }
+
+.card {
+  display: flex; flex-direction: column;
+  background: var(--paper);
+  border: var(--rule);
+  text-decoration: none;
+  color: var(--deep-purple);
+  transition: border-color 0.35s var(--ease-calm), transform 0.35s var(--ease-calm);
+}
+.card:hover { border-color: rgba(194, 160, 83, 0.7); transform: translateY(-2px); }
+/* The 4mm tonal band — the only thing that separates one product from another */
+.card__band { height: 4px; background: var(--band, var(--royal-purple)); flex: none; }
+.card__figure {
+  aspect-ratio: 4 / 3;
+  display: grid; place-items: center;
+  background: var(--half-white);
+  padding: 26px;
+  overflow: hidden;
+}
+.card__figure img { width: 100%; height: 100%; object-fit: contain; }
+/* The drawn packs are portrait; drive them off height so they fit the frame */
+.card__figure .pack { height: 100%; width: auto; max-width: 100%; }
+
+/* Photography — overhead, single object, linen ground. It carries its own
+   ground, so it runs edge to edge rather than floating on the half white. */
+.card__figure--photo { padding: 0; }
+.card__figure--photo img { width: 100%; height: 100%; object-fit: cover; }
+.card:hover .card__figure--photo img { transform: scale(1.012); }
+.card__figure--photo img { transition: transform 0.5s var(--ease-calm); }
+.card__body { padding: 24px 26px 28px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.card__name { font-family: var(--display); font-weight: 300; font-size: 26px; line-height: 1; }
+.card__ing { margin-top: 2px; }
+.card__foot { margin-top: auto; padding-top: 18px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.card__price { font-family: var(--mono); font-size: 13px; color: var(--deep-purple); }
+
+/* ------------------------------------------------- packaging renderings -- */
+/* Amber glass jar · deep purple cap · uncoated label, gold foil rule.
+   Stand pouch · matte deep purple. Drawn, not photographed, until real
+   photography lands in /assets/img. */
+.pack { width: 100%; max-width: 230px; }
+
+/* -------------------------------------------------------------- product -- */
+.product { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 88px); align-items: start; }
+@media (max-width: 900px) { .product { grid-template-columns: 1fr; } }
+.product__figure { background: var(--paper); border: var(--rule); display: grid; place-items: center; padding: clamp(28px, 5vw, 60px); position: relative; }
+.product__figure::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 4px; background: var(--band, var(--royal-purple)); }
+.product__figure img { width: 100%; max-width: 340px; height: auto; object-fit: contain; }
+.product__figure .pack { max-width: 268px; }
+.bundle__figure .pack { max-width: 268px; }
+.product__figure--photo { padding: 0; border: 0; overflow: hidden; }
+.product__figure--photo img { width: 100%; max-width: none; height: auto; display: block; }
+.bundle__figure--photo { width: 100%; }
+.bundle__figure--photo img { width: 100%; height: auto; }
+.product__name { font-family: var(--display); font-weight: 200; font-size: clamp(40px, 5.6vw, 62px); line-height: 1; margin: 12px 0 14px; }
+.product__meta { display: flex; flex-wrap: wrap; gap: 10px 22px; padding-block: 20px; border-block: var(--rule); margin-block: 26px; }
+.product__meta div { min-width: 96px; }
+.product__meta .label { color: var(--royal-purple); margin-bottom: 4px; }
+.product__buy { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 28px; }
+.product__buy .price { font-family: var(--mono); font-size: 15px; }
+
+/* ---------------------------------------------------------- facts panel -- */
+/* A legal document, not a design surface. Black on white, no tint,
+   heavy rules intact, nothing below minimum size. */
+.facts {
+  background: #FFFFFF;
+  color: #000000;
+  border: 1px solid #000000;
+  padding: 18px 18px 20px;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.5;
+  max-width: 420px;
+}
+.facts h3 { font-family: var(--mono); font-weight: 700; font-size: 20px; color: #000; letter-spacing: 0; line-height: 1.1; margin: 0 0 6px; }
+.facts__hr { border: 0; border-top: 1px solid #000; margin: 6px 0; }
+.facts__hr--heavy { border-top: 7px solid #000; }
+.facts__hr--mid { border-top: 4px solid #000; }
+.facts table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.facts td { padding: 3px 0; vertical-align: top; color: #000; }
+.facts td:last-child { text-align: right; white-space: nowrap; padding-left: 12px; }
+.facts .row-head { display: flex; justify-content: space-between; font-size: 11px; }
+.facts__foot { font-family: var(--body); font-weight: 400; font-size: 11.5px; line-height: 1.55; color: #000; margin-top: 8px; }
+.facts__foot p { margin: 0 0 6px; max-width: none; font-size: 11.5px; color: #000; }
+
+.disclaimer {
+  font-family: var(--body);
+  font-weight: 400;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--ink);
+  border-top: var(--rule);
+  padding-top: 16px;
+  margin-top: 28px;
+  max-width: 62ch;
+}
+.section--purple .disclaimer { color: rgba(244, 241, 236, 0.7); border-top: var(--rule-dark); }
+
+/* ---------------------------------------------------------------- table -- */
+.dose-table { width: 100%; border-collapse: collapse; }
+.dose-table th {
+  font-family: var(--body); font-weight: 500; font-size: 10.5px;
+  letter-spacing: 0.2em; text-transform: uppercase; text-align: left;
+  color: var(--royal-purple); padding: 0 16px 12px 0; border-bottom: var(--rule);
+}
+.dose-table th:last-child, .dose-table td:last-child { text-align: right; padding-right: 0; }
+.dose-table td { padding: 15px 16px 15px 0; border-bottom: var(--rule); font-size: 14px; }
+.dose-table td.num { font-family: var(--mono); font-size: 12.5px; }
+.dose-table td.state { font-family: var(--display); font-weight: 300; font-size: 20px; }
+.dose-table tr:last-child td { border-bottom: 0; }
+.table-scroll { overflow-x: auto; }
+
+/* --------------------------------------------------------------- bundle -- */
+.bundle { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+@media (max-width: 860px) { .bundle { grid-template-columns: 1fr; } }
+.bundle__figure { display: grid; place-items: center; }
+.bundle__list { list-style: none; margin: 26px 0 0; padding: 0; }
+.bundle__list li { display: flex; align-items: baseline; gap: 16px; padding: 14px 0; border-top: var(--rule-dark); }
+.bundle__list li:last-child { border-bottom: var(--rule-dark); }
+.bundle__list .n { font-family: var(--display); font-weight: 300; font-size: 20px; min-width: 84px; color: var(--half-white); }
+.bundle__list .i { font-family: var(--body); font-weight: 500; font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--light-gold); flex: 1; }
+.bundle__list .d { font-family: var(--mono); font-size: 11.5px; color: rgba(244, 241, 236, 0.75); }
+
+/* ----------------------------------------------------------- gold strip -- */
+/* One accent per surface, and never more than a tenth of it. */
+.strip-gold { background: var(--gold); color: var(--deep-purple); padding-block: clamp(44px, 6vw, 72px); text-align: center; }
+.strip-gold .heading { font-size: clamp(22px, 3.2vw, 32px); max-width: 22ch; margin-inline: auto; }
+.strip-gold .label { color: rgba(58, 31, 92, 0.6); margin-bottom: 16px; }
+
+/* ------------------------------------------------------------- ritual -- */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 4vw, 56px); counter-reset: step; }
+@media (max-width: 780px) { .steps { grid-template-columns: 1fr; gap: 32px; } }
+.step .n { font-family: var(--mono); font-size: 11px; color: var(--gold); letter-spacing: 0.1em; display: block; margin-bottom: 14px; }
+.step p { font-size: 15px; margin: 10px 0 0; }
+
+/* --------------------------------------------------------------- quote -- */
+.quote { text-align: center; max-width: 22ch; margin-inline: auto; }
+.quote .display { font-size: clamp(28px, 4vw, 44px); }
+
+/* -------------------------------------------------------------- footer -- */
+.site-footer { background: var(--deep-purple); color: var(--half-white); padding-block: clamp(56px, 7vw, 88px) 34px; }
+.site-footer a { color: rgba(244, 241, 236, 0.78); text-decoration: none; }
+.site-footer a:hover { color: var(--light-gold); }
+.footer__grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: clamp(28px, 4vw, 56px); }
+@media (max-width: 880px) { .footer__grid { grid-template-columns: 1fr 1fr; gap: 36px; } }
+@media (max-width: 520px) { .footer__grid { grid-template-columns: 1fr; } }
+.footer__col .label { color: var(--light-gold); margin-bottom: 16px; }
+.footer__col ul { list-style: none; margin: 0; padding: 0; }
+.footer__col li { margin-bottom: 10px; font-size: 14px; }
+.footer__brand .mark { width: 44px; height: 44px; margin-bottom: 18px; }
+.footer__brand p { font-size: 14px; color: rgba(244, 241, 236, 0.72); max-width: 30ch; }
+.footer__base { margin-top: clamp(40px, 5vw, 64px); padding-top: 22px; border-top: var(--rule-dark); display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.footer__base .data { color: rgba(203, 191, 224, 0.6); font-size: 11px; }
+
+/* --------------------------------------------------------------- misc -- */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 72px); align-items: start; }
+@media (max-width: 860px) { .grid-2 { grid-template-columns: 1fr; } }
+.center { text-align: center; }
+.center p { margin-inline: auto; }
+/* The mark is a block; text-align cannot centre it */
+.center .mark, .center .lockup { margin-inline: auto; }
+.center .lockup { display: flex; justify-content: center; }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+::selection { background: var(--pale-lilac); color: var(--deep-purple); }
+
+/* ------------------------------------------------ packaging renderings -- */
+/* Drawn to the Section Eight spec so the site is finished before the
+   photography arrives. Front of pack carries four things only: mark,
+   wordmark, state, ingredient. Dose and count sit at the base in mono.
+   Swap any of these for <img src="assets/img/…"> when shots land. */
+.pk-word    { font-family: var(--display); font-weight: 200; text-transform: lowercase; letter-spacing: .15em; }
+.pk-state   { font-family: var(--display); font-weight: 300; }
+.pk-ing     { font-family: var(--body); font-weight: 500; letter-spacing: .2em; text-transform: uppercase; }
+.pk-data    { font-family: var(--mono); font-weight: 400; font-variant-numeric: tabular-nums; }
+.pk-glass   { fill: #A9702F; }
+.pk-glass-2 { fill: #93602A; }
+.pk-cap     { fill: var(--deep-purple); }
+.pk-label   { fill: var(--half-white); }
+.pk-foil    { stroke: var(--gold); stroke-width: 1.4; }
+.pk-pouch   { fill: var(--deep-purple); }
+
+/* Every checkable number lines up in a column */
+.data, .mono, .facts, .dose-table td.num, .card__price, .product__buy .price {
+  font-variant-numeric: tabular-nums;
+}
