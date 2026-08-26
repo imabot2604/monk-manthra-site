@@ -292,11 +292,14 @@ def head(title, desc, rel=""):
 <a class="visually-hidden" href="#main">Skip to content</a>'''
 
 
-def header(active, rel=""):
-    links = "".join(
-        f'<a href="{rel}{h}"{" aria-current=\"page\"" if h == active else ""}>{t}</a>'
-        for t, h in NAV
-    )
+def header(active, rel="", section=None):
+    def state(h):
+        if h == active:
+            return ' aria-current="page"'
+        if h == section:
+            return ' data-section=""'   # an ancestor section, not the page itself
+        return ""
+    links = "".join(f'<a href="{rel}{h}"{state(h)}>{t}</a>' for t, h in NAV)
     return f'''
 <header class="site-header">
   <div class="wrap site-header__inner">
@@ -645,7 +648,16 @@ def page_product(p):
     others = [q for q in PRODUCTS if q["slug"] != p["slug"]][:3]
     rel_cards = "\n".join(card(q, rel) for q in others)
     return head(f'{p["state"]} — monk manthra', f'{p["state"]} · {p["ing"]} · {p["dose"]} · {p["count"]}.', rel) \
-        + header(None, rel) + f'''
+        + header(None, rel, section="range.html") + f'''
+<nav class="crumb" aria-label="Breadcrumb">
+  <div class="wrap">
+    <ol>
+      <li><a href="{rel}index.html">monk manthra</a></li>
+      <li><a href="{rel}range.html">The range</a></li>
+      <li><span aria-current="page">{p["state"]}</span></li>
+    </ol>
+  </div>
+</nav>
 <section class="section section--tight">
   <div class="wrap">
     <div class="product" style="--band:{p["band"]}">
@@ -729,6 +741,7 @@ def page_product(p):
       <p class="label">Also in the range</p>
       <hr class="gold-rule">
       <h2 class="heading">Six formulas, one family.</h2>
+      <p style="margin-top:18px"><a class="textlink" href="{rel}range.html">Back to the range</a></p>
     </div>
     <div class="range">
 {rel_cards}

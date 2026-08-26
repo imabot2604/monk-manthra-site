@@ -48,6 +48,25 @@
     });
   }
 
+  // The header is only a material while content is actually underneath it.
+  // At the top of the page there is nothing to blur, so it stays plain.
+  function floatingHeader() {
+    var header = document.querySelector(".site-header");
+    if (!header) return;
+    var ticking = false;
+
+    function apply() {
+      header.classList.toggle("is-floating", window.scrollY > 4);
+      ticking = false;
+    }
+    apply();
+    window.addEventListener("scroll", function () {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(apply);
+    }, { passive: true });
+  }
+
   function ready(fn) {
     if (document.readyState !== "loading") fn();
     else document.addEventListener("DOMContentLoaded", fn);
@@ -55,6 +74,7 @@
 
   ready(function () {
     applyReduction();
+    floatingHeader();
     if (reduced) {
       var marks = document.querySelectorAll(".mark[data-draw]");
       Array.prototype.forEach.call(marks, function (m) { m.removeAttribute("data-draw"); });
