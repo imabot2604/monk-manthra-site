@@ -1,0 +1,23 @@
+{% comment %}
+  The wordmark + mark, as a link. Mirrors build.py's `header()` lockup
+  exactly, including the guide-mandated .15em wordmark tracking (set once in
+  assets/theme.css, not here).
+
+  No colour parameter, matching mark.liquid — the footer's own on-purple
+  class on <footer> is what recolours everything inside it, this snippet
+  included. Never pass a variant into the render call; wrap it instead.
+
+  Usage:
+    {% render 'lockup' %}                            header, 32px
+    {% render 'lockup', size: 44, stacked: true %}    footer, called from inside <footer class="site-footer on-purple">
+{% endcomment %}
+{%- liquid assign l_size = size | default: 32 -%}
+<a class="lockup{% if stacked %} lockup--stacked{% endif %}" href="{{ routes.root_url }}" aria-label="monk manthra — home">
+  {% render 'mark', size: l_size, rings_lock: 1 %}
+  <span class="lockup__type">
+    <span class="wordmark">monk manthra</span>
+    {%- unless stacked -%}
+      <span class="lockup__sub nav__hide-sm">Nutrition</span>
+    {%- endunless -%}
+  </span>
+</a>

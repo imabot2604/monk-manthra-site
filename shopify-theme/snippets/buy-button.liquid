@@ -1,0 +1,21 @@
+{% comment %}
+  A real <button>, not the <a href> the headless GitHub Pages version used.
+  That version had to be a link — its default (no-JS) behaviour was
+  "navigate to start.html", a genuine fallback destination. Here there is no
+  separate landing page to fall back to; the whole point of this theme is
+  that checkout lives on this same site, so a button is the more honest
+  element for an action rather than a navigation.
+
+  Usage: {% render 'buy-button', product: product %}
+{% endcomment %}
+{%- assign variant = product.selected_or_first_available_variant -%}
+<button
+  type="button"
+  class="btn"
+  data-buy
+  data-variant-id="{{ variant.id }}"
+  data-qty="1"
+  {% unless variant.available %}disabled aria-disabled="true"{% endunless %}
+>
+  {%- if variant.available -%}{{ label | default: "Add to order" }}{%- else -%}Sold out{%- endif -%}
+</button>

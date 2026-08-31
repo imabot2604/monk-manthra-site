@@ -1,0 +1,141 @@
+{% comment %}
+  Mirrors build.py's page_product(). One section per logical block of that
+  function, so the schema stays simple and each piece can be reordered or
+  disabled from the theme customizer without a Liquid edit.
+{% endcomment %}
+{%- liquid
+  assign m = product.metafields.monkmanthra
+  assign img = product.featured_image
+-%}
+
+<nav class="crumb" aria-label="Breadcrumb">
+  <div class="wrap">
+    <ol>
+      <li><a href="{{ routes.root_url }}">monk manthra</a></li>
+      <li><a href="{{ section.settings.range_page.url | default: routes.all_products_collection_url }}">The range</a></li>
+      <li><span aria-current="page">{{ product.title }}</span></li>
+    </ol>
+  </div>
+</nav>
+
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="product" style="--band:{{ m.tonal_band.value }}">
+      <div class="product__figure{% if img %} product__figure--photo{% endif %}">
+        {%- if img -%}
+          <img
+            src="{{ img | image_url: width: 1024 }}"
+            srcset="{{ img | image_url: width: 700 }} 700w, {{ img | image_url: width: 1024 }} 1024w"
+            sizes="(max-width: 900px) 92vw, 380px"
+            width="{{ img.width }}" height="{{ img.height }}"
+            alt="{{ img.alt | default: product.title }}"
+          >
+        {%- endif -%}
+      </div>
+      <div>
+        <p class="label">{{ m.ingredient_label.value }}</p>
+        <h1 class="product__name">{{ product.title }}</h1>
+        <hr class="gold-rule">
+        <p class="lede">{{ m.tagline.value }}</p>
+
+        <div class="product__meta">
+          <div><p class="label">Dose</p><p class="data">{{ m.dose.value }}</p></div>
+          <div><p class="label">Count</p><p class="data">{{ m.count.value }}</p></div>
+          <div><p class="label">Serving</p><p class="data">{{ m.serving.value }}</p></div>
+          <div><p class="label">When</p><p class="data">{{ m.when_to_take.value }}</p></div>
+        </div>
+
+        <p>{{ m.blurb.value }}</p>
+
+        <div class="product__buy">
+          {% render 'buy-button', product: product %}
+          <span class="price">{{ product.price | money }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--paper">
+  <div class="wrap grid-2">
+    <div>
+      <p class="label">Back of pack</p>
+      <hr class="gold-rule">
+      <h2 class="display">The panel, unedited.</h2>
+      <p class="lede">The facts panel is a legal document, not a design surface. It is
+         reproduced here exactly as it is printed — black on white, full contrast, rules
+         intact, nothing tinted purple.</p>
+      {%- if m.lot_code.value -%}
+        <p class="data data--sm" style="color:#7A5CA8">LOT {{ m.lot_code.value }} · INK-JETTED ON THE BASE</p>
+      {%- endif -%}
+    </div>
+    <div>{% render 'facts-panel', product: product %}</div>
+  </div>
+</section>
+
+{%- if m.supports_claim.value -%}
+<section class="section section--purple on-purple">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="label">What to expect</p>
+      <hr class="gold-rule">
+      <h2 class="display">Take it tonight. Then take it again tomorrow.</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="n">WEEK 1</span>
+        <h3 class="heading">Nothing, probably.</h3>
+        <p>The first week is about the habit, not the ingredient. Put the jar somewhere
+           you cannot miss it and take it at the same point in the meal each night.</p>
+      </div>
+      <div class="step">
+        <span class="n">WEEK 3</span>
+        <h3 class="heading">Most people notice something.</h3>
+        <p>Not a change you would post about. The kind you only see looking back at
+           the fortnight behind you.</p>
+      </div>
+      <div class="step">
+        <span class="n">WEEK 4</span>
+        <h3 class="heading">Decide.</h3>
+        <p>Give it a month before you judge it. If it is not doing anything for you,
+           stop — and because there is one ingredient, you know what you stopped.</p>
+      </div>
+    </div>
+    <p class="disclaimer">{{ m.supports_claim.value }} This is a structure-and-function statement,
+      not a medical claim. {{ product.title }} is not intended to diagnose, treat, cure or
+      prevent any disease.</p>
+  </div>
+</section>
+{%- endif -%}
+
+{%- if section.settings.range_collection -%}
+<section class="section">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="label">Also in the range</p>
+      <hr class="gold-rule">
+      <h2 class="heading">Six formulas, one family.</h2>
+      <p style="margin-top:18px"><a class="textlink" href="{{ section.settings.range_page.url | default: routes.all_products_collection_url }}">Back to the range</a></p>
+    </div>
+    <div class="range">
+      {%- assign shown = 0 -%}
+      {%- for other in section.settings.range_collection.products -%}
+        {%- if other.id != product.id and shown < 3 -%}
+          {% render 'product-card', product: other %}
+          {%- assign shown = shown | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product page",
+  "settings": [
+    { "type": "url", "id": "range_page", "label": "\"The range\" page" },
+    { "type": "collection", "id": "range_collection", "label": "The range (for \"Also in the range\")" }
+  ]
+}
+{% endschema %}

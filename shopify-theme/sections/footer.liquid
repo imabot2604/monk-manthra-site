@@ -1,0 +1,67 @@
+{% comment %}
+  Mirrors build.py's footer(), including the exact disclaimer and legal
+  copy word for word. "The range" list pulls from a real collection rather
+  than the hardcoded PRODUCTS dict — point the setting at whichever
+  collection holds all six products.
+{% endcomment %}
+<footer class="site-footer on-purple">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div class="footer__col footer__brand">
+        {% render 'lockup', size: 44, stacked: false %}
+        <span class="wordmark" style="font-size:20px;display:block;margin-bottom:14px;margin-top:14px">monk manthra</span>
+        <p>Daily supplements for people who want to feel steady, not supercharged.</p>
+      </div>
+      <div class="footer__col">
+        <p class="label">The range</p>
+        <ul>
+          {%- for product in section.settings.range_collection.products -%}
+            <li><a href="{{ product.url }}">{{ product.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+      <div class="footer__col">
+        <p class="label">Bundles</p>
+        <ul>
+          {%- for product in section.settings.bundles_collection.products -%}
+            <li><a href="{{ product.url }}">{{ product.title }}</a></li>
+          {%- endfor -%}
+          <li><a href="{{ section.settings.start_page.url }}">Subscribe</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <p class="label">Company</p>
+        <ul>
+          <li><a href="{{ section.settings.story_page.url }}">The idea</a></li>
+          <li><a href="{{ section.settings.start_page.url }}">How to begin</a></li>
+          <li><a href="mailto:{{ section.settings.contact_email }}">{{ section.settings.contact_email }}</a></li>
+          <li><span class="data" style="color:rgba(244,241,236,.72)">{{ section.settings.contact_phone }}</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="disclaimer">
+      These statements have not been evaluated by a food-safety regulator. These
+      products are not intended to diagnose, treat, cure or prevent any disease.
+      Supplements are not a substitute for a varied diet. Speak to a doctor before
+      starting anything new if you are pregnant, nursing, or taking medication.
+    </p>
+    <div class="footer__base">
+      <p class="data">© {{ 'now' | date: '%Y' }} MONK MANTHRA NUTRITION</p>
+      <p class="data">BRAND GUIDE V1.0 · MADE IN INDIA</p>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "collection", "id": "range_collection", "label": "The range (six products)" },
+    { "type": "collection", "id": "bundles_collection", "label": "Bundles" },
+    { "type": "url", "id": "story_page", "label": "\"The idea\" page" },
+    { "type": "url", "id": "start_page", "label": "\"Start\" page" },
+    { "type": "text", "id": "contact_email", "label": "Contact email", "default": "hello@monkmanthra.com" },
+    { "type": "text", "id": "contact_phone", "label": "Contact phone", "default": "+91 98 4712 0088" }
+  ]
+}
+{% endschema %}

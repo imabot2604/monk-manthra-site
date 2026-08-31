@@ -9,6 +9,12 @@ python3 build.py                 # emit the pages
 python3 -m http.server 4321      # serve them
 ```
 
+**Also in this repo:** `shopify-theme/` — a from-scratch Shopify Online
+Store 2.0 theme meant to replace this site once finished. See
+`shopify-theme/README.md` for status; it currently has the full chrome
+(header, footer, cart) and one complete page (product) proven out, with the
+remaining page types still to build.
+
 ## Layout
 
 ```

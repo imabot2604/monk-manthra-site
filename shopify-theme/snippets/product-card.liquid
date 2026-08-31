@@ -1,0 +1,41 @@
+{% comment %}
+  Mirrors build.py's card(). --band comes from the tonal_band colour
+  metafield — Section Seven: products are separated by a 4mm tonal band
+  from the core palette, never by a new colour, so this value should always
+  be one of the six palette hexes, same constraint build.py enforces by only
+  ever passing a `band` from that fixed set.
+
+  Real width/height come from the image object rather than the 1024x872
+  build.py hardcoded — that number was specific to the GitHub Pages
+  pipeline's own watermark-cropped output and does not hold for arbitrary
+  merchant-uploaded photography.
+
+  Usage: {% render 'product-card', product: product %}
+{% endcomment %}
+{%- liquid
+  assign m = product.metafields.monkmanthra
+  assign img = product.featured_image
+-%}
+<a class="card" href="{{ product.url }}" style="--band:{{ m.tonal_band.value }}">
+  <span class="card__band"></span>
+  <span class="card__figure{% if img %} card__figure--photo{% endif %}">
+    {%- if img -%}
+      <img
+        src="{{ img | image_url: width: 1024 }}"
+        srcset="{{ img | image_url: width: 700 }} 700w, {{ img | image_url: width: 1024 }} 1024w"
+        sizes="(max-width: 900px) 92vw, 380px"
+        width="{{ img.width }}" height="{{ img.height }}"
+        alt="{{ img.alt | default: product.title }}"
+        loading="lazy" decoding="async"
+      >
+    {%- endif -%}
+  </span>
+  <span class="card__body">
+    <span class="card__name">{{ product.title }}</span>
+    <span class="label card__ing">{{ m.ingredient_label.value }}</span>
+    <span class="card__foot">
+      <span class="data">{{ m.dose.value }} · {{ m.count.value }}</span>
+      <span class="card__price">{{ product.price | money }}</span>
+    </span>
+  </span>
+</a>

@@ -1,0 +1,70 @@
+{% comment %}
+  A section, not a snippet — deliberately. Shopify's Section Rendering API
+  (fetch('/cart?section_id=cart-drawer'), returning { "cart-drawer": html })
+  is how theme.js refreshes this after an add/update/remove without a full
+  reload, and that API only serves actual sections. Still rendered exactly
+  once, from layout/theme.liquid via {% section 'cart-drawer' %}, in the
+  same document position every time — id-swappable in place, not popping up
+  fresh markup elsewhere.
+
+  Cart lines are server-rendered from Shopify's own `cart` object below, so
+  the drawer is correct even before theme.js runs, or if it fails to load —
+  the AJAX refresh is progressive enhancement on top of a working page, not
+  a requirement for the drawer to show real state.
+
+  This is a first-party Shopify cart, not the Storefront GraphQL client the
+  headless GitHub Pages version used — no access token needed here, because
+  this theme and the cart share an origin.
+{% endcomment %}
+<div class="cart-scrim" hidden data-cart-close></div>
+<aside class="cart-drawer" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Your order">
+  <div class="cart-drawer__head">
+    <p class="label">Your order</p>
+    <button type="button" class="cart-drawer__close" data-cart-close aria-label="Close">×</button>
+  </div>
+
+  <ul class="cart-lines" data-cart-body>
+    {%- if cart.item_count == 0 -%}
+      <p class="cart-empty">Nothing in the order yet.</p>
+    {%- else -%}
+      {%- for item in cart.items -%}
+        <li class="cart-line" data-line-key="{{ item.key }}">
+          <span class="cart-line__name">
+            {{ item.product.title }}
+            {%- if item.variant.title != 'Default Title' -%}
+              <span class="cart-line__variant">{{ item.variant.title }}</span>
+            {%- endif -%}
+          </span>
+          <span class="cart-line__qty">
+            <button type="button" class="cart-step" data-step="-1" aria-label="One fewer">−</button>
+            <span class="data" data-line-qty>{{ item.quantity }}</span>
+            <button type="button" class="cart-step" data-step="1" aria-label="One more">+</button>
+          </span>
+          <span class="cart-line__price data">{{ item.final_line_price | money }}</span>
+          <button type="button" class="cart-remove" data-remove aria-label="Remove {{ item.product.title }}">×</button>
+        </li>
+      {%- endfor -%}
+    {%- endif -%}
+  </ul>
+
+  <div class="cart-drawer__foot">
+    <div class="cart-subtotal">
+      <span class="label">Subtotal</span>
+      <span class="data" data-cart-subtotal>{{ cart.total_price | money }}</span>
+    </div>
+    {%- comment -%}
+      aria-disabled paired with a real href is contradictory, and
+      routes.cart_url is a valid page even at zero items — Shopify's own
+      cart page shows its empty state correctly, so the link is just always
+      live. (The headless JS version couldn't do this: it had no
+      server-rendered cart, so an empty cart had no checkoutUrl to point at
+      yet, and blocking the link was the only honest option there.)
+    {%- endcomment -%}
+    <a class="btn" data-cart-checkout href="{{ routes.cart_url }}">Checkout</a>
+    <p class="data data--sm cart-drawer__note">Checkout and payment happen on Shopify's own secure page.</p>
+  </div>
+</aside>
+
+{% schema %}
+{ "name": "Cart drawer" }
+{% endschema %}

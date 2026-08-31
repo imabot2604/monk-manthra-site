@@ -1,0 +1,33 @@
+{% comment %}
+  Mirrors build.py's header(). Nav comes from a real Shopify menu (Admin →
+  Navigation) via the menu setting below, rather than hardcoded links, so
+  adding a page doesn't require a Liquid edit — set the default to whichever
+  menu holds The range / Bundles / The idea / Start.
+
+  section.settings.menu.links[*].active is Shopify's own current-page flag;
+  no equivalent yet exists here for "an ancestor section is active" (the
+  data-section state the GitHub Pages nav uses for product pages inside The
+  range) — Shopify menus don't expose a parent/section relationship the way
+  a flat NAV list in Python could. Worth a follow-up if that state matters
+  enough to replicate; for now every non-active link renders identically.
+{% endcomment %}
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    {% render 'lockup' %}
+    <nav class="nav" aria-label="Primary">
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+    {% render 'cart-toggle' %}
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Primary navigation", "default": "main-menu" }
+  ]
+}
+{% endschema %}

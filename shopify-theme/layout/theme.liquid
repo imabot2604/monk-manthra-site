@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page_title }}</title>
+{%- if page_description -%}
+<meta name="description" content="{{ page_description | escape }}">
+{%- endif -%}
+<link rel="canonical" href="{{ canonical_url }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+{%- comment -%}
+  Loaded directly from Google Fonts rather than Shopify's font_picker — see
+  config/settings_schema.json, "Typography", for why. Identical URL to the
+  one on the GitHub Pages site, so the two never fall out of sync on faces.
+{%- endcomment -%}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,200;9..144,300;9..144,400&family=Karla:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+{{ 'theme.css' | asset_url | stylesheet_tag }}
+<link rel="icon" href="{{ 'favicon.svg' | asset_url }}" type="image/svg+xml">
+<meta name="theme-color" content="#3A1F5C">
+{{ content_for_header }}
+</head>
+<body>
+<a class="visually-hidden" href="#main">Skip to content</a>
+
+{% section 'header' %}
+
+<main id="main">
+  {{ content_for_layout }}
+</main>
+
+{% section 'footer' %}
+
+{% section 'cart-drawer' %}
+
+<script src="{{ 'theme.js' | asset_url }}"></script>
+</body>
+</html>

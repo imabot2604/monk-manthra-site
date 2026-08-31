@@ -1,0 +1,43 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "monk manthra",
+    "theme_version": "1.0.0",
+    "theme_author": "monk manthra",
+    "theme_documentation_url": "https://github.com/imabot2604/monk-manthra-site#readme"
+  },
+  {
+    "name": "Colour",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Brand & Visual Guidelines v1.0, Section Five. These five are fixed by the guide — 60% Half White, 30% Deep Purple, 10% Gold, held on every surface. They are theme settings so a future rebrand has one place to change them, not because day-to-day editing should touch them."
+      },
+      { "type": "color", "id": "deep_purple", "label": "Deep Purple", "default": "#3A1F5C", "info": "All body text. Dark packaging fields." },
+      { "type": "color", "id": "royal_purple", "label": "Royal Purple", "default": "#7A5CA8", "info": "The mark, rules, sub-labels. Never running text — fails contrast below 18px." },
+      { "type": "color", "id": "pale_lilac", "label": "Pale Lilac", "default": "#CBBFE0", "info": "Tint blocks, table fills, disabled states." },
+      { "type": "color", "id": "gold", "label": "Gold", "default": "#C2A053", "info": "One accent per surface. Foil, rules, buttons. Never more than a tenth of a surface." },
+      { "type": "color", "id": "light_gold", "label": "Light Gold", "default": "#E0C88C", "info": "Gold on dark grounds only, where #C2A053 goes muddy." },
+      { "type": "color", "id": "half_white", "label": "Half White", "default": "#F4F1EC", "info": "Default ground. Labels, pages, cartons." },
+      { "type": "color", "id": "ink", "label": "Ink", "default": "#241B33", "info": "Alternate body text colour." }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Section Six. Fraunces for the wordmark and headlines (200–300, never bold), Karla for body and labels, IBM Plex Mono for every number a customer might check. Loaded directly from Google Fonts in layout/theme.liquid rather than Shopify's font_picker — Fraunces' variable optical-size axis and IBM Plex Mono are not confirmed entries in Shopify's curated font library, and guessing at picker IDs risked silently falling back to a wrong face. Swap to font_picker later if you confirm both are listed in Shopify's font panel."
+      }
+    ]
+  },
+  {
+    "name": "The mark",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Section Two — Construction. The mark's geometry (arc angles, ring radii, seed size) is fixed by the guide and is not exposed here: it is precomputed once in snippets/mark.liquid, verified against the site's Python generator, and never recalculated at render time. Liquid has no trigonometric functions, so recomputing it live is not an option — this keeps the construction correct by making it impossible to edit into an off-spec shape."
+      }
+    ]
+  }
+]

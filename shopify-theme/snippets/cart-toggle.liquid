@@ -1,0 +1,13 @@
+{% comment %}
+  Server-rendered from Shopify's own `cart` object, so the count is correct
+  on first paint — before theme.js has run at all — rather than starting at
+  zero and waiting on a client-side fetch the way the headless GitHub Pages
+  version had to (it had no server-rendered cart to read).
+{% endcomment %}
+<button type="button" class="cart-toggle" data-cart-toggle aria-label="Order" aria-haspopup="dialog">
+  <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+    <path d="M5 8h14l-1.2 10.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M8.5 8V6a3.5 3.5 0 0 1 7 0v2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+  </svg>
+  <span class="cart-toggle__count" data-cart-count{% if cart.item_count == 0 %} hidden{% endif %}>{{ cart.item_count }}</span>
+</button>

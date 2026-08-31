@@ -1,0 +1,42 @@
+{% comment %}
+  The mark — Section Two. Gold seed, two purple rings, one gold outer ring,
+  gap at the top. Ring radii step 1.6x outward from the seed; every arc runs
+  20deg to 340deg so the opening is centred and identical on all three.
+
+  These three path values are NOT computed here. Liquid has no sin/cos, so
+  the arc geometry is precomputed once in Python (the same arc() function
+  that generates the GitHub Pages site) and hardcoded below. Verified
+  byte-for-byte identical to that function's output before being pasted in
+  — see the theme README for the verification command. Do not hand-edit
+  these coordinates; regenerate them from arc() if the geometry ever changes.
+
+  Colour is NOT a parameter here, on purpose — it matches assets/theme.css,
+  ported unchanged from the GitHub Pages site: .on-purple .mark and
+  .on-gold .mark are ANCESTOR selectors. The mark reads its colour from
+  whatever section wraps it (a section with class on-purple or on-gold), the
+  same way it works on the current live site. Wrap the call, don't pass a
+  variant — there isn't one to pass.
+
+  Usage:
+    {% render 'mark', size: 104, draw: true %}          hero, draws once on load
+    {% render 'mark', size: 32, rings_lock: 1 %}         header/footer, fixed reduction
+{% endcomment %}
+{%- liquid
+  assign m_size = size | default: 104
+-%}
+<svg
+  class="mark{% if extra_class %} {{ extra_class }}{% endif %}"
+  viewBox="0 0 100 100"
+  width="{{ m_size }}"
+  height="{{ m_size }}"
+  role="img"
+  aria-label="monk manthra"
+  {% if draw %}data-draw=""{% endif %}
+  {% if rings_lock %}data-rings="{{ rings_lock }}" data-rings-lock=""{% endif %}
+  focusable="false"
+>
+  <path class="ring ring--1" d="M 54.788 36.844 A 14.0 14.0 0 1 1 45.212 36.844"/>
+  <path class="ring ring--2" d="M 57.661 28.951 A 22.4 22.4 0 1 1 42.339 28.951"/>
+  <path class="ring ring--3" d="M 62.258 16.321 A 35.84 35.84 0 1 1 37.742 16.321"/>
+  <circle class="seed" cx="50" cy="50" r="5.2"/>
+</svg>
