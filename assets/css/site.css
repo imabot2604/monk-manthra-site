@@ -323,6 +323,94 @@ strong { font-weight: 500; }  /* Karla 500, never a bold headline */
 .crumb a:active { opacity: 0.6; transition-duration: 0.06s; }
 .crumb [aria-current="page"] { color: var(--deep-purple); }
 
+/* -------------------------------------------------------------- cart -- */
+/* Not part of the brand guide — the guide governs the mark, colour, type
+   and copy, and says nothing about commerce UI. Built from the same tokens
+   rather than a separate visual language: half white ground, deep purple
+   ink, one gold action, Fraunces for names, Plex Mono for money. */
+.cart-toggle {
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; margin-inline-start: 6px;
+  background: transparent; border: 1px solid rgba(122, 92, 168, 0.35);
+  color: var(--deep-purple); cursor: pointer;
+  transition: border-color 0.3s var(--ease-calm);
+}
+.cart-toggle:hover { border-color: var(--gold); }
+.cart-toggle:active { opacity: 0.7; transition-duration: 0.06s; }
+.cart-toggle.is-adding { border-color: var(--gold); }
+.cart-toggle.is-error { border-color: #B5484F; }
+.cart-toggle__count {
+  position: absolute; top: -6px; right: -6px;
+  min-width: 16px; height: 16px; padding: 0 3px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--gold); color: var(--deep-purple);
+  font-family: var(--mono); font-size: 0.625rem; font-variant-numeric: tabular-nums;
+  border-radius: 999px;
+}
+
+.cart-scrim {
+  position: fixed; inset: 0; z-index: 60;
+  background: rgba(36, 27, 51, 0.4);
+  backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+}
+
+.cart-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 61;
+  width: min(400px, 100vw);
+  background: var(--half-white); color: var(--deep-purple);
+  box-shadow: -12px 0 40px rgba(36, 27, 51, 0.18);
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.4s var(--ease-calm);
+}
+body.cart-open .cart-drawer { transform: translateX(0); }
+body.cart-open { overflow: hidden; }
+@media (prefers-reduced-motion: reduce) {
+  .cart-drawer { transition: none; }
+}
+
+.cart-drawer__head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 24px; border-bottom: var(--rule);
+}
+.cart-drawer__close {
+  width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; border: 0; color: var(--deep-purple);
+  font-size: 1.25rem; line-height: 1; cursor: pointer;
+}
+.cart-drawer__close:active { opacity: 0.6; }
+
+.cart-lines { list-style: none; margin: 0; padding: 8px 24px; overflow-y: auto; flex: 1; }
+.cart-empty { font-size: 0.875rem; color: var(--royal-purple); padding: 24px 0; }
+.cart-line {
+  display: grid; grid-template-columns: 1fr auto auto; align-items: center;
+  gap: 8px 14px; padding: 16px 0; border-bottom: var(--rule-dark);
+}
+.cart-line__name { font-family: var(--display); font-weight: 300; font-size: 1rem; letter-spacing: -0.012em; }
+.cart-line__variant { font-family: var(--body); font-weight: 400; font-size: 0.75rem; color: var(--royal-purple); display: block; }
+.cart-line__qty { display: inline-flex; align-items: center; gap: 10px; }
+.cart-step {
+  width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; border: 1px solid rgba(122, 92, 168, 0.35); color: var(--deep-purple);
+  font-family: var(--mono); font-size: 0.75rem; cursor: pointer; line-height: 1;
+}
+.cart-step:hover { border-color: var(--gold); }
+.cart-step:active { opacity: 0.6; }
+.cart-line__price { grid-row: 1; grid-column: 3; }
+.cart-remove {
+  grid-row: 2; grid-column: 3; justify-self: end;
+  background: transparent; border: 0; color: var(--royal-purple);
+  font-size: 0.9375rem; cursor: pointer; padding: 2px 4px;
+}
+.cart-remove:hover { color: #B5484F; }
+
+.cart-drawer__foot { padding: 20px 24px 24px; border-top: var(--rule); }
+.cart-subtotal { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
+.cart-drawer__foot .btn { display: block; text-align: center; width: 100%; }
+.cart-drawer__foot .btn[aria-disabled="true"] { opacity: 0.4; pointer-events: none; }
+.cart-drawer__note { margin-top: 12px; color: var(--royal-purple); text-align: center; }
+
 /* --------------------------------------------------------------- button -- */
 .btn {
   display: inline-block;
@@ -592,6 +680,7 @@ a.visually-hidden:focus {
     border-bottom: var(--rule);
   }
   .site-header::after { display: none; }
+  .cart-scrim { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(36, 27, 51, 0.55); }
 }
 
 /* Near-solid grounds with defined borders. The guide itself warns that
@@ -612,6 +701,8 @@ a.visually-hidden:focus {
   .section--purple .label, .on-purple .lockup__sub { color: var(--light-gold); }
   .card::after { border-color: var(--deep-purple); }
   .btn--quiet { border-color: var(--deep-purple); }
+  .cart-toggle, .cart-step { border-color: var(--deep-purple); }
+  .cart-drawer { border-left: 1px solid var(--deep-purple); box-shadow: none; }
   :focus-visible { outline-width: 3px; }
 }
 ::selection { background: var(--pale-lilac); color: var(--deep-purple); }

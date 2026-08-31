@@ -72,7 +72,61 @@ background.
 - **Lot codes and expiry** (`MM-2604`, `best before end 2028-04`) are illustrative.
 - **`hello@monkmanthra.com` and the phone number** are taken from the guide's own
   stationery mock.
-- **Add to order / Subscribe** are links, not a cart. There is no commerce layer.
+- **Add to order / Subscribe** are links to `start.html`, not a cart — unless
+  Shopify is configured, see below.
+
+## Selling on Shopify
+
+The site stays headless: `build.py` keeps every product's copy, design and
+facts panel; Shopify holds price, stock, and checkout. Nothing on the page
+changes — the cart is a drawer that opens over the existing design, using the
+same tokens (half white ground, deep purple ink, one gold action).
+
+**It is completely inert until you fill in three things.** Right now
+`SHOP["domain"]` in `build.py` still says `YOUR-STORE`, so `build.py` never
+emits the cart toggle, never loads `shop.js`, and every "Add to order" button
+is the same plain link to `start.html` it always was. Confirmed by grepping a
+built page for `cart-toggle` — zero matches until this is configured.
+
+**1. A store.** Start a Shopify trial and note the `*.myshopify.com` domain —
+that goes in `SHOP["domain"]`.
+
+**2. A Storefront API token.** In Shopify admin: *Settings → Apps and sales
+channels → Develop apps → Create an app.* Under *Configuration*, enable the
+**Storefront API** and grant it cart read/write scopes. Install the app, then
+copy the **Storefront API access token** — not the Admin API token. The
+Storefront token is meant to sit in client-side code; Shopify scopes it to
+cart and product read access only, nothing an attacker could do damage with.
+The Admin token is a real secret and must never go in this file. That goes in
+`SHOP["token"]`.
+
+**3. A variant ID per product.** In Shopify admin, open a product, open the
+variant, and its GraphQL ID is `gid://shopify/ProductVariant/` followed by the
+numeric ID in the page's URL. Paste the full `gid://…` string — not the bare
+number — into that product's `shopify_variant_id` key in `build.py` (see the
+`calm` entry in `PRODUCTS` for the exact spot). Every product without one
+keeps linking straight to `start.html`, so you can light products up one at a
+time.
+
+Then:
+
+```bash
+python3 build.py && git add -A && git commit -m "Connect Shopify" && git push
+```
+
+**How it works once live:** `assets/js/shop.js` talks to Shopify's Storefront
+API (GraphQL) directly from the browser — no backend needed, so this still
+runs on GitHub Pages. It creates a cart on the first add, persists the cart ID
+in `localStorage` so it survives a reload, and the drawer's Checkout button
+sends the customer to Shopify's own hosted checkout — that's also where card
+details belong; this site never touches them. Verified against a mocked
+Storefront API before shipping: add → drawer opens, badge updates, line item
+renders, checkout link resolves to Shopify's real `checkoutUrl`.
+
+**What Shopify does not solve on its own:** subscriptions need a separate app
+(Recharge, Loop, Appstle); COD needs enabling in Shopify's payment settings;
+and none of this replaces the FSSAI licence and real facts-panel data the site
+still needs before any of it goes live — see the placeholder list above.
 
 ## Photography
 

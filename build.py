@@ -6,9 +6,27 @@ Content lives here once; the pages are emitted from it so the six product
 pages cannot drift apart. Run:  python3 build.py
 """
 
-import os, math, textwrap
+import os, math, json, textwrap
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
+
+# --------------------------------------------------------------------------
+# SHOPIFY — commerce backend only. The site's HTML, CSS and copy stay exactly
+# as they are; Shopify holds price, stock and checkout. See README.md,
+# "Selling on Shopify" for the three things you need to fill in below.
+#
+# Until "domain" stops saying YOUR-STORE, every buy button on the site is a
+# plain link to start.html — unchanged from today. Nothing here can go live
+# by accident.
+# --------------------------------------------------------------------------
+SHOP = {
+    "domain": "YOUR-STORE.myshopify.com",          # Settings → Domains
+    "token": "YOUR-STOREFRONT-ACCESS-TOKEN",        # public by design — see README
+    # Storefront API is versioned quarterly (YYYY-01/04/07/10). Bump this
+    # every few months: https://shopify.dev/docs/api/usage/versioning
+    "apiVersion": "2025-10",
+}
+SHOP_CONFIGURED = "YOUR-STORE" not in SHOP["domain"] and "YOUR-" not in SHOP["token"]
 
 # --------------------------------------------------------------------------
 # THE MARK — gold seed, two purple rings, gold outer ring, gap at the top.
@@ -156,6 +174,10 @@ PRODUCTS = [
         slug="calm", state="Calm", ing="ASHWAGANDHA KSM-66", ing_lines=["ASHWAGANDHA", "KSM-66"],
         dose="600mg", count="60 capsules", per="1 capsule", when="Evening",
         price="1,450", band="#7A5CA8", pack="jar", lot="MM-2611",
+        # Paste the variant's GraphQL ID from Shopify admin, exactly in this
+        # form — the numeric ID alone will not work. Every other product
+        # defaults to None (a plain link) until it gets the same treatment.
+        shopify_variant_id=None,  # e.g. "gid://shopify/ProductVariant/45123456789012"
         line="600mg of ashwagandha. That is the whole formula.",
         blurb=(
             "One root extract, standardised to 5% withanolides, at the dose the research "
@@ -310,7 +332,7 @@ def header(active, rel="", section=None):
         <span class="lockup__sub nav__hide-sm">Nutrition</span>
       </span>
     </a>
-    <nav class="nav" aria-label="Primary">{links}</nav>
+    <nav class="nav" aria-label="Primary">{links}</nav>{"" if not SHOP_CONFIGURED else chr(10) + "    " + cart_chrome()}
   </div>
 </header>
 <main id="main">'''
@@ -363,7 +385,7 @@ def footer(rel=""):
     </div>
   </div>
 </footer>
-<script src="{rel}assets/js/site.js"></script>
+<script src="{rel}assets/js/site.js"></script>{("" if not SHOP_CONFIGURED else chr(10) + f'<script>window.SHOP={json.dumps(SHOP)};</script><script src="{rel}assets/js/shop.js"></script>')}
 </body>
 </html>'''
 
@@ -413,6 +435,45 @@ def card(p, rel=""):
           </span>
         </span>
       </a>'''
+
+
+def buy_button(item, rel="", label="Add to order"):
+    """A real cart when shopify_variant_id is set; today, a plain link to
+    start.html — identical to every other page until Shopify is configured."""
+    vid = item.get("shopify_variant_id")
+    if vid:
+        return f'<a class="btn" href="{rel}start.html" data-buy data-variant-id="{vid}" data-qty="1">{label}</a>'
+    return f'<a class="btn" href="{rel}start.html">{label}</a>'
+
+
+def cart_chrome():
+    """The toggle, scrim and drawer. Present on every page via header(), but
+    the toggle stays visually quiet — a small ring, not a fourth nav item —
+    until something is actually in it."""
+    return '''
+    <button type="button" class="cart-toggle" data-cart-toggle aria-label="Order" aria-haspopup="dialog">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <path d="M5 8h14l-1.2 10.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+        <path d="M8.5 8V6a3.5 3.5 0 0 1 7 0v2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span class="cart-toggle__count" data-cart-count hidden>0</span>
+    </button>
+    <div class="cart-scrim" hidden data-cart-close></div>
+    <aside class="cart-drawer" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Your order">
+      <div class="cart-drawer__head">
+        <p class="label">Your order</p>
+        <button type="button" class="cart-drawer__close" data-cart-close aria-label="Close">×</button>
+      </div>
+      <ul class="cart-lines" data-cart-body></ul>
+      <div class="cart-drawer__foot">
+        <div class="cart-subtotal">
+          <span class="label">Subtotal</span>
+          <span class="data" data-cart-subtotal></span>
+        </div>
+        <a class="btn" data-cart-checkout aria-disabled="true">Checkout</a>
+        <p class="data data--sm cart-drawer__note">Checkout and payment happen on Shopify's own secure page.</p>
+      </div>
+    </aside>'''
 
 
 def dose_table():
@@ -678,7 +739,7 @@ def page_product(p):
         <p>{p["blurb"]}</p>
 
         <div class="product__buy">
-          <a class="btn" href="{rel}start.html">Add to order</a>
+          {buy_button(p, rel)}
           <span class="price">₹{p["price"]}</span>
           <a class="textlink" href="{rel}start.html">Or subscribe monthly</a>
         </div>
@@ -774,7 +835,7 @@ def page_bundles():
         <p>{b["blurb"]}</p>
         <ul class="bundle__list">{items}</ul>
         <div class="product__buy">
-          <a class="btn" href="start.html">Add to order</a>
+          {buy_button(b)}
           <span class="price" style="color:#F4F1EC">₹{b["price"]}</span>
           <span class="data">SAVES ₹{b["saving"]}</span>
         </div>
