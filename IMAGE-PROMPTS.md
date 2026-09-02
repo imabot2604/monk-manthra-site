@@ -130,6 +130,24 @@ Reuse this block verbatim inside each brief so the label is consistent.
 > base of the pouch, in cream monospace: `24g protein · 900g`. The pouch lies flat
 > on the linen, seen from directly above.
 
+## 6b · Golden Milk — pouch, no jar
+
+> [preamble] A matte deep aubergine-purple stand-up pouch with a resealable zip
+> along the top and a flat bottom gusset. Completely matte, no window, no gloss.
+> Centred on the front, a small circular mark in pale gold — a solid gold dot at
+> the centre with two thin pale lilac concentric rings and one thin gold outer
+> ring, each broken by a small gap at twelve o'clock. Below it the lowercase words
+> "monk manthra" in a light serif with wide letter-spacing, in cream. A short thin
+> gold rule. Then the product name **Golden Milk** set large in a light cream
+> serif, on two lines if it needs them. Below it, in small spaced pale lilac
+> capitals: `TURMERIC · GINGER · CINNAMON`. At the base of the pouch, in cream
+> monospace: `5g serving · 300g`. The pouch lies flat on the linen, seen from
+> directly above.
+
+Note: this is the only product whose name runs to two words, so the pack face
+has less room than the others — check the state line doesn't crowd the gold
+rule above it or the ingredient line below.
+
 ## 7 · The Evening Three — carton
 
 > [preamble] A rectangular gift carton in matte deep aubergine purple, lying flat,

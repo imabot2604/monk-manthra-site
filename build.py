@@ -261,6 +261,28 @@ PRODUCTS = [
         other="pea protein isolate, brown rice protein, natural vanilla, sunflower lecithin, steviol glycosides.",
         directions="one scoop in 250ml of water or milk, any time of day.",
     ),
+    dict(
+        slug="golden-milk", state="Golden Milk", ing="TURMERIC · GINGER · CINNAMON",
+        ing_lines=["TURMERIC · GINGER", "CINNAMON"],
+        dose="5g", count="300g pouch", per="1 tsp (5g)", when="Evening",
+        price="1,390", band="#C2A053", pack="pouch", lot="MM-2647",
+        line="Turmeric, ginger and cinnamon. The warm milk is up to you.",
+        blurb=(
+            "The drink people have made at home for a very long time, measured out so "
+            "you know what is in the cup. Turmeric for the colour and the curcumin, "
+            "ginger and cinnamon because they belong there, and black pepper because "
+            "turmeric is poorly absorbed without it. One teaspoon, stirred into "
+            "whatever milk you use."
+        ),
+        supports="Contributes to the normal function of joints.",
+        facts=[("Turmeric powder", "3g"),
+               ("&nbsp;&nbsp;of which curcuminoids", "90mg"),
+               ("Ginger powder", "1.2g"),
+               ("Ceylon cinnamon", "700mg"),
+               ("Black pepper extract", "10mg")],
+        other="nothing else. No sweetener, no milk powder, no anti-caking agent.",
+        directions="one teaspoon stirred into 200ml of warm milk, in the evening.",
+    ),
 ]
 BY_SLUG = {p["slug"]: p for p in PRODUCTS}
 
@@ -535,11 +557,11 @@ def page_index():
 <section class="hero on-purple">
   <div class="wrap">
     {mark(104, draw=True, lock="3")}
-    <h1 class="display">Six supplements. One habit.</h1>
+    <h1 class="display">Seven supplements. One habit.</h1>
     <p>Single-ingredient formulas at doses you can check. Made to be taken every day,
        not talked about every day.</p>
     <a class="btn" href="range.html">See the range</a>
-    <div class="hero__note"><p class="data">6 FORMULAS · 0 PROPRIETARY BLENDS</p></div>
+    <div class="hero__note"><p class="data">7 FORMULAS · 0 PROPRIETARY BLENDS</p></div>
   </div>
 </section>
 
@@ -581,7 +603,7 @@ def page_index():
       <hr class="gold-rule">
       <h2 class="display">Named for the state. Verified by the ingredient.</h2>
       <p class="lede">You shop by feeling and check by ingredient — never the other way
-         round. Six formulas, one word each. If a product needs two words, it needs a
+         round. Seven formulas, one word each. If a product needs two words, it needs a
          rethink.</p>
     </div>
     <div class="range">
@@ -658,7 +680,7 @@ def page_range():
     <div class="section__head">
       <p class="label">The range</p>
       <hr class="gold-rule">
-      <h1 class="display">Six supplements. One habit.</h1>
+      <h1 class="display">Seven supplements. One habit.</h1>
       <p class="lede">Every product is named for the state it supports, with the actual
          ingredient underneath it. One word only. The range is never numbered and never
          lettered — numbers belong to doses.</p>
@@ -801,7 +823,7 @@ def page_product(p):
     <div class="section__head">
       <p class="label">Also in the range</p>
       <hr class="gold-rule">
-      <h2 class="heading">Six formulas, one family.</h2>
+      <h2 class="heading">Seven formulas, one family.</h2>
       <p style="margin-top:18px"><a class="textlink" href="{rel}range.html">Back to the range</a></p>
     </div>
     <div class="range">
@@ -862,7 +884,7 @@ def page_bundles():
   <div class="wrap center">
     <hr class="gold-rule gold-rule--center">
     <div class="quote">
-      <p class="display">Six supplements. One habit.</p>
+      <p class="display">Seven supplements. One habit.</p>
     </div>
     <p style="margin-top:26px"><a class="btn btn--quiet" href="range.html">See the range</a></p>
   </div>
