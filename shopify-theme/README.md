@@ -5,7 +5,16 @@ finished. Not started blind — every file here has been checked the ways it
 *can* be checked without a connected store (see "What's actually been
 verified" below), same discipline as the rest of this repo.
 
-## Status: chrome complete, one full page proven
+## Status: live on the store as an unpublished theme
+
+Theme id `189397303592`, name "monk manthra", role `unpublished` — the
+store's live Horizon theme is untouched. All 8 products, 2 collections and
+2 pages exist on `monkmanthra.myshopify.com`, created via the Admin API.
+Products are **DRAFT** on purpose (placeholder facts panels, no FSSAI
+clearance), which is why storefront product/collection URLs 404 until they
+are activated behind a store password.
+
+## What was chrome-only before
 
 **Built and checked:**
 - `layout/theme.liquid` — the shell (`content_for_header`/`content_for_layout`
@@ -31,17 +40,21 @@ verified" below), same discipline as the rest of this repo.
   every metafield the theme references is documented, and every documented
   one is actually used — no drift either direction
 
-**Not built yet:** the home page, the range/collection listing, bundles,
-the idea, and start — index.html, range.html, bundles.html, story.html,
-start.html's Liquid equivalents. The product page was built first because
-it is the most constrained page on the site — the facts panel is a legal
-document, Section Nine is explicit about that — so it's the page most worth
-proving the pattern on before repeating it five more times.
+**Since built, to make the theme actually loadable:** `sections/hero.liquid`,
+`range-grid.liquid`, `main-collection.liquid`, `main-cart.liquid`,
+`main-page.liquid`; `templates/index.json`, `collection.json`, `cart.json`,
+`page.json`, `404.liquid`, `search.liquid`; `locales/en.default.json` and
+`config/settings_data.json` — Shopify refuses to load a theme without
+locales, and 404s every page type lacking a template.
+
+**Still not built:** dedicated bundles, "the idea" and "start" page designs.
+Those exist as real Shopify pages with content, rendering through the
+generic `main-page.liquid`, rather than the bespoke layouts `build.py`
+gives them.
 
 ## What's actually been verified, and how
 
-There is no connected store yet, so nothing here has *rendered*. What could
-be checked without one, was:
+Static checks run before upload (all still worth re-running after edits):
 
 - **The mark's geometry** — Liquid has no `sin`/`cos`, so the three ring
   paths in `mark.liquid` are hardcoded, not computed. Verified by running
@@ -60,10 +73,17 @@ be checked without one, was:
   reference in the theme cross-checked against `METAFIELDS.md`; nothing
   used-but-undocumented, nothing documented-but-unused.
 
-None of that is the same as a real render. Liquid's actual runtime
-behaviour, Shopify's exact object shapes, and whether the design holds up
-visually can only be confirmed once this is pushed to a real store and
-opened in a theme preview.
+**Then verified against the real store.** All 29 files uploaded to theme
+`189397303592`; the homepage renders our actual markup — `class="hero
+on-purple"`, `class="wordmark"`, and the heading "Six supplements. One
+habit." all present in the served HTML. One upload failed on first attempt
+and was fixed: Shopify rejects a `settings_schema.json` whose `theme_info`
+lacks `theme_support_url` (or `theme_support_email`, but not both).
+
+Product and collection URLs still 404, because the products are DRAFT —
+that is the intended state, not a bug. Full-page rendering with real
+product data is unverified until they are activated behind a store
+password.
 
 ## One real design decision, made along the way
 
@@ -94,16 +114,35 @@ and `best_before` are real per-product metafields here instead of copied
 static text, so a product that actually contains soy won't silently claim
 otherwise.
 
-## Next steps, in order
+## Done
 
-1. Create the Shopify store, run `composio link shopify`
-2. Create the metafield **definitions** in `METAFIELDS.md` (admin UI —
-   Composio's Shopify tools can set metafield values once definitions
-   exist, but definition creation itself wasn't in the tool set found)
-3. Push these files as a theme (via the Composio theme-asset tools, or the
-   Shopify CLI / GitHub integration once the store exists)
-4. Create the six products + two bundles, fill in their metafields
-5. Open the theme preview — this is the first point any of this actually
-   renders — and fix whatever a real render reveals that static analysis
-   couldn't catch
-6. Build the remaining five page types, now that the pattern is proven
+1. ~~Store connected~~ — `monkmanthra.myshopify.com`, INR, professional plan
+2. ~~Products created~~ — 6 products + 2 bundles, DRAFT, with all metafields
+   and prices, photography pulled from the GitHub Pages URLs
+3. ~~Collections~~ — `the-range` (6), `bundles` (2)
+4. ~~Pages + menu~~ — `/pages/the-idea`, `/pages/start`; main menu rewired
+   to The range / Bundles / The idea / Start
+5. ~~Theme uploaded~~ — unpublished, live Horizon untouched
+
+## Next
+
+1. Turn on **Online Store → Preferences → Restrict store access** (no API
+   exists for this; admin UI only — confirmed by schema introspection)
+2. Activate the 8 products so every page renders with real data
+3. Walk the preview and fix what static analysis could not catch
+4. Fix the money format — the store renders `Rs. 1,450`, the design wants
+   `₹1,450`. Settings → General → Currency formatting
+5. Rename the store from "My Store"
+6. Build bespoke bundles / the-idea / start layouts (they currently fall
+   through the generic `main-page.liquid`)
+
+## Known gaps
+
+- **Bundle pages use the product template**, which renders a Supplement
+  Facts panel. A carton of three jars has no single panel — each product
+  inside has its own. Bundles were created without facts metafields so the
+  panel renders empty rather than wrong, but they need their own template.
+- **Header nav has no "section active" state.** Shopify menus expose
+  `link.active` (current page) but no parent/ancestor relationship, so the
+  `data-section` state the GitHub Pages nav uses on product pages has no
+  equivalent yet.

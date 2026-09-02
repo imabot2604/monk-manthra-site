@@ -4,7 +4,8 @@
     "theme_name": "monk manthra",
     "theme_version": "1.0.0",
     "theme_author": "monk manthra",
-    "theme_documentation_url": "https://github.com/imabot2604/monk-manthra-site#readme"
+    "theme_documentation_url": "https://github.com/imabot2604/monk-manthra-site#readme",
+    "theme_support_url": "https://github.com/imabot2604/monk-manthra-site/issues"
   },
   {
     "name": "Colour",

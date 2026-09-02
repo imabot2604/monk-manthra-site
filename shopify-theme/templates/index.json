@@ -1,0 +1,7 @@
+{
+  "sections": {
+    "hero":  { "type": "hero", "settings": { "cta_label": "See the range" } },
+    "range": { "type": "range-grid", "settings": { "paper": true } }
+  },
+  "order": ["hero", "range"]
+}

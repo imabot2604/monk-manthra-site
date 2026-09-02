@@ -1,0 +1,10 @@
+{
+  "general": {
+    "meta": { "tags": "Tagged \"{{ tags }}\"", "page": "Page {{ page }}" },
+    "404": { "title": "Nothing here.", "subtext": "The page you were after does not exist." },
+    "cart": { "title": "Your order", "empty": "Nothing in the order yet.", "checkout": "Checkout", "subtotal": "Subtotal" },
+    "search": { "heading": "Search", "placeholder": "Search", "results_for": "Results for \"{{ terms }}\"", "no_results": "Nothing found for \"{{ terms }}\"." }
+  },
+  "products": { "product": { "add_to_cart": "Add to order", "sold_out": "Sold out", "price": "Price" } },
+  "sections": { "header": { "menu": "Menu", "cart": "Order" } }
+}

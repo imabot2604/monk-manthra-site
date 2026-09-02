@@ -1,11 +1,14 @@
 # Metafields this theme expects
 
-Every product needs these, under the namespace `monkmanthra`. Create the
-**definitions** once in Shopify admin (*Settings → Custom data → Products →
-Add definition*) — the Composio Shopify toolkit I have access to can read and
-set metafield *values*, but definition creation isn't in the tool set I
-found, so that first step is admin-UI or Admin GraphQL
-(`metafieldDefinitionCreate`) on your side.
+Every product needs these, under the namespace `monkmanthra`.
+
+**Correction to an earlier claim in this file:** definitions are *not*
+required first. All 15 were written directly via `productCreate`'s
+`metafields` input and read back correctly with the right types — verified
+on the live store. Creating definitions in *Settings → Custom data →
+Products* is still worth doing, because without them the values are
+invisible in the admin product editor (they work fine in Liquid either
+way), but it is a convenience, not a prerequisite.
 
 | Key | Type | Example | Maps to (build.py) |
 |---|---|---|---|
