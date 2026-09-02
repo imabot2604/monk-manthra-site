@@ -84,7 +84,7 @@ def main():
 <header class="site-header">
   <div class="wrap site-header__inner">
     <a class="lockup" href="#top" aria-label="monk manthra — top">
-      {B.mark(32, lock="1")}
+      {B.mark(32, lock="3")}
       <span class="lockup__type">
         <span class="wordmark">monk manthra</span>
         <span class="lockup__sub nav__hide-sm">Nutrition</span>
@@ -104,11 +104,11 @@ def main():
 <section class="hero on-purple">
   <div class="wrap">
     {B.mark(104, draw=True, lock="3")}
-    <h1 class="display">Six supplements. One habit.</h1>
+    <h1 class="display">Seven supplements. One habit.</h1>
     <p>Single-ingredient formulas at doses you can check. Made to be taken every day,
        not talked about every day.</p>
     <a class="btn" href="#range">See the range</a>
-    <div class="hero__note"><p class="data">6 FORMULAS · 0 PROPRIETARY BLENDS</p></div>
+    <div class="hero__note"><p class="data">7 FORMULAS · 0 PROPRIETARY BLENDS</p></div>
   </div>
 </section>
 
@@ -150,7 +150,7 @@ def main():
       <hr class="gold-rule">
       <h2 class="display">Named for the state. Verified by the ingredient.</h2>
       <p class="lede">You shop by feeling and check by ingredient — never the other way
-         round. Six formulas, one word each. If a product needs two words, it needs a
+         round. Seven formulas, one word each. If a product needs two words, it needs a
          rethink.</p>
     </div>
     <div class="range">

@@ -148,13 +148,21 @@ strong { font-weight: 500; }  /* Karla 500, never a bold headline */
    Nothing ever sits inside the rings. */
 .mark { display: block; overflow: visible; }
 .mark .ring { fill: none; stroke-linecap: round; }
-.mark .ring--1 { stroke: var(--royal-purple); stroke-width: 2.4; }
+/* Rings step outward dark → light, the light-ground mirror of the
+   .on-purple treatment below. Rings 1 and 2 were both Royal Purple, which
+   gave the mark no depth at all on half white. Deep Purple innermost is the
+   analogue of Half White on a dark ground: the most prominent ring, nearest
+   the seed. Literal white cannot be used here — it is the ground colour. */
+.mark .ring--1 { stroke: var(--deep-purple); stroke-width: 2.4; }
 .mark .ring--2 { stroke: var(--royal-purple); stroke-width: 2.4; }
 .mark .ring--3 { stroke: var(--gold); stroke-width: 2.4; }
 .mark .seed { fill: var(--gold); stroke: none; }
 
-/* Reversed on deep purple — gold stays gold, purple lifts to lilac */
-.on-purple .mark .ring--1,
+/* Reversed on deep purple — gold stays gold, and the rings step outward
+   white → lilac so the ripple reads as depth rather than two identical arcs.
+   Half White, not pure white: it is the palette's white, and it is already
+   what .on-purple .wordmark uses, so ring and wordmark match on one ground. */
+.on-purple .mark .ring--1 { stroke: var(--half-white); }
 .on-purple .mark .ring--2 { stroke: var(--pale-lilac); }
 .on-purple .mark .ring--3 { stroke: var(--light-gold); }
 .on-purple .mark .seed { fill: var(--light-gold); }

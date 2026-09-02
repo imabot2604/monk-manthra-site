@@ -8,12 +8,19 @@
   included. Never pass a variant into the render call; wrap it instead.
 
   Usage:
-    {% render 'lockup' %}                            header, 32px
-    {% render 'lockup', size: 44, stacked: true %}    footer, called from inside <footer class="site-footer on-purple">
+    {% render 'lockup' %}                                       header, 32px, three rings
+    {% render 'lockup', size: 44, rings_lock: 2 %}               footer, two rings
+
+  rings_lock defaults to 3. The header deliberately overrides Section Two's
+  reduction rule (which prescribes one ring at <=32px) at the brand owner's
+  direction; the footer passes 2 to match build.py's mark(44, lock="2").
 {% endcomment %}
-{%- liquid assign l_size = size | default: 32 -%}
+{%- liquid
+  assign l_size = size | default: 32
+  assign l_rings = rings_lock | default: 3
+-%}
 <a class="lockup{% if stacked %} lockup--stacked{% endif %}" href="{{ routes.root_url }}" aria-label="monk manthra — home">
-  {% render 'mark', size: l_size, rings_lock: 1 %}
+  {% render 'mark', size: l_size, rings_lock: l_rings %}
   <span class="lockup__type">
     <span class="wordmark">monk manthra</span>
     {%- unless stacked -%}

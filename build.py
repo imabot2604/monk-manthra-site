@@ -313,8 +313,8 @@ BUNDLES = [
 # --------------------------------------------------------------------------
 # PAGE CHROME
 # --------------------------------------------------------------------------
-NAV = [("The range", "range.html"), ("Bundles", "bundles.html"),
-       ("The idea", "story.html"), ("Start", "start.html")]
+NAV = [("Start", "start.html"), ("The range", "range.html"),
+       ("Bundles", "bundles.html"), ("The idea", "story.html")]
 
 
 def head(title, desc, rel=""):
@@ -348,7 +348,7 @@ def header(active, rel="", section=None):
 <header class="site-header">
   <div class="wrap site-header__inner">
     <a class="lockup" href="{rel}index.html" aria-label="monk manthra — home">
-      {mark(32, lock="1")}
+      {mark(32, lock="3")}
       <span class="lockup__type">
         <span class="wordmark">monk manthra</span>
         <span class="lockup__sub nav__hide-sm">Nutrition</span>
