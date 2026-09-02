@@ -1,7 +1,25 @@
 {
   "sections": {
-    "hero":  { "type": "hero", "settings": { "cta_label": "See the range" } },
-    "range": { "type": "range-grid", "settings": { "paper": true } }
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "heading": "Seven supplements. One habit.",
+        "subheading": "Single-ingredient formulas at doses you can check. Made to be taken every day, not talked about every day.",
+        "cta_label": "See the range",
+        "cta_url": "shopify://collections/the-range",
+        "note": "7 FORMULAS · 0 PROPRIETARY BLENDS"
+      }
+    },
+    "range": {
+      "type": "range-grid",
+      "settings": {
+        "collection": "the-range",
+        "label": "The range",
+        "heading": "Named for the state. Verified by the ingredient.",
+        "body": "You shop by feeling and check by ingredient — never the other way round. Seven formulas, one word each.",
+        "paper": true
+      }
+    }
   },
   "order": ["hero", "range"]
 }

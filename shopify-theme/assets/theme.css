@@ -49,6 +49,10 @@
 
 /* ---------------------------------------------------------------- reset -- */
 *, *::before, *::after { box-sizing: border-box; }
+/* The `hidden` attribute only sets display:none at UA level, so ANY explicit
+   display in our own CSS silently beats it — which is exactly what made the
+   cart badge render "0" instead of disappearing. */
+[hidden] { display: none !important; }
 html {
   font-size: 100%;            /* inherit the reader's default size */
   -webkit-text-size-adjust: 100%;
