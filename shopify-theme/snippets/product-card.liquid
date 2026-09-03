@@ -2,40 +2,60 @@
   Mirrors build.py's card(). --band comes from the tonal_band colour
   metafield — Section Seven: products are separated by a 4mm tonal band
   from the core palette, never by a new colour, so this value should always
-  be one of the six palette hexes, same constraint build.py enforces by only
-  ever passing a `band` from that fixed set.
+  be one of the six palette hexes.
 
-  Real width/height come from the image object rather than the 1024x872
-  build.py hardcoded — that number was specific to the GitHub Pages
-  pipeline's own watermark-cropped output and does not hold for arbitrary
-  merchant-uploaded photography.
+  Real width/height come from the image object rather than build.py's
+  hardcoded 1024x872 — that number was specific to the GitHub Pages
+  pipeline's watermark crop and does not hold for arbitrary photography.
 
-  Usage: {% render 'product-card', product: product %}
+  Params:
+    product  required
+    linked   pass false for a card that is not clickable (coming soon on a
+             single-page store, where there is nowhere to click through to).
+             A non-link rendered as <a> would be a lie to keyboard and
+             screen-reader users, so the tag changes with it, not just the
+             styling.
+
+  "Coming soon" is driven by the coming_soon metafield, not by availability.
+  Sold out and unreleased are different claims and must not share copy.
 {% endcomment %}
 {%- liquid
   assign m = product.metafields.monkmanthra
   assign img = product.featured_image
+  assign soon = m.coming_soon.value
+  assign is_linked = true
+  if linked == false
+    assign is_linked = false
+  endif
 -%}
-<a class="card" href="{{ product.url }}" style="--band:{{ m.tonal_band.value }}">
-  <span class="card__band"></span>
-  <span class="card__figure{% if img %} card__figure--photo{% endif %}">
-    {%- if img -%}
-      <img
-        src="{{ img | image_url: width: 1024 }}"
-        srcset="{{ img | image_url: width: 700 }} 700w, {{ img | image_url: width: 1024 }} 1024w"
-        sizes="(max-width: 900px) 92vw, 380px"
-        width="{{ img.width }}" height="{{ img.height }}"
-        alt="{{ img.alt | default: product.title }}"
-        loading="lazy" decoding="async"
-      >
-    {%- endif -%}
-  </span>
-  <span class="card__body">
-    <span class="card__name">{{ product.title }}</span>
-    <span class="label card__ing">{{ m.ingredient_label.value }}</span>
-    <span class="card__foot">
-      <span class="data">{{ m.dose.value }} · {{ m.count.value }}</span>
-      <span class="card__price">{{ product.price | money }}</span>
+{%- capture card_inner -%}
+    <span class="card__band"></span>
+    <span class="card__figure{% if img %} card__figure--photo{% endif %}">
+      {%- if img -%}
+        <img
+          src="{{ img | image_url: width: 1024 }}"
+          srcset="{{ img | image_url: width: 700 }} 700w, {{ img | image_url: width: 1024 }} 1024w"
+          sizes="(max-width: 900px) 92vw, 380px"
+          width="{{ img.width }}" height="{{ img.height }}"
+          alt="{{ img.alt | default: product.title }}"
+          loading="lazy" decoding="async">
+      {%- endif -%}
     </span>
-  </span>
-</a>
+    <span class="card__body">
+      <span class="card__name">{{ product.title }}</span>
+      <span class="label card__ing">{{ m.ingredient_label.value }}</span>
+      <span class="card__foot">
+        <span class="data">{{ m.dose.value }} · {{ m.count.value }}</span>
+        {%- if soon -%}
+          <span class="card__soon label">Coming soon</span>
+        {%- else -%}
+          <span class="card__price">{{ product.price | money }}</span>
+        {%- endif -%}
+      </span>
+    </span>
+{%- endcapture -%}
+{%- if is_linked -%}
+  <a class="card" href="{{ product.url }}" style="--band:{{ m.tonal_band.value }}">{{ card_inner }}</a>
+{%- else -%}
+  <div class="card card--static" style="--band:{{ m.tonal_band.value }}">{{ card_inner }}</div>
+{%- endif -%}

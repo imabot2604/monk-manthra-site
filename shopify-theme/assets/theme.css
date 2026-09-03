@@ -534,6 +534,11 @@ body.cart-open { overflow: hidden; }
   opacity: 0; transition: opacity 0.35s var(--ease-calm);
 }
 .card:hover { transform: translateY(-2px); }
+/* A card with nowhere to click must not behave like one. */
+.card--static { cursor: default; }
+.card--static:hover { transform: none; }
+.card--static:hover::after { opacity: 0; }
+.card__soon { color: var(--royal-purple); }
 .card:hover::after { opacity: 1; }
 .card:active { transform: translateY(-1px) scale(0.994); transition-duration: 0.06s; }
 /* The 4mm tonal band — the only thing that separates one product from another */

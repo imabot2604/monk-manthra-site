@@ -1,0 +1,127 @@
+{% comment %}
+  The one product that is actually for sale, rendered inline on the home page
+  rather than behind a click. Mirrors main-product.liquid's layout but drops
+  the breadcrumb and the "also in the range" block, which make no sense on a
+  single-page store.
+
+  Reuses snippets/facts-panel.liquid and snippets/buy-button.liquid rather
+  than restating them, so the legal panel has exactly one implementation.
+{% endcomment %}
+{%- liquid
+  assign p = section.settings.product
+  assign m = p.metafields.monkmanthra
+  assign img = p.featured_image
+-%}
+
+{%- if p == blank -%}
+  {%- comment -%} Theme editor: nothing picked yet. {%- endcomment -%}
+  {%- if request.design_mode -%}
+    <section class="section"><div class="wrap">
+      <p class="label">Featured product</p>
+      <p>Pick the product to sell in this section's settings.</p>
+    </div></section>
+  {%- endif -%}
+{%- else -%}
+<section class="section section--paper anchor" id="{{ section.settings.anchor | default: 'buy' }}">
+  <div class="wrap">
+    <div class="product" style="--band:{{ m.tonal_band.value }}">
+      <div class="product__figure{% if img %} product__figure--photo{% endif %}">
+        {%- if img -%}
+          <img
+            src="{{ img | image_url: width: 1024 }}"
+            srcset="{{ img | image_url: width: 700 }} 700w, {{ img | image_url: width: 1024 }} 1024w"
+            sizes="(max-width: 900px) 92vw, 420px"
+            width="{{ img.width }}" height="{{ img.height }}"
+            alt="{{ img.alt | default: p.title }}">
+        {%- endif -%}
+      </div>
+      <div>
+        <p class="label">{{ m.ingredient_label.value }}</p>
+        <h2 class="product__name">{{ p.title }}</h2>
+        <hr class="gold-rule">
+        <p class="lede">{{ m.tagline.value }}</p>
+
+        <div class="product__meta">
+          <div><p class="label">Dose</p><p class="data">{{ m.dose.value }}</p></div>
+          <div><p class="label">Count</p><p class="data">{{ m.count.value }}</p></div>
+          <div><p class="label">Serving</p><p class="data">{{ m.serving.value }}</p></div>
+          <div><p class="label">When</p><p class="data">{{ m.when_to_take.value }}</p></div>
+        </div>
+
+        <p>{{ m.blurb.value }}</p>
+
+        <div class="product__buy">
+          {% render 'buy-button', product: p %}
+          <span class="price">{{ p.price | money }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- if section.settings.show_facts -%}
+<section class="section">
+  <div class="wrap grid-2">
+    <div>
+      <p class="label">Back of pack</p>
+      <hr class="gold-rule">
+      <h2 class="display">The panel, unedited.</h2>
+      <p class="lede">The facts panel is a legal document, not a design surface. It is
+         reproduced here exactly as it is printed — black on white, full contrast, rules
+         intact, nothing tinted purple.</p>
+      {%- if m.lot_code.value -%}
+        <p class="data data--sm" style="color:#7A5CA8">LOT {{ m.lot_code.value }} · INK-JETTED ON THE BASE</p>
+      {%- endif -%}
+    </div>
+    <div>{% render 'facts-panel', product: p %}</div>
+  </div>
+</section>
+{%- endif -%}
+
+{%- if m.supports_claim.value -%}
+<section class="section section--purple on-purple">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="label">What to expect</p>
+      <hr class="gold-rule">
+      <h2 class="display">Take it tonight. Then take it again tomorrow.</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="n">WEEK 1</span>
+        <h3 class="heading">Nothing, probably.</h3>
+        <p>The first week is about the habit, not the ingredient. Keep it where you
+           cannot miss it and take it at the same point in the evening each night.</p>
+      </div>
+      <div class="step">
+        <span class="n">WEEK 3</span>
+        <h3 class="heading">Most people notice something.</h3>
+        <p>Not a change you would post about. The kind you only see looking back at
+           the fortnight behind you.</p>
+      </div>
+      <div class="step">
+        <span class="n">WEEK 4</span>
+        <h3 class="heading">Decide.</h3>
+        <p>Give it a month before you judge it. If it is not doing anything for you,
+           stop — and because the formula is short, you know what you stopped.</p>
+      </div>
+    </div>
+    <p class="disclaimer">{{ m.supports_claim.value }} This is a structure-and-function
+      statement, not a medical claim. {{ p.title }} is not intended to diagnose, treat,
+      cure or prevent any disease.</p>
+  </div>
+</section>
+{%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Featured product",
+  "settings": [
+    { "type": "product", "id": "product", "label": "The product on sale" },
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "buy" },
+    { "type": "checkbox", "id": "show_facts", "label": "Show the facts panel", "default": true }
+  ],
+  "presets": [{ "name": "Featured product" }]
+}
+{% endschema %}

@@ -1,0 +1,54 @@
+{% comment %}
+  Everything not yet for sale. Filtered on the coming_soon metafield rather
+  than on availability: "sold out" and "coming soon" are different claims,
+  and a genuinely sold-out product must not be described as unreleased.
+
+  Products still render their photography and ingredient line — the range is
+  the story here — but carry no price and no buy button. They are also
+  tracked at zero stock with a DENY policy in Shopify, so a direct
+  /cart/add.js call is refused too; this is not a front-end-only lock.
+{% endcomment %}
+<section class="section anchor" id="{{ section.settings.anchor | default: 'coming-soon' }}">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="label">{{ section.settings.label }}</p>
+      <hr class="gold-rule">
+      <h2 class="display">{{ section.settings.heading }}</h2>
+      {%- if section.settings.body != blank -%}
+        <p class="lede">{{ section.settings.body }}</p>
+      {%- endif -%}
+    </div>
+    <div class="range">
+      {%- comment -%}
+        Two collection slots because products and bundles live in separate
+        collections; a single grid is calmer here than two headed sections
+        for what is, to a visitor, one list of things not yet on sale.
+      {%- endcomment -%}
+      {%- for product in section.settings.collection.products -%}
+        {%- if product.metafields.monkmanthra.coming_soon.value -%}
+          {% render 'product-card', product: product, linked: false %}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- for product in section.settings.collection_2.products -%}
+        {%- if product.metafields.monkmanthra.coming_soon.value -%}
+          {% render 'product-card', product: product, linked: false %}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Coming soon",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collection to draw from" },
+    { "type": "collection", "id": "collection_2", "label": "Second collection (bundles)" },
+    { "type": "text", "id": "label", "label": "Eyebrow", "default": "Still in production" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The rest of the range is coming." },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "One formula at a time, in the order they are ready. Nothing goes on sale before the panel on the back of it is final." },
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "coming-soon" }
+  ],
+  "presets": [{ "name": "Coming soon" }]
+}
+{% endschema %}
