@@ -1,0 +1,119 @@
+{% comment %}
+  The story page, ported from build.py's page_story().
+
+  Deliberately a section with the copy in settings, NOT the Shopify Page's
+  body field. The page record created early via the API held a stripped
+  version of this text and silently fell out of sync when the copy was
+  updated in build.py — page bodies live in Shopify's database and no
+  rebuild reaches them. Keeping it in the theme means one more surface to
+  update by hand, but at least it is a file in the repo that a diff can
+  catch, rather than a database row nothing points at.
+{% endcomment %}
+<section class="section section--tight">
+  <div class="wrap wrap--narrow">
+    <p class="label">{{ section.settings.eyebrow }}</p>
+    <hr class="gold-rule">
+    <h1 class="display">{{ section.settings.heading }}</h1>
+    <p class="lede" style="margin-top:26px">{{ section.settings.lede }}</p>
+  </div>
+</section>
+
+<section class="section section--purple on-purple">
+  <div class="wrap">
+    <div class="principles">
+      <div class="principle">
+        <p class="label">Positioning</p>
+        <hr class="gold-rule">
+        <p>{{ section.settings.positioning }}</p>
+      </div>
+      <div class="principle">
+        <p class="label">Who it is for</p>
+        <hr class="gold-rule">
+        <p>{{ section.settings.audience }}</p>
+      </div>
+      <div class="principle">
+        <p class="label">What we hold to</p>
+        <hr class="gold-rule">
+        <p>{{ section.settings.values }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap grid-2">
+    <div>
+      <p class="label">The mark</p>
+      <hr class="gold-rule">
+      <h2 class="display">One utterance, repeating.</h2>
+      <p class="lede">A gold seed at the centre, rings travelling outward, and a gap at
+         the top where the sound escapes.</p>
+    </div>
+    <div class="stack">
+      <p>The seed radius is the unit. Each ring steps outward at roughly 1.6×, so the
+         spacing loosens the way a real ripple does. Every arc runs the same 20° to 340°,
+         which is why the opening sits centred and identical on all three.</p>
+      <p>Gold appears exactly twice — the seed and the outer ring. The eye enters at the
+         source and leaves at the edge.</p>
+      <p>It draws once when a page loads, over 1.4 seconds, outward. Then it stops. It
+         does not loop and it does not pulse, because a thing that repeats forever on a
+         screen is not a practice, it is a nag.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section--paper">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="label">How we write</p>
+      <hr class="gold-rule">
+      <h2 class="display">The calmest voice in a loud category.</h2>
+      <p class="lede">Plain verbs, no exclamation marks, no urgency. That is close to the
+         whole of the differentiation.</p>
+    </div>
+    <div class="table-scroll">
+      <table class="dose-table">
+        <thead><tr>
+          <th scope="col">We write this</th><th scope="col">Not this</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>Take one capsule with the evening meal.</td>
+              <td style="color:#7A5CA8">Unlock your best sleep ever</td></tr>
+          <tr><td>600mg of ashwagandha. Nothing else added.</td>
+              <td style="color:#7A5CA8">Our proprietary blend of ancient botanicals</td></tr>
+          <tr><td>Most people notice something by week three.</td>
+              <td style="color:#7A5CA8">Feel the difference from day one, guaranteed</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="disclaimer">
+      We never say a product treats, prevents, cures or diagnoses anything — that
+      language turns a supplement into an unlicensed drug in most markets. We use
+      structure-and-function phrasing only, and only where we hold evidence for the
+      specific dose we sell. No before-and-after imagery, no weight-loss framing, no
+      "clinically proven" flashes, on any channel.
+    </p>
+  </div>
+</section>
+
+<section class="strip-gold on-gold">
+  <div class="wrap">
+    <p class="label">Practice</p>
+    <h2 class="heading">A word, repeated, is how anything changes.</h2>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "The idea",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The idea" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "A manthra is one word, repeated, until it changes something." },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "That is also how a body works — a small dose, a walk, a meal, a night of proper sleep, taken daily, until the effect compounds. The brand is built entirely on that single parallel, and every decision below traces back to it." },
+    { "type": "textarea", "id": "positioning", "label": "Positioning", "default": "Daily supplements for people who want to feel steady, not supercharged. We sell consistency, not transformation. The rest of the category shouts about performance; we would rather speak quietly about repetition." },
+    { "type": "textarea", "id": "audience", "label": "Who it is for", "default": "People who already have a practice of some kind — yoga, running, therapy, cooking. People who read the ingredient panel before the front of the pack, and who are suspicious of hype and of anything that looks like a pharmacy." },
+    { "type": "textarea", "id": "values", "label": "What we hold to", "default": "Repetition over intensity. Show the dose — numbers are visible, never hidden. Say the honest number, including the unglamorous one: the first week usually feels like nothing at all. Earn the calm, because white space is the product and a crowded label is a nervous one." }
+  ],
+  "presets": [{ "name": "The idea" }]
+}
+{% endschema %}
