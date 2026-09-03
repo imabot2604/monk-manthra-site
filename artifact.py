@@ -91,10 +91,10 @@ def main():
       </span>
     </a>
     <nav class="nav" aria-label="Primary">
-      <a href="#range">The range</a>
-      <a href="#bundle">Bundles</a>
-      <a href="#idea">The idea</a>
       <a href="#start">Start</a>
+      <a href="#idea">The idea</a>
+      <a href="#bundle">Bundles</a>
+      <a href="#range">The range</a>
     </nav>
   </div>
 </header>

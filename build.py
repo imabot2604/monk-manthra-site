@@ -313,8 +313,8 @@ BUNDLES = [
 # --------------------------------------------------------------------------
 # PAGE CHROME
 # --------------------------------------------------------------------------
-NAV = [("Start", "start.html"), ("The range", "range.html"),
-       ("Bundles", "bundles.html"), ("The idea", "story.html")]
+NAV = [("Start", "start.html"), ("The idea", "story.html"),
+       ("Bundles", "bundles.html"), ("The range", "range.html")]
 
 
 def head(title, desc, rel=""):
