@@ -118,9 +118,9 @@ def main():
       <p class="label">Principles</p>
       <hr class="gold-rule">
       <h2 class="display">A manthra is one word, repeated, until it changes something.</h2>
-      <p class="lede">That is also how a supplement works — a small dose, taken daily,
-         until the effect compounds. Three rules follow from it, and we designed the
-         whole range around them.</p>
+      <p class="lede">That is also how a body works — a small dose, a walk, a meal, a
+         night of proper sleep, taken daily, until the effect compounds. Three rules
+         follow from it, and we designed the whole range around them.</p>
     </div>
     <div class="principles">
       <div class="principle">

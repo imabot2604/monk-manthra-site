@@ -571,9 +571,9 @@ def page_index():
       <p class="label">Principles</p>
       <hr class="gold-rule">
       <h2 class="display">A manthra is one word, repeated, until it changes something.</h2>
-      <p class="lede">That is also how a supplement works — a small dose, taken daily,
-         until the effect compounds. Three rules follow from it, and we designed the
-         whole range around them.</p>
+      <p class="lede">That is also how a body works — a small dose, a walk, a meal, a
+         night of proper sleep, taken daily, until the effect compounds. Three rules
+         follow from it, and we designed the whole range around them.</p>
     </div>
     <div class="principles">
       <div class="principle">
@@ -900,9 +900,10 @@ def page_story():
     <p class="label">The idea</p>
     <hr class="gold-rule">
     <h1 class="display">A manthra is one word, repeated, until it changes something.</h1>
-    <p class="lede" style="margin-top:26px">That is also how a supplement works — a small
-       dose, taken daily, until the effect compounds. The brand is built entirely on that
-       single parallel, and every decision below traces back to it.</p>
+    <p class="lede" style="margin-top:26px">That is also how a body works — a small dose,
+       a walk, a meal, a night of proper sleep, taken daily, until the effect compounds.
+       The brand is built entirely on that single parallel, and every decision below
+       traces back to it.</p>
   </div>
 </section>
 
@@ -927,8 +928,9 @@ def page_story():
         <p class="label">What we hold to</p>
         <hr class="gold-rule">
         <p>Repetition over intensity. Show the dose — numbers are visible, never hidden.
-           Earn the calm, because white space is the product and a crowded label is a
-           nervous one.</p>
+           Say the honest number, including the unglamorous one: the first week usually
+           feels like nothing at all. Earn the calm, because white space is the product
+           and a crowded label is a nervous one.</p>
       </div>
     </div>
   </div>
