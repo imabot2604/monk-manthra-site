@@ -84,7 +84,7 @@ def main():
 <header class="site-header">
   <div class="wrap site-header__inner">
     <a class="lockup" href="#top" aria-label="monk manthra — top">
-      {B.mark(32, lock="3")}
+      <span class="lockup__disc on-purple">{B.mark(32, lock="3")}</span>
       <span class="lockup__type">
         <span class="wordmark">monk manthra</span>
         <span class="lockup__sub nav__hide-sm">Nutrition</span>

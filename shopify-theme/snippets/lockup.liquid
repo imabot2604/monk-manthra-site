@@ -9,7 +9,7 @@
 
   Usage:
     {% render 'lockup' %}                                       header, 32px, three rings
-    {% render 'lockup', size: 44, rings_lock: 2 %}               footer, two rings
+    {% render 'lockup', size: 44, rings_lock: 2, disc: false %}  footer, two rings, no disc
 
   rings_lock defaults to 3. The header deliberately overrides Section Two's
   reduction rule (which prescribes one ring at <=32px) at the brand owner's
@@ -18,9 +18,18 @@
 {%- liquid
   assign l_size = size | default: 32
   assign l_rings = rings_lock | default: 3
+  # nil (not passed) must still mean true, so only an explicit false disables it
+  assign l_disc = true
+  if disc == false
+    assign l_disc = false
+  endif
 -%}
 <a class="lockup{% if stacked %} lockup--stacked{% endif %}" href="{{ routes.root_url }}" aria-label="monk manthra — home">
-  {% render 'mark', size: l_size, rings_lock: l_rings %}
+  {%- if l_disc -%}
+    <span class="lockup__disc on-purple">{% render 'mark', size: l_size, rings_lock: l_rings %}</span>
+  {%- else -%}
+    {% render 'mark', size: l_size, rings_lock: l_rings %}
+  {%- endif -%}
   <span class="lockup__type">
     <span class="wordmark">monk manthra</span>
     {%- unless stacked -%}

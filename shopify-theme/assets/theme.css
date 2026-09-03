@@ -214,6 +214,21 @@ strong { font-weight: 500; }  /* Karla 500, never a bold headline */
 }
 
 /* -------------------------------------------------------------- lockups -- */
+/* The header mark sits on its own deep purple disc. Section Two sanctions the
+   mark reversed on deep purple, and it is the only way the reversed ring
+   treatment (white → lilac → gold) can work in a half-white header — white on
+   half white is invisible. The .on-purple class on this wrapper is what
+   recolours the rings, via the same ancestor selector the hero uses; there is
+   no separate colour rule for it. Padding exceeds the seed diameter (3.3px at
+   32px), so the guide's clear-space rule still holds inside the disc. */
+.lockup__disc {
+  display: flex;
+  flex: none;
+  padding: 7px;
+  background: var(--deep-purple);
+  border-radius: 50%;
+}
+
 /* Clear space: one seed diameter on all four sides. Nothing enters it. */
 .lockup { display: inline-flex; align-items: center; gap: 14px; text-decoration: none; padding: var(--seed); }
 .lockup__type { display: block; }
