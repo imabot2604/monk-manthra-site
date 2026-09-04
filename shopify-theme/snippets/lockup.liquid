@@ -9,11 +9,11 @@
 
   Usage:
     {% render 'lockup' %}                                       header, 32px, three rings
-    {% render 'lockup', size: 44, rings_lock: 2, disc: false %}  footer, two rings, no disc
+    {% render 'lockup', size: 44, rings_lock: 3, disc: false %}  footer, three rings, no disc
 
   rings_lock defaults to 3. The header deliberately overrides Section Two's
   reduction rule (which prescribes one ring at <=32px) at the brand owner's
-  direction; the footer passes 2 to match build.py's mark(44, lock="2").
+  direction; the footer matches it at 3 so the two marks are identical.
 {% endcomment %}
 {%- liquid
   assign l_size = size | default: 32

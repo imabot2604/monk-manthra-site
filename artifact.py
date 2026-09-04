@@ -344,7 +344,7 @@ def main():
   <div class="wrap">
     <div class="footer__grid">
       <div class="footer__col footer__brand">
-        {B.mark(44, lock="2")}
+        {B.mark(44, lock="3")}
         <span class="wordmark" style="font-size:20px;display:block;margin-bottom:14px">monk manthra</span>
         <p>Daily supplements for people who want to feel steady, not supercharged.</p>
       </div>

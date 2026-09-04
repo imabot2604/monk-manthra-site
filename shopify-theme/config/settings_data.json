@@ -6,6 +6,25 @@
     "gold": "#C2A053",
     "light_gold": "#E0C88C",
     "half_white": "#F4F1EC",
-    "ink": "#241B33"
+    "ink": "#241B33",
+    "sections": {
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "range_collection": "the-range",
+          "bundles_collection": "bundles",
+          "story_page": "/pages/the-idea",
+          "start_page": "/pages/start",
+          "contact_email": "hello@monkmanthra.com",
+          "contact_phone": "+91 98 4712 0088"
+        }
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "menu": "main-menu"
+        }
+      }
+    }
   }
 }
