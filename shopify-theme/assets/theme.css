@@ -371,6 +371,18 @@ strong { font-weight: 500; }  /* Karla 500, never a bold headline */
 }
 .cart-toggle:hover { border-color: var(--gold); }
 .cart-toggle:active { opacity: 0.7; transition-duration: 0.06s; }
+/* The JS puts these on the clicked [data-buy] button, which is a .btn and
+   never a .cart-toggle — so as written the pending and error states could
+   not render at all. Click "Add to order" and nothing acknowledged the
+   network round-trip; a failure was silent except in the console. */
+.btn.is-adding, [data-buy].is-adding {
+  opacity: 0.55;
+  cursor: progress;
+  transition: opacity 0.12s var(--ease-calm);
+}
+.btn.is-error, [data-buy].is-error {
+  background: #B5484F; border-color: #B5484F; color: var(--half-white);
+}
 .cart-toggle.is-adding { border-color: var(--gold); }
 .cart-toggle.is-error { border-color: #B5484F; }
 .cart-toggle__count {
@@ -386,7 +398,13 @@ strong { font-weight: 500; }  /* Karla 500, never a bold headline */
   position: fixed; inset: 0; z-index: 60;
   background: rgba(36, 27, 51, 0.4);
   backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+  /* The scrim used to appear instantly on a `hidden` toggle while the sheet
+     took 0.4s, so the dim landed a beat early. Surface and scrim arrive
+     together now; `hidden` still removes it from the a11y tree at rest. */
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-calm);
 }
+body.cart-open .cart-scrim { opacity: 1; }
 
 .cart-drawer {
   position: fixed; top: 0; right: 0; bottom: 0; z-index: 61;
@@ -399,6 +417,18 @@ strong { font-weight: 500; }  /* Karla 500, never a bold headline */
 }
 body.cart-open .cart-drawer { transform: translateX(0); }
 body.cart-open { overflow: hidden; }
+
+/* While a finger is on it, and while the release spring is running, the sheet
+   is driven frame by frame from JS. A CSS transition here would fight the
+   rAF loop and — worse — could not be grabbed mid-flight, which is the whole
+   point of a dismissible sheet. touch-action: pan-y keeps vertical scrolling
+   inside the drawer while we claim the horizontal axis. */
+.cart-drawer { touch-action: pan-y; }
+.cart-drawer.is-dragging,
+.cart-drawer.is-springing { transition: none; }
+.cart-drawer.is-dragging { cursor: grabbing; }
+.cart-drawer.is-dragging .cart-scrim,
+.cart-drawer.is-springing .cart-scrim { transition: none; }
 @media (prefers-reduced-motion: reduce) {
   .cart-drawer { transition: none; }
 }
@@ -437,6 +467,7 @@ body.cart-open { overflow: hidden; }
   font-size: 0.9375rem; cursor: pointer; padding: 2px 4px;
 }
 .cart-remove:hover { color: #B5484F; }
+.cart-remove:active { opacity: 0.6; transition-duration: 0.06s; }
 
 .cart-drawer__foot { padding: 20px 24px 24px; border-top: var(--rule); }
 .cart-subtotal { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }

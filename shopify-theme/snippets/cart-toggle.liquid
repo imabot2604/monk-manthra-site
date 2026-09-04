@@ -11,3 +11,14 @@
   </svg>
   <span class="cart-toggle__count" data-cart-count{% if cart.item_count == 0 %} hidden{% endif %}>{{ cart.item_count }}</span>
 </button>
+{%- comment -%}
+  Adding to cart is a commit. Sighted users get the badge and the drawer
+  opening; without this a screen reader got nothing at all. Kept outside the
+  button so the announcement is not read as part of its label, and phrased as
+  a sentence rather than a bare digit.
+{%- endcomment -%}
+<span class="visually-hidden" role="status" aria-live="polite" data-cart-announce>
+  {%- if cart.item_count == 1 -%}1 item in your order
+  {%- elsif cart.item_count > 1 -%}{{ cart.item_count }} items in your order
+  {%- endif -%}
+</span>
