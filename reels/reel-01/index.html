@@ -71,7 +71,6 @@
       .end { display:grid; place-content:center; justify-items:center; gap:40px }
       .end .mark { width:230px; height:230px; overflow:visible }
       .end .wordmark { font-family:"Fraunces",serif; font-weight:200; font-size:82px; letter-spacing:.15em }
-      .end .soon { font-family:"IBM Plex Mono",monospace; font-size:25px; letter-spacing:.28em; color:var(--light-gold) }
     </style>
   </head>
   <body>
@@ -131,7 +130,6 @@
           <circle id="eseed" class="seed" cx="50" cy="50" r="5.2"/>
         </svg>
         <div class="wordmark"><span class="w"><i>monk</i></span> <span class="w"><i>manthra</i></span></div>
-        <div class="soon" id="soon">COMING SOON</div>
       </div>
 
     <audio id="vo1" src="assets/vo/af_heart-01.wav" data-start="0.80" data-duration="2.67" data-track-index="10" data-volume="1"></audio>
@@ -238,10 +236,8 @@
         tl.to("#" + id, { strokeDashoffset:0, duration:1.0, ease:"power2.out" }, 19.42 + i * .13);
       });
       gsap.set("#eseed", { transformOrigin:"50% 50%", scale:0 });
-      gsap.set("#soon", { opacity:0, y:14, scaleX:1.06, transformOrigin:"50% 50%" });
       tl.to("#eseed", { scale:1, duration:.7, ease:"back.out(2)" }, 19.37);
       say("#b-end .wordmark", 19.77, .045);
-      tl.to("#soon", { opacity:1, y:0, scaleX:1, duration:1.1, ease:"power3.out" }, 20.42);
       tl.fromTo("#b-end", { opacity:0 }, { opacity:1, duration:.4 }, 19.27);
 
       // --- Captions on the footage beats only -------------------------------
