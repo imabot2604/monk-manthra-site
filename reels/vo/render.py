@@ -13,15 +13,13 @@ import sys, numpy as np, soundfile as sf
 from kokoro import KPipeline
 
 LINES = [
-    "A manthra is one word.",
-    "Repeated.",
+    "A manthra is one word, repeated.",
     "Until it changes something.",
-    "That is also how a body works.",
-    "A small dose, repeated, at the same hour.",
-    "This is Golden Milk.",
+    "A body works the same way.",
+    "One small dose, at the same hour.",
+    "Golden Milk.",
     "Turmeric, ginger, cinnamon.",
-    "Five grams, in the evening.",
-    "The warm milk is up to you.",
+    "And black pepper, because turmeric needs it.",
     "Monk Manthra. Coming soon.",
 ]
 
@@ -39,7 +37,7 @@ SR = 24000
 voice = sys.argv[1] if len(sys.argv) > 1 else "bf_emma"
 # 0.85 rather than 1.0: the whole script is about not hurrying, and Kokoro's
 # default read is brisk enough to undercut the words.
-speed = float(sys.argv[2]) if len(sys.argv) > 2 else 0.85
+speed = float(sys.argv[2]) if len(sys.argv) > 2 else 1.0
 
 pipe = KPipeline(lang_code=voice[0], repo_id="hexgrad/Kokoro-82M")
 parts, total = [], 0.0
@@ -56,7 +54,7 @@ for i, text in enumerate(LINES, 1):
 
 # A single stitched preview, with the pauses the script asks for: the opening
 # three lines only work with real silence between them.
-gaps = [0.55, 0.55, 0.75, 0.30, 0.60, 0.35, 0.30, 0.30, 0.55, 0.0]
+gaps = [0.34, 0.46, 0.30, 0.46, 0.26, 0.16, 0.40, 0.0]
 mix = []
 for a, g in zip(parts, gaps):
     mix.append(a)
