@@ -5,8 +5,26 @@ buyable that we want traffic on. So this reel's job is **not** to sell. It
 introduces the idea and the name, and earns the right to post a product later.
 
 - **28s**, 9:16, 1080x1920
-- 4 Flow clips at 8s, trimmed to 32s of footage → 28s cut
+- **Hybrid cut**: motion graphics built in HyperFrames, intercut with
+  generated footage from Flow/Omni
 - Female VO (Kokoro), music bed, no on-screen hype
+
+## How the two halves divide
+
+Not alternated for variety — split by what each is actually good at.
+
+**Motion graphics carry every word and every number.** Type, the mark, the
+palette, the dose. These are the things that must be exactly right, and a
+generative model cannot be held to a hex value or a letterform. Built, not
+prompted.
+
+**Flow carries texture and warmth.** Liquid, powder, steam, light on stone.
+Things that need to look real and photographed, where an exact frame was
+never the point.
+
+The seam between them is the risk. Both halves sit on the same deep purple
+ground and cut on the VO's own pauses, never mid-phrase, so the change of
+technique lands as a change of subject rather than a change of budget.
 
 ## Why this and not a product launch
 
@@ -86,18 +104,60 @@ and cut on the VO's own commas. That is cheaper than fighting the prompt.
 
 ### Clip 4 — 0:21-0:28 · over VO lines 10-11
 
-    A matte deep purple stand-up pouch on a dark stone surface, warm side
-    light, deep shadow behind. Camera perfectly static. Steam drifts slowly
-    across the frame from the left. Nothing else moves. Photographic,
-    product photography, generous empty space around the pouch.
+    A plain matte white stand-up pouch, completely blank with no text, no
+    label and no printing of any kind, standing on a dark stone surface.
+    Warm side light from the left, deep shadow behind it. Camera perfectly
+    static. Steam drifts slowly across the frame. Nothing else moves.
+    Photographic product photography, generous empty space around the pouch.
 
-**The pouch label will be wrong.** Flow cannot render the wordmark or the
-mark correctly and will invent something close and wrong — which is worse
-than blank. Two options: prompt an unlabelled pouch and composite the real
-artwork on in post, or hold the last 4s on a plain purple card carrying the
-real mark. The second is cheaper and more on-brand.
+Say "blank", "no text" and "no label" more than once — a single mention is
+usually not enough to stop a model decorating a pack.
+
+**Packaging here is white, carrying only the mark** — no wordmark, no
+product name, no dose. That is a deliberate simplification for now, and it
+happens to solve the problem this shot had: an unlabelled white pouch is a
+thing Flow can render convincingly, where a pouch covered in type is not.
+The mark is composited on afterwards from the real artwork, so it is exact
+rather than approximated.
+
+Nothing on the pack is text, so nothing on it can be subtly wrong.
 
 ---
+
+## The motion-graphics beats
+
+Built, not prompted. Each sits between two Flow clips.
+
+### MG-A — 0:00-0:02, cold open, before clip 1
+
+The mark draws itself once, outward from the seed, over 1.4s on deep purple.
+Then it stops. This is the one piece of non-response motion the brand allows,
+and it is already specified: 1.4 seconds, outward, once, never looping.
+
+Straight cut from the finished mark into the ripple of clip 1 — the mark's
+rings and the ripple's rings are the same shape, so the cut rhymes.
+
+### MG-B — 0:19-0:21, between clips 3 and 4
+
+The dose, set as data, on deep purple:
+
+    GOLDEN MILK
+    TURMERIC · GINGER · CINNAMON
+    5g · EVENING
+
+Type only. It appears; it does not animate in. The numbers are the point,
+and Section Nine says numbers are shown, never hidden or dressed up.
+
+### MG-C — 0:26-0:28, end card
+
+Mark and wordmark, centred on deep purple, holding still. Beneath, in the
+small caps used for labels:
+
+    COMING SOON
+
+No button, no arrow, no swipe-up prompt. There is nothing to tap yet, and
+pretending otherwise is the first thing that would make this account look
+like every other supplement account.
 
 ## Captions
 
