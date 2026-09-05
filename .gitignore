@@ -7,3 +7,6 @@ __pycache__/
 
 # Generated single-file build for Artifact publishing (800KB of inlined base64)
 artifact.html
+reels/reel-01/node_modules/
+reels/reel-01/.hyperframes/
+reels/reel-01/renders/

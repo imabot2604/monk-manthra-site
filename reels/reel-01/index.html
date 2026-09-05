@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      /* Fonts are bundled, not linked. A render host cannot be assumed to have
+         Fraunces, and a silent fallback to a system serif would break the one
+         thing the guide is strictest about. */
+      @font-face { font-family:"Fraunces"; src:url("assets/fonts/Fraunces-200.woff2") format("woff2"); font-weight:200; font-display:block }
+      @font-face { font-family:"Fraunces"; src:url("assets/fonts/Fraunces-300.woff2") format("woff2"); font-weight:300; font-display:block }
+      @font-face { font-family:"Karla"; src:url("assets/fonts/Karla-300.woff2") format("woff2"); font-weight:300; font-display:block }
+      @font-face { font-family:"Karla"; src:url("assets/fonts/Karla-400.woff2") format("woff2"); font-weight:400; font-display:block }
+      @font-face { font-family:"IBM Plex Mono"; src:url("assets/fonts/IBMPlexMono-400.woff2") format("woff2"); font-weight:400; font-display:block }
+      @font-face { font-family:"IBM Plex Mono"; src:url("assets/fonts/IBMPlexMono-500.woff2") format("woff2"); font-weight:500; font-display:block }
+
+      :root {
+        --deep-purple:#3A1F5C; --royal-purple:#7A5CA8; --pale-lilac:#CBBFE0;
+        --gold:#C2A053; --light-gold:#E0C88C; --half-white:#F4F1EC;
+      }
+      * { margin:0; padding:0; box-sizing:border-box }
+      html, body { width:1080px; height:1920px; overflow:hidden; background:var(--deep-purple) }
+      body { font-family:"Karla", sans-serif; color:var(--half-white) }
+      .clip { position:absolute; inset:0 }
+
+      /* Footage is cropped to 9:16 by framing, not by a blur patch: the source
+         watermark sits in the rightmost 20% and falls outside this window. */
+      .shot { position:absolute; inset:0; width:1080px; height:1920px;
+              object-fit:cover; object-position:50% 50% }
+      .vignette { position:absolute; inset:0; pointer-events:none;
+              background:radial-gradient(120% 75% at 50% 45%, rgba(58,31,92,0) 45%, rgba(58,31,92,.72) 100%) }
+
+      .stage { position:absolute; inset:0; display:grid; place-items:center }
+      .mark { width:520px; height:520px; overflow:visible }
+      .mark .ring { fill:none; stroke-width:2.4; stroke-linecap:butt }
+      .ring--1 { stroke:var(--half-white) }
+      .ring--2 { stroke:var(--pale-lilac) }
+      .ring--3 { stroke:var(--light-gold) }
+      .seed { fill:var(--light-gold) }
+
+      .caption { display:flex; align-items:flex-end; justify-content:center;
+              padding:0 96px 300px; text-align:center }
+      .caption span { font-family:"Karla",sans-serif; font-weight:300; font-size:46px;
+              line-height:1.42; letter-spacing:.005em; color:var(--half-white);
+              text-shadow:0 2px 24px rgba(24,10,40,.55) }
+
+      .data { display:grid; place-content:center; text-align:center; gap:30px }
+      .data .name { font-family:"Fraunces",serif; font-weight:200; font-size:104px;
+              letter-spacing:-.015em; color:var(--half-white) }
+      .data .ings, .data .dose { font-family:"IBM Plex Mono",monospace; font-weight:400;
+              font-size:30px; letter-spacing:.18em; color:var(--pale-lilac) }
+      .data .dose { color:var(--light-gold); font-weight:500 }
+      .rule { width:96px; height:1px; background:var(--gold); justify-self:center }
+
+      .end { display:grid; place-content:center; justify-items:center; gap:44px }
+      .end .wordmark { font-family:"Fraunces",serif; font-weight:200; font-size:86px;
+              letter-spacing:.15em; color:var(--half-white) }
+      .end .soon { font-family:"IBM Plex Mono",monospace; font-size:26px;
+              letter-spacing:.26em; color:var(--light-gold) }
+      .end .mark { width:250px; height:250px }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="31.2"
+         data-width="1080" data-height="1920" data-fps="24">
+
+      <!-- BEAT 1 - the mark builds with the words. "One word" is the seed;
+           "repeated" is the first ring; "until it changes something" is the
+           rest travelling outward. The ripple clip was never generated, and
+           drawing it is truer anyway: the mark IS a seed with rings going out. -->
+      <div class="clip stage" id="beat-mark" data-start="0" data-duration="9.75" data-track-index="1">
+        <svg class="mark" viewBox="0 0 100 100" aria-hidden="true">
+          <path id="r3" class="ring ring--3" d="M 62.258 16.321 A 35.84 35.84 0 1 1 37.742 16.321"/>
+          <path id="r2" class="ring ring--2" d="M 57.661 28.951 A 22.4 22.4 0 1 1 42.339 28.951"/>
+          <path id="r1" class="ring ring--1" d="M 54.788 36.844 A 14.0 14.0 0 1 1 45.212 36.844"/>
+          <circle id="seed" class="seed" cx="50" cy="50" r="5.2"/>
+        </svg>
+      </div>
+
+      <!-- BEAT 2 - the spoon, over "how a body works" / "a small dose, repeated" -->
+      <video class="clip shot" id="v-spoon" src="assets/footage/spoon.mp4"
+             data-start="9.75" data-duration="6.75" data-media-start="0.4"
+             data-track-index="1" muted playsinline></video>
+      <div class="clip vignette" id="beat-spoon-vig" data-start="9.75" data-duration="6.75" data-track-index="2"></div>
+      </div>
+
+      <!-- BEAT 3 - the three bowls. The crop window pans left to right across
+           them, landing each ingredient on its own comma in the voiceover.
+           The narrow window is the reason this shot works, not a compromise. -->
+      <video class="clip shot" id="v-dishes" src="assets/footage/dishes.mp4"
+             data-start="16.5" data-duration="5.3" data-media-start="0.2"
+             data-track-index="1" muted playsinline></video>
+      <div class="clip vignette" id="beat-dishes-vig" data-start="16.5" data-duration="5.3" data-track-index="2"></div>
+      </div>
+
+      <!-- BEAT 4 - the numbers, set as data. Section Nine: numbers are shown,
+           never dressed up. It appears; it does not animate in. -->
+      <div class="clip data" id="beat-data" data-start="21.8" data-duration="2.85" data-track-index="1">
+        <div class="name">Golden Milk</div>
+        <div class="rule"></div>
+        <div class="ings">TURMERIC · GINGER · CINNAMON</div>
+        <div class="dose">5g · EVENING</div>
+      </div>
+
+      <!-- BEAT 5 - back to the bowls, where the pan left off -->
+      <video class="clip shot" id="v-dishes2" src="assets/footage/dishes.mp4"
+             data-start="24.65" data-duration="2.75" data-media-start="5.2"
+             data-track-index="1" muted playsinline></video>
+      <div class="clip vignette" id="beat-dishes-2-vig" data-start="24.65" data-duration="2.75" data-track-index="2"></div>
+      </div>
+
+      <!-- BEAT 6 - end card. No button, no arrow, no swipe-up: there is
+           nothing to tap yet, and pretending otherwise is what would make this
+           look like every other supplement account. -->
+      <div class="clip end" id="beat-end" data-start="27.4" data-duration="3.80" data-track-index="1">
+        <svg class="mark" viewBox="0 0 100 100" aria-hidden="true">
+          <path class="ring ring--3" d="M 62.258 16.321 A 35.84 35.84 0 1 1 37.742 16.321"/>
+          <path class="ring ring--2" d="M 57.661 28.951 A 22.4 22.4 0 1 1 42.339 28.951"/>
+          <path class="ring ring--1" d="M 54.788 36.844 A 14.0 14.0 0 1 1 45.212 36.844"/>
+          <circle class="seed" cx="50" cy="50" r="5.2"/>
+        </svg>
+        <div class="wordmark">monk manthra</div>
+        <div class="soon">COMING SOON</div>
+      </div>
+
+    <div class="clip caption" id="cap1" data-start="1.45" data-duration="2.85" data-track-index="4"><span>A manthra is one word.</span></div>
+    <div class="clip caption" id="cap2" data-start="4.40" data-duration="2.23" data-track-index="4"><span>Repeated.</span></div>
+    <div class="clip caption" id="cap3" data-start="6.72" data-duration="2.80" data-track-index="4"><span>Until it changes something.</span></div>
+    <div class="clip caption" id="cap4" data-start="9.82" data-duration="3.00" data-track-index="4"><span>That is also how a body works.</span></div>
+    <div class="clip caption" id="cap5" data-start="12.67" data-duration="3.88" data-track-index="4"><span>A small dose, repeated, at the same hour.</span></div>
+    <div class="clip caption" id="cap6" data-start="16.70" data-duration="2.53" data-track-index="4"><span>This is Golden Milk.</span></div>
+    <div class="clip caption" id="cap7" data-start="19.12" data-duration="2.90" data-track-index="4"><span>Turmeric, ginger, cinnamon.</span></div>
+    <div class="clip caption" id="cap8" data-start="21.88" data-duration="2.90" data-track-index="4"><span>Five grams, in the evening.</span></div>
+    <div class="clip caption" id="cap9" data-start="24.62" data-duration="2.83" data-track-index="4"><span>The warm milk is up to you.</span></div>
+    <div class="clip caption" id="cap10" data-start="27.55" data-duration="3.05" data-track-index="4"><span>Monk Manthra. Coming soon.</span></div>
+
+    <audio id="vo1" src="assets/vo/af_heart-01.wav" data-start="1.60" data-duration="2.40" data-track-index="10" data-volume="1"></audio>
+    <audio id="vo2" src="assets/vo/af_heart-02.wav" data-start="4.55" data-duration="1.77" data-track-index="10" data-volume="1"></audio>
+    <audio id="vo3" src="assets/vo/af_heart-03.wav" data-start="6.88" data-duration="2.35" data-track-index="10" data-volume="1"></audio>
+    <audio id="vo4" src="assets/vo/af_heart-04.wav" data-start="9.97" data-duration="2.55" data-track-index="10" data-volume="1"></audio>
+    <audio id="vo5" src="assets/vo/af_heart-05.wav" data-start="12.82" data-duration="3.42" data-track-index="10" data-volume="1"></audio>
+    <audio id="vo6" src="assets/vo/af_heart-06.wav" data-start="16.85" data-duration="2.08" data-track-index="10" data-volume="1"></audio>
+    <audio id="vo7" src="assets/vo/af_heart-07.wav" data-start="19.27" data-duration="2.45" data-track-index="10" data-volume="1"></audio>
+    <audio id="vo8" src="assets/vo/af_heart-08.wav" data-start="22.02" data-duration="2.45" data-track-index="10" data-volume="1"></audio>
+    <audio id="vo9" src="assets/vo/af_heart-09.wav" data-start="24.77" data-duration="2.38" data-track-index="10" data-volume="1"></audio>
+    <audio id="vo10" src="assets/vo/af_heart-10.wav" data-start="27.70" data-duration="2.60" data-track-index="10" data-volume="1"></audio>
+      <audio id="bed" src="assets/vo/drone.wav" data-start="0" data-duration="31.2"
+             data-track-index="11" data-volume="1"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // --- Beat 1: the mark drawn on, in step with the voiceover -------------
+      // Guide-legal: the mark's draw is the one non-response motion allowed,
+      // and it happens once, outward, never looping. Here it is spread across
+      // three narrated lines instead of 1.4s, which is the same gesture given
+      // the time the sentence needs.
+      const LEN = { r1:78.19, r2:125.11, r3:200.17 };
+      ["r1","r2","r3"].forEach(function (id) {
+        gsap.set("#" + id, { strokeDasharray: LEN[id], strokeDashoffset: LEN[id] });
+      });
+      gsap.set("#seed", { transformOrigin:"50% 50%", scale:0, opacity:0 });
+
+      tl.to("#seed", { scale:1, opacity:1, duration:.9, ease:"power2.out" }, 0.55)
+        .to("#r1", { strokeDashoffset:0, duration:1.5, ease:"power1.inOut" }, 4.55)
+        .to("#r2", { strokeDashoffset:0, duration:1.7, ease:"power1.inOut" }, 6.88)
+        .to("#r3", { strokeDashoffset:0, duration:2.1, ease:"power1.inOut" }, 7.22);
+
+      // --- Footage: crop-window moves -----------------------------------------
+      // Panning the window, not the footage: the source is 1920 wide inside a
+      // 1080 frame, so there is real image either side to travel into.
+      tl.fromTo("#v-spoon", { objectPosition:"40% 50%" },
+                { objectPosition:"56% 50%", duration:6.75, ease:"none" }, 9.75);
+
+      // The dishes pan is timed to the commas in "Turmeric, ginger, cinnamon":
+      // the window leaves the turmeric bowl, crosses the ginger, and arrives at
+      // the cinnamon as the word lands.
+      tl.fromTo("#v-dishes", { objectPosition:"5% 50%" },
+                { objectPosition:"66% 50%", duration:5.3, ease:"power1.inOut" }, 16.5);
+      tl.fromTo("#v-dishes2", { objectPosition:"66% 50%" },
+                { objectPosition:"67% 50%", duration:2.75, ease:"none" }, 24.65);
+
+      // --- Cuts ---------------------------------------------------------------
+      // Short dissolves, all landing in the gaps between spoken lines, never
+      // mid-phrase. 0.28s is long enough not to snap and short enough not to
+      // read as a effect.
+      [["#beat-mark",0,9.75],
+       ["#v-spoon",9.75,6.75],["#beat-spoon-vig",9.75,6.75],
+       ["#v-dishes",16.5,5.3],["#beat-dishes-vig",16.5,5.3],
+       ["#beat-data",21.8,2.85],
+       ["#v-dishes2",24.65,2.75],["#beat-dishes-2-vig",24.65,2.75],
+       ["#beat-end",27.4,3.80]]
+        .forEach(function (b) {
+          var sel = b[0], at = b[1], dur = b[2];
+          tl.fromTo(sel, { opacity:0 }, { opacity:1, duration:.28, ease:"power1.out" }, at);
+          tl.to(sel, { opacity:0, duration:.28, ease:"power1.in" }, at + dur - .28);
+        });
+
+      // End card settles rather than arrives.
+      tl.from("#beat-end .wordmark", { y:14, opacity:0, duration:.8, ease:"power2.out" }, 27.75)
+        .from("#beat-end .soon",     { opacity:0, duration:.9, ease:"power1.out" }, 28.5);
+
+      // --- Captions ------------------------------------------------------------
+      // One full phrase, fading. Deliberately not the one-word-at-a-time centre
+      // style used on the other channels: that is a retention device for fast
+      // formats and would read as exactly the nag the brand guide names.
+      document.querySelectorAll(".caption").forEach(function (el) {
+        var s = parseFloat(el.dataset.start), d = parseFloat(el.dataset.duration);
+        tl.fromTo(el, { opacity:0 }, { opacity:1, duration:.26, ease:"power1.out" }, s);
+        tl.to(el, { opacity:0, duration:.26, ease:"power1.in" }, s + d - .26);
+      });
+
+      // --- Bed --------------------------------------------------------------
+      // Ducked under every spoken line rather than sitting at one level: the
+      // drone is there to stop the silence sounding like a broken file.
+      tl.to("#bed", { volume:.55, duration:1.0 }, 1.0)
+        .to("#bed", { volume:1,  duration:1.6 }, 27.4);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
