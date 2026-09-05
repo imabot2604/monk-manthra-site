@@ -188,3 +188,30 @@ VO by about 12dB.
     Coming soon.
 
 No hashtag wall. Three at most, and only real ones.
+
+---
+
+## Voiceover — rendered
+
+`reels/vo/af_heart-*.wav`, Kokoro, speed 0.85, one file per line plus a
+stitched `af_heart-full.wav`. 24.4s of speech, 28.7s with the scripted pauses.
+
+**The brand name is not read as spelled.** Kokoro turns "manthra" into
+/mˈænθɹə/ — "man-THruh", with the English *th* of "think". The name comes
+from Sanskrit *mantra*, whose *th* is an aspirated t, so the correct sound is
+/mˈæntɹə/. `render.py` feeds the engine "mantra" and gets exactly that.
+Confirmed by reading Kokoro's phoneme output, not by ear.
+
+This changes only what the engine is told. Every visible spelling — captions,
+on-screen type, the post caption — stays **manthra**.
+
+Anyone re-rendering this in another engine must check the same thing. It is
+the brand's name, in the first line and the last, and it is silently wrong
+by default.
+
+## Known limitation of this VO
+
+Kokoro has no Indian English voice. `af_heart` is American, chosen by ear
+from three candidates. For an Indian brand that is a compromise, made
+knowingly — worth revisiting if the account grows or a real voice is
+recorded.

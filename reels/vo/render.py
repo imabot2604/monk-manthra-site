@@ -25,6 +25,16 @@ LINES = [
     "Monk Manthra. Coming soon.",
 ]
 
+# The brand name is spelled "manthra" and must not be read that way. Kokoro
+# turns that spelling into /mˈænθɹə/ - "man-THruh", with the English th of
+# "think". The name comes from Sanskrit mantra, where the th is an aspirated
+# t, so the correct sound is /mˈæntɹə/. Feeding the engine "mantra" produces
+# exactly that. Verified by reading Kokoro's own phoneme output, not by ear.
+#
+# This only ever changes what the engine is told. Every visible spelling -
+# captions, on-screen type, the post copy - stays "manthra".
+SAY_AS = {"manthra": "mantra", "Manthra": "Mantra"}
+
 SR = 24000
 voice = sys.argv[1] if len(sys.argv) > 1 else "bf_emma"
 # 0.85 rather than 1.0: the whole script is about not hurrying, and Kokoro's
@@ -34,7 +44,10 @@ speed = float(sys.argv[2]) if len(sys.argv) > 2 else 0.85
 pipe = KPipeline(lang_code=voice[0], repo_id="hexgrad/Kokoro-82M")
 parts, total = [], 0.0
 for i, text in enumerate(LINES, 1):
-    audio = np.concatenate([g.audio.numpy() for g in pipe(text, voice=voice, speed=speed)])
+    spoken = text
+    for written, say in SAY_AS.items():
+        spoken = spoken.replace(written, say)
+    audio = np.concatenate([g.audio.numpy() for g in pipe(spoken, voice=voice, speed=speed)])
     sf.write(f"vo/{voice}-{i:02d}.wav", audio, SR)
     dur = len(audio) / SR
     total += dur
