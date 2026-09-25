@@ -1,0 +1,763 @@
+<title>monk manthra brand board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,200;9..144,300;9..144,400&family=Karla:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* ==========================================================================
+   monk manthra — brand board
+   Built to Brand & Visual Guidelines v1.0 (2026). Tokens lifted verbatim
+   from assets/css/site.css so the board cannot drift from the site.
+
+   Single-ground by decision, not omission: section five fixes half white
+   #F4F1EC as the default ground and holds 60/30/10 on every surface. A
+   dark-mode inversion would put purple at 60 and break the rule the board
+   exists to state, so every colour here is painted explicitly and the page
+   reads the same on either host theme.
+   ========================================================================== */
+:root {
+  color-scheme: light;
+
+  --deep-purple: #3A1F5C;
+  --royal-purple: #7A5CA8;
+  --pale-lilac: #CBBFE0;
+  --gold: #C2A053;
+  --light-gold: #E0C88C;
+  --half-white: #F4F1EC;
+  --ink: #241B33;
+  --amber: #A9702F;
+
+  --display: "Fraunces", "Times New Roman", serif;
+  --body: "Karla", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --seed: 10px;
+  --rule: 1px solid rgba(122, 92, 168, 0.28);
+  --rule-dark: 1px solid rgba(224, 200, 140, 0.22);
+  --ease-calm: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+* , *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--half-white);
+  color: var(--deep-purple);
+  font-family: var(--body);
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+svg { display: block; overflow: visible; }
+
+.sheet {
+  width: min(1100px, 100%);
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 64px);
+  padding-block: clamp(36px, 6vw, 80px);
+}
+
+/* ---------------------------------------------------------- type roles -- */
+.display {
+  font-family: var(--display);
+  font-weight: 200;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  text-wrap: balance;
+}
+.heading {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(1.25rem, 2.4vw, 1.625rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-wrap: balance;
+}
+.label {
+  font-family: var(--body);
+  font-weight: 500;
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--royal-purple);
+  margin: 0;
+  line-height: 1.6;
+}
+.data {
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 0.75rem;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+.data--sm { font-size: 0.6875rem; }
+p { margin: 0; max-width: 62ch; }
+.note { font-size: 0.9375rem; line-height: 1.75; color: var(--ink); }
+
+/* ------------------------------------------------------------- the mark -- */
+.mark .ring { fill: none; stroke-linecap: round; }
+.mark .ring--1 { stroke: var(--deep-purple); stroke-width: 2.4; }
+.mark .ring--2 { stroke: var(--royal-purple); stroke-width: 2.4; }
+.mark .ring--3 { stroke: var(--gold); stroke-width: 2.4; }
+.mark .seed { fill: var(--gold); }
+
+.on-purple .mark .ring--1 { stroke: var(--half-white); }
+.on-purple .mark .ring--2 { stroke: var(--pale-lilac); }
+.on-purple .mark .ring--3 { stroke: var(--light-gold); }
+.on-purple .mark .seed { fill: var(--light-gold); }
+
+.on-gold .mark .ring--1,
+.on-gold .mark .ring--2,
+.on-gold .mark .ring--3 { stroke: var(--deep-purple); }
+.on-gold .mark .seed { fill: var(--deep-purple); }
+
+.mark[data-rings="2"] .ring--1 { display: none; }
+.mark[data-rings="1"] .ring--1,
+.mark[data-rings="1"] .ring--2 { display: none; }
+
+/* Draws once, outward, 1.4s. Never loops, never pulses — section eleven. */
+.is-drawing .ring--1 { stroke-dasharray: 80;  stroke-dashoffset: 80;  animation: ripple 0.62s var(--ease-calm) 0.22s both; }
+.is-drawing .ring--2 { stroke-dasharray: 126; stroke-dashoffset: 126; animation: ripple 0.62s var(--ease-calm) 0.46s both; }
+.is-drawing .ring--3 { stroke-dasharray: 201; stroke-dashoffset: 201; animation: ripple 0.62s var(--ease-calm) 0.70s both; }
+.is-drawing .seed { animation: seed-in 0.34s var(--ease-calm) both; transform-origin: 50% 50%; }
+@keyframes ripple { to { stroke-dashoffset: 0; } }
+@keyframes seed-in { from { opacity: 0; transform: scale(0.4); } to { opacity: 1; transform: scale(1); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .is-drawing .ring--1, .is-drawing .ring--2, .is-drawing .ring--3, .is-drawing .seed {
+    animation: none; stroke-dashoffset: 0; opacity: 1;
+  }
+}
+
+.wordmark {
+  font-family: var(--display);
+  font-weight: 200;
+  text-transform: lowercase;
+  letter-spacing: 0.15em;   /* .13–.16em, guide-mandated */
+  color: var(--deep-purple);
+  line-height: 1;
+  white-space: nowrap;
+}
+.on-purple .wordmark { color: var(--half-white); }
+.on-gold .wordmark { color: var(--deep-purple); }
+
+/* ------------------------------------------------------------ masthead -- */
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+  padding-bottom: 30px;
+  border-bottom: 2px solid var(--deep-purple);
+}
+.masthead__lockup { display: flex; align-items: center; gap: 18px; }
+.masthead .wordmark { font-size: clamp(1.5rem, 3.4vw, 2rem); }
+.masthead__sub { margin-top: 8px; }
+.masthead__meta { text-align: right; display: grid; gap: 4px; color: var(--royal-purple); }
+
+/* --------------------------------------------------------------- bands -- */
+.band {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  gap: clamp(20px, 4vw, 52px);
+  padding-block: clamp(34px, 5vw, 58px);
+  border-bottom: var(--rule);
+}
+.band__index { display: grid; gap: 6px; align-content: start; }
+.band__num {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+}
+.band__body { display: grid; gap: 26px; min-width: 0; }
+.band__lede { display: grid; gap: 12px; }
+
+@media (max-width: 720px) {
+  .masthead__meta { text-align: left; }
+  .band { grid-template-columns: 1fr; gap: 18px; }
+  .band__index { display: flex; align-items: baseline; gap: 12px; }
+}
+
+/* ------------------------------------------------------------ mark band -- */
+.grounds {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2px;
+  background: rgba(122, 92, 168, 0.28);
+  border: var(--rule);
+}
+.ground {
+  display: grid;
+  gap: 18px;
+  justify-items: center;
+  align-content: center;
+  padding: 34px 20px 26px;
+  min-height: 210px;
+}
+.ground--white { background: var(--half-white); }
+.ground--purple { background: var(--deep-purple); }
+.ground--gold { background: var(--gold); }
+.ground__caption { font-size: 0.625rem; letter-spacing: 0.2em; text-transform: uppercase; font-family: var(--body); font-weight: 500; }
+.ground--white .ground__caption { color: var(--royal-purple); }
+.ground--purple .ground__caption { color: var(--light-gold); }
+.ground--gold .ground__caption { color: var(--deep-purple); }
+
+.clearspace {
+  display: inline-grid;
+  place-items: center;
+  padding: var(--seed);              /* one seed diameter, all four sides */
+  outline: 1px dashed var(--pale-lilac);
+  outline-offset: 0;
+}
+
+.reduction {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: clamp(26px, 5vw, 54px);
+}
+.reduction__item { display: grid; justify-items: center; gap: 14px; }
+.reduction__item .data { color: var(--royal-purple); }
+
+/* ------------------------------------------------------------- palette -- */
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+  gap: 2px;
+  background: rgba(122, 92, 168, 0.28);
+  border: var(--rule);
+}
+.swatch { background: var(--half-white); display: grid; }
+.swatch__chip { height: 92px; }
+.swatch__text { padding: 14px 16px 18px; display: grid; gap: 7px; }
+.swatch__name { font-family: var(--display); font-weight: 300; font-size: 1.0625rem; line-height: 1; }
+.swatch__hex { font-family: var(--mono); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.04em; }
+.swatch__spec { font-family: var(--mono); font-size: 0.625rem; color: var(--royal-purple); letter-spacing: 0.02em; }
+.swatch__use { font-size: 0.8125rem; line-height: 1.55; color: var(--ink); max-width: none; }
+.swatch--hairline .swatch__chip { border-bottom: var(--rule); }
+
+.ratio { display: grid; gap: 10px; }
+.ratio__bar { display: flex; height: 26px; border: var(--rule); }
+.ratio__seg { display: grid; place-items: center; font-family: var(--mono); font-size: 0.625rem; letter-spacing: 0.08em; }
+.ratio__seg--white { flex: 60; background: var(--half-white); color: var(--royal-purple); }
+.ratio__seg--purple { flex: 30; background: var(--deep-purple); color: var(--half-white); }
+.ratio__seg--gold { flex: 10; background: var(--gold); color: var(--deep-purple); }
+
+/* ---------------------------------------------------------- typography -- */
+.faces { display: grid; gap: 2px; background: rgba(122, 92, 168, 0.28); border: var(--rule); }
+.face { background: var(--half-white); padding: 22px clamp(16px, 2.6vw, 26px); display: grid; gap: 10px; }
+.face__specimen { line-height: 1; margin: 0; }
+.face--display .face__specimen { font-family: var(--display); font-weight: 300; font-size: clamp(1.75rem, 4.2vw, 2.5rem); letter-spacing: -0.01em; }
+.face--body .face__specimen { font-family: var(--body); font-weight: 300; font-size: clamp(1.375rem, 3vw, 1.75rem); }
+.face--mono .face__specimen { font-family: var(--mono); font-weight: 400; font-size: clamp(1.125rem, 2.4vw, 1.375rem); letter-spacing: 0.01em; font-variant-numeric: tabular-nums; }
+.face__meta { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: baseline; }
+.face__note { font-size: 0.8125rem; line-height: 1.6; color: var(--ink); max-width: 58ch; }
+
+.scale { width: 100%; border-collapse: collapse; }
+.scale th, .scale td { text-align: left; padding: 11px 14px 11px 0; border-bottom: var(--rule); vertical-align: baseline; }
+.scale th { font-family: var(--body); font-weight: 500; font-size: 0.625rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--royal-purple); }
+.scale td:last-child, .scale th:last-child { padding-right: 0; text-align: right; white-space: nowrap; }
+.scale__sample--display { font-family: var(--display); font-weight: 200; font-size: 1.5rem; letter-spacing: -0.02em; }
+.scale__sample--heading { font-family: var(--display); font-weight: 300; font-size: 1.1875rem; }
+.scale__sample--body { font-family: var(--body); font-weight: 300; font-size: 1rem; }
+.scale__sample--label { font-family: var(--body); font-weight: 500; font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase; }
+.scale__sample--data { font-family: var(--mono); font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+.scale__spec { font-family: var(--mono); font-size: 0.6875rem; color: var(--royal-purple); }
+.scroll-x { overflow-x: auto; }
+
+/* ------------------------------------------------------------- product -- */
+.range { display: grid; grid-template-columns: repeat(auto-fit, minmax(146px, 1fr)); gap: 2px; background: rgba(122, 92, 168, 0.28); border: var(--rule); }
+.product { background: var(--half-white); padding: 20px 16px 18px; display: grid; gap: 9px; align-content: start; border-top: 4px solid var(--band, var(--royal-purple)); }
+.product__state { font-family: var(--display); font-weight: 300; font-size: 1.375rem; line-height: 1; }
+.product__ingredient { font-family: var(--body); font-weight: 500; font-size: 0.625rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--royal-purple); line-height: 1.5; }
+.product__dose { font-family: var(--mono); font-size: 0.6875rem; font-variant-numeric: tabular-nums; }
+.product__flag { font-family: var(--mono); font-size: 0.5938rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
+
+.bundles { display: flex; flex-wrap: wrap; gap: 10px 28px; }
+.bundle { font-family: var(--display); font-weight: 300; font-size: 1.0625rem; }
+.bundle span { font-family: var(--body); font-weight: 500; font-size: 0.625rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--royal-purple); display: block; margin-top: 3px; }
+
+/* --------------------------------------------------------------- voice -- */
+.voice { display: grid; gap: 2px; background: rgba(122, 92, 168, 0.28); border: var(--rule); }
+.voice__row { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: rgba(122, 92, 168, 0.28); }
+.voice__cell { background: var(--half-white); padding: 18px clamp(14px, 2.4vw, 22px); display: grid; gap: 8px; align-content: start; }
+.voice__tag { font-family: var(--body); font-weight: 500; font-size: 0.625rem; letter-spacing: 0.2em; text-transform: uppercase; }
+.voice__cell--write .voice__tag { color: var(--gold); }
+.voice__cell--not .voice__tag { color: var(--royal-purple); }
+.voice__line { font-family: var(--display); font-weight: 300; font-size: 1.0625rem; line-height: 1.4; letter-spacing: -0.005em; }
+.voice__cell--not .voice__line { color: var(--royal-purple); }
+@media (max-width: 600px) { .voice__row { grid-template-columns: 1fr; } }
+
+.claims { border-left: 2px solid var(--gold); padding-left: 18px; display: grid; gap: 8px; }
+
+/* ------------------------------------------------------------- contact -- */
+.contact {
+  background: var(--deep-purple);
+  color: var(--half-white);
+  padding: clamp(30px, 5vw, 52px) clamp(22px, 4vw, 52px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: clamp(26px, 4vw, 48px);
+  margin-top: clamp(34px, 5vw, 58px);
+}
+.contact .label { color: var(--light-gold); }
+.contact__col { display: grid; gap: 12px; align-content: start; }
+.contact__lockup { display: grid; gap: 16px; justify-items: start; }
+.contact .wordmark { font-size: 1.375rem; }
+.address {
+  font-family: var(--body);
+  font-weight: 300;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  font-style: normal;
+  color: var(--half-white);
+  max-width: 34ch;
+}
+.address strong { font-weight: 500; }
+.contact__line { font-family: var(--mono); font-size: 0.8125rem; letter-spacing: 0.01em; color: var(--light-gold); word-break: break-word; }
+.contact__caveat { font-family: var(--mono); font-size: 0.625rem; line-height: 1.7; color: var(--pale-lilac); letter-spacing: 0.02em; max-width: 34ch; }
+
+.colophon {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px 28px;
+  padding-top: 18px;
+}
+.colophon .data { color: var(--royal-purple); }
+
+/* ---------------------------------------------------------------- print --
+   A3 portrait at zero page margin so the half-white ground runs full bleed,
+   the way the stock does. print-color-adjust is not optional: without it
+   Chrome drops every background and the purple boards print as white holes.
+   -------------------------------------------------------------------- */
+@media print {
+  @page { size: A3 portrait; margin: 0; }
+  *, *::before, *::after { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: var(--half-white); }
+  .sheet { width: 100%; max-width: none; padding: 16mm 14mm; }
+  .figure, .finishes, .never, .swatches, .grounds, .faces, .voice, .range,
+  .callout, .claims, .contact, .scroll-x { break-inside: avoid; }
+  .scroll-x { overflow-x: visible; }
+  /* The ripple must print finished, never caught part-drawn. */
+  .mark .ring, .is-drawing .ring {
+    stroke-dasharray: none !important; stroke-dashoffset: 0 !important; animation: none !important;
+  }
+  .mark .seed, .is-drawing .seed { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .specs { min-width: 0; }
+  .contact { break-inside: avoid; }
+}
+</style>
+
+<div class="sheet">
+
+  <header class="masthead">
+    <div class="masthead__lockup">
+      <span class="clearspace">
+        <svg class="mark" id="mark-lockup" viewBox="0 0 100 100" width="52" height="52" role="img" aria-label="monk manthra" data-rings="2" focusable="false">
+          <path class="ring ring--1" d="M 54.788 36.844 A 14.0 14.0 0 1 1 45.212 36.844"/>
+          <path class="ring ring--2" d="M 57.661 28.951 A 22.4 22.4 0 1 1 42.339 28.951"/>
+          <path class="ring ring--3" d="M 62.258 16.321 A 35.84 35.84 0 1 1 37.742 16.321"/>
+          <circle class="seed" cx="50" cy="50" r="5.2"/>
+        </svg>
+      </span>
+      <span>
+        <span class="wordmark">monk manthra</span>
+        <p class="label masthead__sub">Nutrition</p>
+      </span>
+    </div>
+    <div class="masthead__meta">
+      <p class="label">Brand board</p>
+      <p class="data data--sm">GUIDELINES V1.0 · 2026</p>
+      <p class="data data--sm">HYDERABAD · IN</p>
+    </div>
+  </header>
+
+  <section class="band">
+    <div class="band__index">
+      <p class="band__num">01</p>
+      <p class="label">The idea</p>
+    </div>
+    <div class="band__body">
+      <div class="band__lede">
+        <h2 class="display">A word, repeated</h2>
+        <p class="note">A manthra is one word, said again, until it changes something. A supplement is a small dose, taken daily, until the effect compounds. Every decision on this board traces back to that parallel — repetition over intensity, nothing shouts, white space is the product.</p>
+      </div>
+      <p class="data" style="color: var(--royal-purple)">POSITIONING · STEADY, NOT SUPERCHARGED &nbsp;·&nbsp; AUDIENCE · 28–45, READS THE PANEL</p>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="band__index">
+      <p class="band__num">02</p>
+      <p class="label">The mark</p>
+    </div>
+    <div class="band__body">
+      <div class="band__lede">
+        <h3 class="heading">A gold seed, three rings travelling out, and a gap at the top where the sound escapes.</h3>
+        <p class="note">The seed radius is the unit; ring radii step at 1.6×, so spacing loosens outward the way a real ripple does. Every arc runs 20° to 340°, one stroke weight per ring, round caps. Gold appears exactly twice — the seed and the outer ring.</p>
+      </div>
+
+      <div class="grounds">
+        <div class="ground ground--white">
+          <span class="clearspace">
+            <svg class="mark" id="mark-white" viewBox="0 0 100 100" width="96" height="96" role="img" aria-label="Full colour on half white" data-rings="3" focusable="false">
+              <path class="ring ring--1" d="M 54.788 36.844 A 14.0 14.0 0 1 1 45.212 36.844"/>
+              <path class="ring ring--2" d="M 57.661 28.951 A 22.4 22.4 0 1 1 42.339 28.951"/>
+              <path class="ring ring--3" d="M 62.258 16.321 A 35.84 35.84 0 1 1 37.742 16.321"/>
+              <circle class="seed" cx="50" cy="50" r="5.2"/>
+            </svg>
+          </span>
+          <span class="ground__caption">Full colour on half white</span>
+        </div>
+        <div class="ground ground--purple on-purple">
+          <svg class="mark" viewBox="0 0 100 100" width="96" height="96" role="img" aria-label="Reversed on deep purple" data-rings="3" focusable="false">
+            <path class="ring ring--1" d="M 54.788 36.844 A 14.0 14.0 0 1 1 45.212 36.844"/>
+            <path class="ring ring--2" d="M 57.661 28.951 A 22.4 22.4 0 1 1 42.339 28.951"/>
+            <path class="ring ring--3" d="M 62.258 16.321 A 35.84 35.84 0 1 1 37.742 16.321"/>
+            <circle class="seed" cx="50" cy="50" r="5.2"/>
+          </svg>
+          <span class="ground__caption">Reversed on deep purple</span>
+        </div>
+        <div class="ground ground--gold on-gold">
+          <svg class="mark" viewBox="0 0 100 100" width="96" height="96" role="img" aria-label="One colour on gold" data-rings="3" focusable="false">
+            <path class="ring ring--1" d="M 54.788 36.844 A 14.0 14.0 0 1 1 45.212 36.844"/>
+            <path class="ring ring--2" d="M 57.661 28.951 A 22.4 22.4 0 1 1 42.339 28.951"/>
+            <path class="ring ring--3" d="M 62.258 16.321 A 35.84 35.84 0 1 1 37.742 16.321"/>
+            <circle class="seed" cx="50" cy="50" r="5.2"/>
+          </svg>
+          <span class="ground__caption">One colour on gold</span>
+        </div>
+      </div>
+
+      <div style="display:grid; gap:18px">
+        <p class="label">Reduction · the mark drops rings as it shrinks</p>
+        <div class="reduction">
+          <div class="reduction__item">
+            <svg class="mark" viewBox="0 0 100 100" width="96" height="96" role="img" aria-label="Three rings at 96 pixels and above" data-rings="3" focusable="false">
+              <path class="ring ring--1" d="M 54.788 36.844 A 14.0 14.0 0 1 1 45.212 36.844"/>
+              <path class="ring ring--2" d="M 57.661 28.951 A 22.4 22.4 0 1 1 42.339 28.951"/>
+              <path class="ring ring--3" d="M 62.258 16.321 A 35.84 35.84 0 1 1 37.742 16.321"/>
+              <circle class="seed" cx="50" cy="50" r="5.2"/>
+            </svg>
+            <p class="data data--sm">≥ 96px · THREE RINGS</p>
+          </div>
+          <div class="reduction__item">
+            <svg class="mark" viewBox="0 0 100 100" width="64" height="64" role="img" aria-label="Two rings between 48 and 95 pixels" data-rings="2" focusable="false">
+              <path class="ring ring--1" d="M 54.788 36.844 A 14.0 14.0 0 1 1 45.212 36.844"/>
+              <path class="ring ring--2" d="M 57.661 28.951 A 22.4 22.4 0 1 1 42.339 28.951"/>
+              <path class="ring ring--3" d="M 62.258 16.321 A 35.84 35.84 0 1 1 37.742 16.321"/>
+              <circle class="seed" cx="50" cy="50" r="5.2"/>
+            </svg>
+            <p class="data data--sm">48–95px · TWO</p>
+          </div>
+          <div class="reduction__item">
+            <svg class="mark" viewBox="0 0 100 100" width="32" height="32" role="img" aria-label="One ring and seed at 32 pixels and below" data-rings="1" focusable="false">
+              <path class="ring ring--1" d="M 54.788 36.844 A 14.0 14.0 0 1 1 45.212 36.844"/>
+              <path class="ring ring--2" d="M 57.661 28.951 A 22.4 22.4 0 1 1 42.339 28.951"/>
+              <path class="ring ring--3" d="M 62.258 16.321 A 35.84 35.84 0 1 1 37.742 16.321"/>
+              <circle class="seed" cx="50" cy="50" r="5.2"/>
+            </svg>
+            <p class="data data--sm">≤ 32px · ONE + SEED</p>
+          </div>
+        </div>
+        <p class="note" style="font-size:0.875rem">Dashed box = clear space: one seed diameter on all four sides, twice that on packaging faces. Nothing enters it — no type, no rules, no product photography, no retailer badges. Minimum sizes: print 12mm wide · screen 32px wide · foil or emboss 16mm wide. Never close the gap, never rotate, never stretch, never put type inside the rings.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="band__index">
+      <p class="band__num">05</p>
+      <p class="label">Colour</p>
+    </div>
+    <div class="band__body">
+      <div class="band__lede">
+        <h3 class="heading">Three colours do the work.</h3>
+        <p class="note">Purple carries the brand, half white carries the page, and gold is reserved for the one thing you want a person to notice.</p>
+      </div>
+
+      <div class="swatches">
+        <div class="swatch">
+          <div class="swatch__chip" style="background:#3A1F5C"></div>
+          <div class="swatch__text">
+            <p class="swatch__name">Deep Purple</p>
+            <p class="swatch__hex">#3A1F5C</p>
+            <p class="swatch__spec">C 85 · M 96 · Y 22 · K 12</p>
+            <p class="swatch__use">All body text. Dark packaging fields, caps, pouches.</p>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background:#7A5CA8"></div>
+          <div class="swatch__text">
+            <p class="swatch__name">Royal Purple</p>
+            <p class="swatch__hex">#7A5CA8</p>
+            <p class="swatch__spec">C 60 · M 70 · Y 0 · K 0</p>
+            <p class="swatch__use">The mark, rules, sub-labels. Never for running text — it fails contrast on half white below 18px.</p>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background:#CBBFE0"></div>
+          <div class="swatch__text">
+            <p class="swatch__name">Pale Lilac</p>
+            <p class="swatch__hex">#CBBFE0</p>
+            <p class="swatch__spec">C 20 · M 24 · Y 0 · K 0</p>
+            <p class="swatch__use">Tint blocks, table fills, disabled states.</p>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background:#C2A053"></div>
+          <div class="swatch__text">
+            <p class="swatch__name">Gold</p>
+            <p class="swatch__hex">#C2A053</p>
+            <p class="swatch__spec">PANTONE 872 C · FOIL</p>
+            <p class="swatch__use">One accent per surface. Foil, rules, buttons. Never more than a tenth of a surface, never a CMYK gradient build.</p>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background:#E0C88C"></div>
+          <div class="swatch__text">
+            <p class="swatch__name">Light Gold</p>
+            <p class="swatch__hex">#E0C88C</p>
+            <p class="swatch__spec">SCREEN · DARK GROUNDS</p>
+            <p class="swatch__use">Gold on dark grounds only, where #C2A053 goes muddy.</p>
+          </div>
+        </div>
+        <div class="swatch swatch--hairline">
+          <div class="swatch__chip" style="background:#F4F1EC"></div>
+          <div class="swatch__text">
+            <p class="swatch__name">Half White</p>
+            <p class="swatch__hex">#F4F1EC</p>
+            <p class="swatch__spec">UNCOATED STOCK</p>
+            <p class="swatch__use">Default ground. Labels, pages, cartons.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ratio">
+        <p class="label">Hold this ratio on every surface</p>
+        <div class="ratio__bar" role="img" aria-label="Sixty parts half white, thirty parts purple, ten parts gold">
+          <span class="ratio__seg ratio__seg--white">60 · HALF WHITE</span>
+          <span class="ratio__seg ratio__seg--purple">30 · PURPLE</span>
+          <span class="ratio__seg ratio__seg--gold">10 · GOLD</span>
+        </div>
+        <p class="note" style="font-size:0.875rem">Body text is always Deep Purple #3A1F5C or Ink #241B33. Capsule and powder colour varies batch to batch — never colour-match packaging to contents.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="band__index">
+      <p class="band__num">06</p>
+      <p class="label">Typography</p>
+    </div>
+    <div class="band__body">
+      <div class="faces">
+        <div class="face face--display">
+          <p class="face__specimen">Steady, not supercharged</p>
+          <div class="face__meta">
+            <span class="label">Fraunces Light</span>
+            <span class="data data--sm" style="color:var(--royal-purple)">200–300 · TRACKING .13–.16em</span>
+          </div>
+          <p class="face__note">Wordmark, product states, headlines. Lowercase. The soft serifs keep it human — a Cormorant or Playfair would put us on the same shelf as every other wellness label. Never bold a headline; if it needs emphasis, give it space instead.</p>
+        </div>
+        <div class="face face--body">
+          <p class="face__specimen">Take one capsule with the evening meal.</p>
+          <div class="face__meta">
+            <span class="label">Karla</span>
+            <span class="data data--sm" style="color:var(--royal-purple)">300 BODY · 500 CAPS AT .2em</span>
+          </div>
+          <p class="face__note">Body copy, navigation, micro-labels.</p>
+        </div>
+        <div class="face face--mono">
+          <p class="face__specimen">600mg · 60 capsules · lot MM-2604</p>
+          <div class="face__meta">
+            <span class="label">IBM Plex Mono</span>
+            <span class="data data--sm" style="color:var(--royal-purple)">400–500 · TABULAR</span>
+          </div>
+          <p class="face__note">The utility face. Every number a customer might check — mg, capsule count, expiry, lot — is set in mono. It signals that we are not hiding the arithmetic.</p>
+        </div>
+      </div>
+
+      <div class="scroll-x">
+        <table class="scale">
+          <thead>
+            <tr><th scope="col">Role</th><th scope="col">Specimen</th><th scope="col">Setting</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="scale__spec">Display</td><td class="scale__sample--display">A word, repeated</td><td class="scale__spec">FRAUNCES 200 · 34–56px</td></tr>
+            <tr><td class="scale__spec">Heading</td><td class="scale__sample--heading">Six supplements. One habit.</td><td class="scale__spec">FRAUNCES 300 · 20–26px</td></tr>
+            <tr><td class="scale__spec">Body</td><td class="scale__sample--body">Effects build over three to four weeks of daily use.</td><td class="scale__spec">KARLA 300 · 15–17px</td></tr>
+            <tr><td class="scale__spec">Label</td><td class="scale__sample--label">Ashwagandha · Night</td><td class="scale__spec">KARLA 500 · 10–11px · .2em</td></tr>
+            <tr><td class="scale__spec">Data</td><td class="scale__sample--data">600mg · 60 capsules · lot MM-2604</td><td class="scale__spec">PLEX MONO 400 · 10–12px</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="band__index">
+      <p class="band__num">07</p>
+      <p class="label">Product architecture</p>
+    </div>
+    <div class="band__body">
+      <div class="band__lede">
+        <h3 class="heading">Named for the state it supports. Verified by the ingredient below it.</h3>
+        <p class="note">The customer shops by feeling and checks by ingredient — never the other way round. One word only; if a product needs two, it needs a rethink. Products are separated by a 4mm tonal band drawn from the core palette, not by new colours, so the shelf stays one family. Never number the range — numbers belong to doses.</p>
+      </div>
+
+      <div class="range">
+        <div class="product" style="--band:#3A1F5C">
+          <p class="product__state">Rest</p>
+          <p class="product__ingredient">Magnesium glycinate</p>
+          <p class="product__dose">400mg · 60 caps</p>
+        </div>
+        <div class="product" style="--band:#7A5CA8">
+          <p class="product__state">Calm</p>
+          <p class="product__ingredient">Ashwagandha KSM-66</p>
+          <p class="product__dose">600mg · 60 caps</p>
+        </div>
+        <div class="product" style="--band:#C2A053">
+          <p class="product__state">Ease</p>
+          <p class="product__ingredient">Turmeric + piperine</p>
+          <p class="product__dose">500mg · 90 caps</p>
+        </div>
+        <div class="product" style="--band:#CBBFE0">
+          <p class="product__state">Clarity</p>
+          <p class="product__ingredient">Omega-3 · algal</p>
+          <p class="product__dose">1000mg · 60 caps</p>
+        </div>
+        <div class="product" style="--band:#E0C88C">
+          <p class="product__state">Sun</p>
+          <p class="product__ingredient">Vitamin D3 + K2</p>
+          <p class="product__dose">2000 IU · 90 caps</p>
+        </div>
+        <div class="product" style="--band:#A9702F">
+          <p class="product__state">Build</p>
+          <p class="product__ingredient">Plant protein · vanilla</p>
+          <p class="product__dose">24g · 900g pouch</p>
+        </div>
+        <div class="product" style="--band:#C2A053">
+          <p class="product__state">Golden Milk</p>
+          <p class="product__ingredient">Turmeric · ashwagandha</p>
+          <p class="product__dose">Pouch</p>
+          <p class="product__flag">First release</p>
+        </div>
+      </div>
+
+      <div class="bundles">
+        <p class="bundle">The Evening Three<span>Bundle · named for a time of day</span></p>
+        <p class="bundle">The Morning Two<span>Bundle · never for a benefit</span></p>
+        <p class="bundle">Jar · pouch · carton<span>Capsules · powders · gifting</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="band__index">
+      <p class="band__num">12</p>
+      <p class="label">Voice &amp; claims</p>
+    </div>
+    <div class="band__body">
+      <div class="band__lede">
+        <h3 class="heading">The calmest voice in a loud category.</h3>
+        <p class="note">Plain verbs, no exclamation marks, no urgency. That restraint is the entire differentiation.</p>
+      </div>
+
+      <div class="voice">
+        <div class="voice__row">
+          <div class="voice__cell voice__cell--write"><p class="voice__tag">Write this</p><p class="voice__line">Take one capsule with the evening meal.</p></div>
+          <div class="voice__cell voice__cell--not"><p class="voice__tag">Not this</p><p class="voice__line">Unlock your best sleep ever!</p></div>
+        </div>
+        <div class="voice__row">
+          <div class="voice__cell voice__cell--write"><p class="voice__tag">Write this</p><p class="voice__line">600mg of ashwagandha. Nothing else added.</p></div>
+          <div class="voice__cell voice__cell--not"><p class="voice__tag">Not this</p><p class="voice__line">Our proprietary blend of ancient botanicals.</p></div>
+        </div>
+        <div class="voice__row">
+          <div class="voice__cell voice__cell--write"><p class="voice__tag">Write this</p><p class="voice__line">Most people notice something by week three.</p></div>
+          <div class="voice__cell voice__cell--not"><p class="voice__tag">Not this</p><p class="voice__line">Feel the difference from day one — guaranteed.</p></div>
+        </div>
+      </div>
+
+      <div class="claims">
+        <p class="label">Claims discipline</p>
+        <p class="note" style="font-size:0.875rem">Never say a product treats, prevents, cures or diagnoses anything. Structure-and-function phrasing only — "supports", "contributes to" — and only at the dose actually sold. Carry the market's required disclaimer on every pack and product page; in India that means the FSSAI nutraceutical declarations, which this brand does not yet hold. No before-and-after imagery, no weight-loss framing, no "clinically proven". This board is design guidance, not legal advice — have a regulatory consultant sign off every pack and claim before print.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" style="border-bottom:none">
+    <div class="band__index">
+      <p class="band__num">11</p>
+      <p class="label">Social &amp; motion</p>
+    </div>
+    <div class="band__body">
+      <p class="note">The grid reads as one continuous surface — dark, light, gold, repeat — so the feed itself becomes the ripple. Photography, where used: overhead, single object, soft north light, deep shadow, half-white or linen ground. No hands holding jars against sunsets. Motion: the ripple draws outward over 1.4s, once, on load. It never loops and never pulses. The mark at the top of this board has already done it.</p>
+    </div>
+  </section>
+
+  <footer class="contact">
+    <div class="contact__col contact__lockup on-purple">
+      <svg class="mark" viewBox="0 0 100 100" width="48" height="48" role="img" aria-label="monk manthra" data-rings="2" focusable="false">
+        <path class="ring ring--1" d="M 54.788 36.844 A 14.0 14.0 0 1 1 45.212 36.844"/>
+        <path class="ring ring--2" d="M 57.661 28.951 A 22.4 22.4 0 1 1 42.339 28.951"/>
+        <path class="ring ring--3" d="M 62.258 16.321 A 35.84 35.84 0 1 1 37.742 16.321"/>
+        <circle class="seed" cx="50" cy="50" r="5.2"/>
+      </svg>
+      <span class="wordmark">monk manthra</span>
+      <p class="data data--sm" style="color:var(--pale-lilac)">NUTRITION · MADE IN INDIA</p>
+    </div>
+
+    <div class="contact__col">
+      <p class="label">Registered address</p>
+      <address class="address">
+        <strong>Monk Manthra Nutrition</strong><br>
+        A22/A Journalist Colony<br>
+        Near Akshaya Kalpa Organic, Road&nbsp;No.&nbsp;70<br>
+        Jubilee Hills, Hyderabad<br>
+        Telangana 500033, India
+      </address>
+    </div>
+
+    <div class="contact__col">
+      <p class="label">Contact</p>
+      <p class="contact__line">hello@monkmanthra.com</p>
+      <p class="contact__line">+91 98 4712 0088</p>
+      <p class="contact__line">monkmanthra.com</p>
+      <p class="contact__caveat">Email and phone carry over from the guide and have not been verified against a live account. Confirm both, and add the FSSAI licence number, before this board goes to a printer or a vendor.</p>
+    </div>
+  </footer>
+
+  <div class="colophon">
+    <p class="data data--sm">© 2026 MONK MANTHRA NUTRITION</p>
+    <p class="data data--sm">BRAND BOARD · BUILT TO GUIDELINES V1.0</p>
+  </div>
+
+</div>
+
+<script>
+// Section eleven: the ripple draws once on load, then never animates again.
+(function () {
+  var ids = ['mark-lockup', 'mark-white'];
+  ids.forEach(function (id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.classList.add('is-drawing');
+    el.addEventListener('animationend', function handler(e) {
+      if (e.target.classList.contains('ring--3')) {
+        el.classList.remove('is-drawing');
+        el.removeEventListener('animationend', handler);
+      }
+    });
+  });
+})();
+</script>

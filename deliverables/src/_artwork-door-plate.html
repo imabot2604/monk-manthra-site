@@ -1,0 +1,64 @@
+<!doctype html><html><head><meta charset="utf-8">
+<title>monk manthra door plate</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,200;9..144,300&family=Karla:wght@300;500&display=swap">
+<style>
+/* monk manthra — door plate · TRUE SIZE ARTWORK · 300 x 200 mm
+   Every value below is a real millimetre, not a ratio: no container
+   queries, nothing to resolve, nothing that can drift between this file
+   and the spec sheet. The page IS the board. No bleed — the purple is the
+   substrate colour, not printed ink, so it stops at the trim.
+   The mark's drawn diameter is 74.08% of its svg box (outer ring r 35.84
+   + half of a 2.4 stroke, on a 100 unit grid), so a 44mm mark needs
+   a 59.4mm box. Do not resize the svg without redoing that sum. */
+@page { size: 300mm 200mm; margin: 0; }
+* { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+html, body { margin: 0; padding: 0; width: 300mm; height: 200mm; }
+svg { display: block; overflow: visible; }
+
+.plate {
+  width: 300mm; height: 200mm; background: #3A1F5C;
+  display: grid; place-content: center;
+}
+.mark { width: 59.4mm; }                 /* drawn diameter 44mm */
+.mark .ring { fill: none; stroke-linecap: round; }
+.mark .ring--1 { stroke: #F4F1EC; stroke-width: 2.4; }
+.mark .ring--2 { stroke: #CBBFE0; stroke-width: 2.4; }
+.mark .ring--3 { stroke: #E0C88C; stroke-width: 2.4; }
+.mark .seed { fill: #E0C88C; }
+
+.wordmark {
+  font-family: "Fraunces", serif; font-weight: 200; text-transform: lowercase;
+  letter-spacing: 0.15em; color: #F4F1EC; line-height: 1; white-space: nowrap;
+}
+.sub {
+  font-family: "Karla", sans-serif; font-weight: 500; letter-spacing: 0.2em;
+  text-transform: uppercase; color: #CBBFE0; line-height: 1.4; margin: 0;
+}
+.address {
+  font-family: "Karla", sans-serif; font-weight: 300; font-style: normal;
+  color: #F4F1EC; line-height: 1.75; letter-spacing: 0.02em; margin: 0;
+}
+.live { width: 252mm; display: grid; justify-items: center; gap: 10.2mm; }  /* 24mm margin */
+.type { display: grid; justify-items: center; gap: 4.2mm; }
+.wordmark { font-size: 27.3mm; }      /* ascender approx 20mm */
+.sub { font-size: 6.9mm; }
+.rule { width: 102mm; height: 0.5mm; background: #E0C88C; margin-block: 4.8mm; }
+.address { font-size: 5.7mm; text-align: center; }
+</style></head><body>
+  <div class="plate">
+   <div class="live">
+    <svg class="mark" viewBox="0 0 100 100" focusable="false">
+      <path class="ring ring--1" d="M 54.788 36.844 A 14.0 14.0 0 1 1 45.212 36.844"/>
+      <path class="ring ring--2" d="M 57.661 28.951 A 22.4 22.4 0 1 1 42.339 28.951"/>
+      <path class="ring ring--3" d="M 62.258 16.321 A 35.84 35.84 0 1 1 37.742 16.321"/>
+      <circle class="seed" cx="50" cy="50" r="5.2"/>
+    </svg>
+    <div class="type">
+      <span class="wordmark">monk manthra</span>
+      <p class="sub">Nutrition</p>
+    </div>
+    <div class="rule"></div>
+    <address class="address">A22/A Journalist Colony, Road&nbsp;No.&nbsp;70<br>Jubilee Hills, Hyderabad 500033</address>
+   </div>
+  </div>
+</body></html>

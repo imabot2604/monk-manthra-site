@@ -1,0 +1,553 @@
+<title>monk manthra name board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,200;9..144,300;9..144,400&family=Karla:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* ==========================================================================
+   monk manthra — office name board · fabrication spec
+   Jubilee Hills, Hyderabad. Built to Brand & Visual Guidelines v1.0 (2026).
+
+   Boards are drawn to true proportion (3:2 door plate, 3:1 gate board) and
+   every element inside them is sized in cqw against the board's real width,
+   so what is on screen is the artwork at scale, not an impression of it.
+   Single ground by decision: section five fixes half white as the default
+   and holds 60/30/10. Every colour is painted explicitly.
+   ========================================================================== */
+:root {
+  color-scheme: light;
+
+  --deep-purple: #3A1F5C;
+  --royal-purple: #7A5CA8;
+  --pale-lilac: #CBBFE0;
+  --gold: #C2A053;
+  --light-gold: #E0C88C;
+  --half-white: #F4F1EC;
+  --ink: #241B33;
+
+  --display: "Fraunces", "Times New Roman", serif;
+  --body: "Karla", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --rule: 1px solid rgba(122, 92, 168, 0.28);
+  --dim: rgba(122, 92, 168, 0.55);
+  --ease-calm: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--half-white);
+  color: var(--deep-purple);
+  font-family: var(--body);
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+svg { display: block; overflow: visible; }
+
+.sheet {
+  width: min(1100px, 100%);
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 64px);
+  padding-block: clamp(36px, 6vw, 80px);
+}
+
+/* ---------------------------------------------------------- type roles -- */
+.display {
+  font-family: var(--display); font-weight: 200;
+  font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.1;
+  letter-spacing: -0.02em; margin: 0; text-wrap: balance;
+}
+.heading {
+  font-family: var(--display); font-weight: 300;
+  font-size: clamp(1.25rem, 2.4vw, 1.625rem); line-height: 1.25;
+  letter-spacing: -0.01em; margin: 0; text-wrap: balance;
+}
+.label {
+  font-family: var(--body); font-weight: 500; font-size: 0.6875rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--royal-purple); margin: 0; line-height: 1.6;
+}
+.data {
+  font-family: var(--mono); font-weight: 400; font-size: 0.75rem;
+  letter-spacing: 0.01em; font-variant-numeric: tabular-nums; margin: 0;
+}
+.data--sm { font-size: 0.6875rem; }
+p { margin: 0; max-width: 62ch; }
+.note { font-size: 0.9375rem; line-height: 1.75; color: var(--ink); }
+
+/* ------------------------------------------------------------- masthead -- */
+.masthead {
+  display: flex; flex-wrap: wrap; align-items: flex-end;
+  justify-content: space-between; gap: 28px;
+  padding-bottom: 30px; border-bottom: 2px solid var(--deep-purple);
+}
+.masthead__lockup { display: flex; align-items: center; gap: 18px; }
+.masthead .wordmark { font-size: clamp(1.5rem, 3.4vw, 2rem); }
+.masthead__meta { text-align: right; display: grid; gap: 4px; color: var(--royal-purple); }
+
+.wordmark {
+  font-family: var(--display); font-weight: 200; text-transform: lowercase;
+  letter-spacing: 0.15em;      /* .13–.16em, guide-mandated */
+  color: var(--deep-purple); line-height: 1; white-space: nowrap;
+}
+
+/* --------------------------------------------------------------- bands -- */
+.band {
+  display: grid; grid-template-columns: 132px minmax(0, 1fr);
+  gap: clamp(20px, 4vw, 52px);
+  padding-block: clamp(34px, 5vw, 58px);
+  border-bottom: var(--rule);
+}
+.band__index { display: grid; gap: 6px; align-content: start; }
+.band__num { font-family: var(--mono); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; color: var(--gold); }
+.band__body { display: grid; gap: 28px; min-width: 0; }
+.band__lede { display: grid; gap: 12px; }
+
+@media (max-width: 720px) {
+  .masthead__meta { text-align: left; }
+  .band { grid-template-columns: 1fr; gap: 18px; }
+  .band__index { display: flex; align-items: baseline; gap: 12px; }
+}
+
+/* ========================================================= THE ARTWORK ==
+   .plate is the board itself. container-type makes its own width the unit,
+   so 1cqw = 1/100 of the real board width and every child is specified
+   against the fabrication drawing, not against the screen.
+   ====================================================================== */
+.plate {
+  container-type: inline-size;
+  background: var(--deep-purple);
+  display: grid;
+  place-content: center;
+  width: 100%;
+}
+.plate--door { aspect-ratio: 3 / 2; }   /* 300 × 200 */
+.plate--gate { aspect-ratio: 3 / 1; }   /* 900 × 300 */
+
+/* The live area is a width, never padding. Padding given in cqw on the
+   element that DEFINES the container shrinks the content box that cqw is
+   measured from, so every child lands a few percent small — the mark drew
+   41.4mm where the callout said 44. An inner box sized in cqw, centred by
+   the plate, leaves 1cqw = 1% of the true board width and the margins fall
+   out of the arithmetic: (100 − 84) / 2 = 8cqw = 24mm. */
+.plate__live { display: grid; justify-items: center; }
+.plate--door .plate__live { width: 84cqw; gap: 3.4cqw; }   /* live 252mm · 24mm margin */
+.plate--gate .plate__live { width: 92cqw; }                /* live 828mm · 36mm margin */
+
+.plate .wordmark { color: var(--half-white); }
+.plate .ring { fill: none; stroke-linecap: round; }
+.plate .ring--1 { stroke: var(--half-white); stroke-width: 2.4; }
+.plate .ring--2 { stroke: var(--pale-lilac); stroke-width: 2.4; }
+.plate .ring--3 { stroke: var(--light-gold); stroke-width: 2.4; }
+.plate .seed { fill: var(--light-gold); }
+
+.plate__type { display: grid; justify-items: center; gap: 1.4cqw; }
+.plate--door .plate__mark { width: 19.8cqw; }     /* mark Ø 44mm */
+.plate--door .wordmark { font-size: 9.1cqw; }     /* ≈20mm ascender */
+.plate--door .plate__sub { font-size: 2.3cqw; }
+.plate--door .plate__rule { width: 34cqw; margin-block: 1.6cqw; }
+.plate--door .plate__address { font-size: 1.9cqw; }
+
+.plate--gate .plate__row { display: flex; align-items: center; justify-content: flex-start; gap: 4.4cqw; }
+.plate--gate .plate__mark { width: 10.8cqw; }     /* mark Ø 72mm */
+.plate--gate .wordmark { font-size: 6.4cqw; }
+.plate--gate .plate__sub { font-size: 1.15cqw; }
+.plate--gate .plate__address { font-size: 1.08cqw; }
+.plate--gate .plate__type { justify-items: start; gap: 0.9cqw; }
+
+.plate__sub {
+  font-family: var(--body); font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--pale-lilac); line-height: 1.4; margin: 0;
+}
+.plate__rule { height: 1px; background: var(--light-gold); opacity: 0.85; }
+.plate__address {
+  font-family: var(--body); font-weight: 300; font-style: normal;
+  color: var(--half-white); line-height: 1.75; text-align: center;
+  letter-spacing: 0.02em; max-width: none;
+}
+.plate--gate .plate__address { text-align: left; line-height: 1.6; }
+
+/* ------------------------------------------------- dimension callouts -- */
+.figure { display: grid; gap: 16px; }
+.figure__frame { position: relative; padding: 40px 0 0 52px; }
+
+.dimline { position: absolute; color: var(--royal-purple); }
+.dimline__label {
+  position: absolute; font-family: var(--mono); font-size: 0.6875rem;
+  letter-spacing: 0.04em; font-variant-numeric: tabular-nums;
+  background: var(--half-white); padding: 0 7px; white-space: nowrap;
+}
+/* horizontal dimension, above the board */
+.dimline--w { top: 18px; left: 52px; right: 0; height: 1px; background: var(--dim); }
+.dimline--w::before, .dimline--w::after {
+  content: ""; position: absolute; top: -4px; width: 1px; height: 9px; background: var(--dim);
+}
+.dimline--w::before { left: 0; }
+.dimline--w::after { right: 0; }
+.dimline--w .dimline__label { left: 50%; transform: translate(-50%, -50%); top: 0; }
+
+/* vertical dimension, left of the board */
+.dimline--h { top: 40px; bottom: 0; left: 24px; width: 1px; background: var(--dim); }
+.dimline--h::before, .dimline--h::after {
+  content: ""; position: absolute; left: -4px; height: 1px; width: 9px; background: var(--dim);
+}
+.dimline--h::before { top: 0; }
+.dimline--h::after { bottom: 0; }
+.dimline--h .dimline__label {
+  top: 50%; left: 0; transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+.figure__caption { display: flex; flex-wrap: wrap; gap: 6px 20px; align-items: baseline; }
+
+@media (max-width: 560px) {
+  .figure__frame { padding: 34px 0 0 0; }
+  .dimline--w { left: 0; top: 14px; }
+  .dimline--h { display: none; }
+  .figure__frame { padding-top: 34px; }
+}
+
+/* ------------------------------------------------------------- finishes -- */
+.finishes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2px; background: rgba(122, 92, 168, 0.28); border: var(--rule); }
+.finish { background: var(--half-white); display: grid; }
+.finish__chip { height: 82px; display: flex; }
+.finish__chip span { flex: 1; }
+.finish__text { padding: 16px 18px 20px; display: grid; gap: 8px; }
+.finish__name { font-family: var(--display); font-weight: 300; font-size: 1.0625rem; line-height: 1.2; }
+.finish__spec { font-family: var(--mono); font-size: 0.625rem; color: var(--royal-purple); letter-spacing: 0.02em; line-height: 1.7; }
+.finish__use { font-size: 0.8125rem; line-height: 1.6; color: var(--ink); max-width: none; }
+.finish--primary { outline: 1px solid var(--gold); outline-offset: -1px; }
+.finish__flag { font-family: var(--mono); font-size: 0.5938rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
+
+/* ---------------------------------------------------------------- table -- */
+.scroll-x { overflow-x: auto; }
+.specs { width: 100%; border-collapse: collapse; min-width: 420px; }
+.specs th, .specs td { text-align: left; padding: 10px 16px 10px 0; border-bottom: var(--rule); vertical-align: baseline; }
+.specs th {
+  font-family: var(--body); font-weight: 500; font-size: 0.625rem;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--royal-purple);
+}
+.specs td:first-child { font-size: 0.875rem; }
+.specs td:not(:first-child) {
+  font-family: var(--mono); font-size: 0.75rem;
+  font-variant-numeric: tabular-nums; letter-spacing: 0.01em;
+}
+.specs td:last-child, .specs th:last-child { padding-right: 0; }
+
+/* ---------------------------------------------------------------- never -- */
+.never { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 2px; background: rgba(122, 92, 168, 0.28); border: var(--rule); }
+.never__item { background: var(--half-white); padding: 16px 18px; display: grid; gap: 6px; align-content: start; }
+.never__tag { font-family: var(--body); font-size: 0.9375rem; line-height: 1; color: var(--gold); }
+.never__line { font-size: 0.875rem; line-height: 1.6; color: var(--ink); max-width: none; }
+
+.callout { border-left: 2px solid var(--gold); padding-left: 18px; display: grid; gap: 8px; }
+
+/* -------------------------------------------------------------- footer -- */
+.contact {
+  background: var(--deep-purple); color: var(--half-white);
+  padding: clamp(30px, 5vw, 52px) clamp(22px, 4vw, 52px);
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: clamp(26px, 4vw, 48px);
+  margin-top: clamp(34px, 5vw, 58px);
+}
+.contact .label { color: var(--light-gold); }
+.contact__col { display: grid; gap: 12px; align-content: start; }
+.address {
+  font-family: var(--body); font-weight: 300; font-size: 0.9375rem;
+  line-height: 1.75; font-style: normal; color: var(--half-white); max-width: 32ch;
+}
+.address strong { font-weight: 500; }
+.contact__line { font-family: var(--mono); font-size: 0.8125rem; color: var(--light-gold); word-break: break-word; }
+.address { max-width: 34ch; }
+.contact__caveat { font-family: var(--mono); font-size: 0.625rem; line-height: 1.7; color: var(--pale-lilac); letter-spacing: 0.02em; max-width: 36ch; }
+
+.colophon { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 28px; padding-top: 18px; }
+.colophon .data { color: var(--royal-purple); }
+
+/* ---------------------------------------------------------------- print --
+   A3 portrait at zero page margin so the half-white ground runs full bleed,
+   the way the stock does. print-color-adjust is not optional: without it
+   Chrome drops every background and the purple boards print as white holes.
+   -------------------------------------------------------------------- */
+@media print {
+  @page { size: A3 portrait; margin: 0; }
+  *, *::before, *::after { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: var(--half-white); }
+  .sheet { width: 100%; max-width: none; padding: 16mm 14mm; }
+  .figure, .finishes, .never, .swatches, .grounds, .faces, .voice, .range,
+  .callout, .claims, .contact, .scroll-x { break-inside: avoid; }
+  .scroll-x { overflow-x: visible; }
+  .specs { min-width: 0; }
+  .contact { break-inside: avoid; }
+}
+</style>
+
+<div class="sheet">
+
+  <header class="masthead">
+    <div class="masthead__lockup">
+      <svg viewBox="0 0 100 100" width="52" height="52" role="img" aria-label="monk manthra" focusable="false">
+        <path d="M 57.661 28.951 A 22.4 22.4 0 1 1 42.339 28.951" fill="none" stroke="#7A5CA8" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M 62.258 16.321 A 35.84 35.84 0 1 1 37.742 16.321" fill="none" stroke="#C2A053" stroke-width="2.4" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="5.2" fill="#C2A053"/>
+      </svg>
+      <span>
+        <span class="wordmark">monk manthra</span>
+        <p class="label" style="margin-top:8px">Office name board</p>
+      </span>
+    </div>
+    <div class="masthead__meta">
+      <p class="label">Fabrication spec</p>
+      <p class="data data--sm">DRAWN TO GUIDELINES V1.0</p>
+      <p class="data data--sm">JUBILEE HILLS · HYDERABAD</p>
+    </div>
+  </header>
+
+  <section class="band">
+    <div class="band__index">
+      <p class="band__num">A</p>
+      <p class="label">Door plate</p>
+    </div>
+    <div class="band__body">
+      <div class="band__lede">
+        <h2 class="display">300 × 200 mm</h2>
+        <p class="note">The stacked lockup, the way the guide sets it for packaging and cartons — mark above type, everything on one optical axis. This is the plate beside the door at A22/A. Drawn here at true 3:2 proportion; the artwork below is the artwork, at scale.</p>
+      </div>
+
+      <div class="figure">
+        <div class="figure__frame">
+          <div class="dimline dimline--w"><span class="dimline__label">300 mm</span></div>
+          <div class="dimline dimline--h"><span class="dimline__label">200 mm</span></div>
+
+          <div class="plate plate--door">
+           <div class="plate__live">
+            <svg class="plate__mark" viewBox="0 0 100 100" role="img" aria-label="monk manthra mark" focusable="false">
+              <path class="ring ring--1" d="M 54.788 36.844 A 14.0 14.0 0 1 1 45.212 36.844"/>
+              <path class="ring ring--2" d="M 57.661 28.951 A 22.4 22.4 0 1 1 42.339 28.951"/>
+              <path class="ring ring--3" d="M 62.258 16.321 A 35.84 35.84 0 1 1 37.742 16.321"/>
+              <circle class="seed" cx="50" cy="50" r="5.2"/>
+            </svg>
+            <div class="plate__type">
+              <span class="wordmark">monk manthra</span>
+              <p class="plate__sub">Nutrition</p>
+            </div>
+            <div class="plate__rule"></div>
+            <address class="plate__address">
+              A22/A Journalist Colony, Road No. 70<br>
+              Jubilee Hills, Hyderabad 500033
+            </address>
+           </div>
+          </div>
+        </div>
+
+        <div class="figure__caption">
+          <span class="label">Live area</span>
+          <span class="data data--sm">252 × 152 mm · 24 mm MARGIN ALL SIDES</span>
+          <span class="data data--sm">MARK Ø 44 mm · THREE RINGS</span>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p class="label">Clear space on signage</p>
+        <p class="note" style="font-size:0.875rem">The guide fixes clear space at one seed diameter, and twice that on packaging faces. At a 44 mm mark the seed is Ø 6.2 mm, so the packaging rule gives 12.4 mm — too tight for a plate a person stands in front of. The 24 mm margin here is roughly four seed diameters and is an extension of the rule, not something the guide states. Hold it as the minimum, not the target.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="band__index">
+      <p class="band__num">B</p>
+      <p class="label">Gate board</p>
+    </div>
+    <div class="band__body">
+      <div class="band__lede">
+        <h2 class="display">900 × 300 mm</h2>
+        <p class="note">The horizontal lockup, which the guide assigns to headers and letterhead — mark left, type right, read from the road. Address sits on one line under the wordmark so the board stays a single horizontal gesture.</p>
+      </div>
+
+      <div class="figure">
+        <div class="figure__frame">
+          <div class="dimline dimline--w"><span class="dimline__label">900 mm</span></div>
+          <div class="dimline dimline--h"><span class="dimline__label">300 mm</span></div>
+
+          <div class="plate plate--gate">
+            <div class="plate__live plate__row">
+              <svg class="plate__mark" viewBox="0 0 100 100" role="img" aria-label="monk manthra mark" focusable="false">
+                <path class="ring ring--1" d="M 54.788 36.844 A 14.0 14.0 0 1 1 45.212 36.844"/>
+                <path class="ring ring--2" d="M 57.661 28.951 A 22.4 22.4 0 1 1 42.339 28.951"/>
+                <path class="ring ring--3" d="M 62.258 16.321 A 35.84 35.84 0 1 1 37.742 16.321"/>
+                <circle class="seed" cx="50" cy="50" r="5.2"/>
+              </svg>
+              <div class="plate__type">
+                <span class="wordmark">monk manthra</span>
+                <p class="plate__sub">Nutrition</p>
+                <address class="plate__address">A22/A Journalist Colony · Road No. 70 · Jubilee Hills · Hyderabad 500033</address>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="figure__caption">
+          <span class="label">Live area</span>
+          <span class="data data--sm">828 × 228 mm · 36 mm MARGIN ALL SIDES</span>
+          <span class="data data--sm">MARK Ø 72 mm · THREE RINGS</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="band__index">
+      <p class="band__num">C</p>
+      <p class="label">Finish</p>
+    </div>
+    <div class="band__body">
+      <div class="band__lede">
+        <h3 class="heading">Gold is foil or metal. Never a printed gradient.</h3>
+        <p class="note">Section five holds on a wall exactly as it holds on a page: purple carries the board, gold marks the one thing you want noticed. On the purple plate the gold is the outer ring, the seed and the hairline — about 0.5% of the face, against a ceiling of ten.</p>
+      </div>
+
+      <div class="finishes">
+        <div class="finish finish--primary">
+          <div class="finish__chip">
+            <span style="background:#3A1F5C; flex:6"></span>
+            <span style="background:#E0C88C; flex:1"></span>
+            <span style="background:#F4F1EC; flex:1"></span>
+          </div>
+          <div class="finish__text">
+            <p class="finish__flag">Specify this</p>
+            <p class="finish__name">Purple field, brass inlay</p>
+            <p class="finish__spec">3mm ACP OR ALUMINIUM<br>MATTE PURPLE #3A1F5C<br>MARK + WORDMARK · BRUSHED BRASS, PANTONE 872 C<br>ADDRESS · HALF WHITE #F4F1EC VINYL</p>
+            <p class="finish__use">Matte, never gloss — a gloss purple picks up the street and the mark disappears into the reflection. Brass is cut and inlaid, not printed; if the shop cannot inlay, use a matched gold vinyl in a single flat tone.</p>
+          </div>
+        </div>
+        <div class="finish">
+          <div class="finish__chip">
+            <span style="background:#F4F1EC; flex:6"></span>
+            <span style="background:#3A1F5C; flex:1"></span>
+            <span style="background:#C2A053; flex:1"></span>
+          </div>
+          <div class="finish__text">
+            <p class="finish__flag">Alternative</p>
+            <p class="finish__name">Half white, purple type</p>
+            <p class="finish__spec">6mm ACRYLIC OR SOLID SURFACE<br>MATTE HALF WHITE #F4F1EC<br>RINGS · #3A1F5C AND #7A5CA8<br>OUTER RING + SEED · GOLD #C2A053</p>
+            <p class="finish__use">For a light-walled entrance where a purple plate would read as a hole. Note the palette flips: on this ground gold is #C2A053, not #E0C88C — light gold is for dark grounds only, where the darker gold goes muddy.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="band__index">
+      <p class="band__num">D</p>
+      <p class="label">Numbers</p>
+    </div>
+    <div class="band__body">
+      <p class="note">Everything a fabricator has to check, in millimetres. Type sizes are given as the drawn height, with the font size that produces it — set the height, then confirm the size, not the other way round.</p>
+
+      <div class="scroll-x">
+        <table class="specs">
+          <thead>
+            <tr>
+              <th scope="col">Element</th>
+              <th scope="col">Door plate</th>
+              <th scope="col">Gate board</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Board</td><td>300 × 200 mm</td><td>900 × 300 mm</td></tr>
+            <tr><td>Thickness</td><td>3 mm</td><td>4 mm</td></tr>
+            <tr><td>Margin, all sides</td><td>24 mm</td><td>36 mm</td></tr>
+            <tr><td>Mark, outer diameter</td><td>44 mm</td><td>72 mm</td></tr>
+            <tr><td>Rings shown</td><td>3</td><td>3</td></tr>
+            <tr><td>Wordmark, ascender</td><td>20 mm · Fraunces 200 @ 27 mm</td><td>42 mm · Fraunces 200 @ 58 mm</td></tr>
+            <tr><td>Wordmark tracking</td><td>.15 em</td><td>.15 em</td></tr>
+            <tr><td>Sub-label, cap height</td><td>5 mm · Karla 500 · .2 em</td><td>10 mm · Karla 500 · .2 em</td></tr>
+            <tr><td>Address, cap height</td><td>4 mm · Karla 300</td><td>7 mm · Karla 300</td></tr>
+            <tr><td>Gold hairline</td><td>0.5 × 102 mm</td><td>none</td></tr>
+            <tr><td>Corner radius</td><td>0 — square</td><td>0 — square</td></tr>
+            <tr><td>Fixing</td><td>4 × 12 mm brass standoffs</td><td>4 × 16 mm brass standoffs</td></tr>
+            <tr><td>Standoff depth</td><td>20 mm off wall</td><td>25 mm off wall</td></tr>
+            <tr><td>Mounting height, plate centre</td><td>1500 mm from floor</td><td>read from the gate line</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <p class="label">Why standoffs</p>
+        <p class="note" style="font-size:0.875rem">The board floats 20 mm off the wall and throws its own shadow. That is the same instruction the guide gives photography — single object, soft light, deep shadow — carried onto the building. A flush-glued plate loses it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" style="border-bottom:none">
+    <div class="band__index">
+      <p class="band__num">E</p>
+      <p class="label">Never</p>
+    </div>
+    <div class="band__body">
+      <div class="never">
+        <div class="never__item">
+          <p class="never__tag">✕</p>
+          <p class="never__line">Never close the gap at the top of the rings to fit a tighter board.</p>
+        </div>
+        <div class="never__item">
+          <p class="never__tag">✕</p>
+          <p class="never__line">No backlit or edge-lit acrylic. A glowing purple field breaks 60/30/10 and the mark stops being a mark.</p>
+        </div>
+        <div class="never__item">
+          <p class="never__tag">✕</p>
+          <p class="never__line">No gold gradient, no mirror-chrome, no rope light. Flat metal or flat vinyl only.</p>
+        </div>
+        <div class="never__item">
+          <p class="never__tag">✕</p>
+          <p class="never__line">Never stretch the board to a wall's proportion. Change the size, hold 3:2 or 3:1.</p>
+        </div>
+        <div class="never__item">
+          <p class="never__tag">✕</p>
+          <p class="never__line">No phone number, no QR code, no shutter timings on the plate. The address is all it carries.</p>
+        </div>
+        <div class="never__item">
+          <p class="never__tag">✕</p>
+          <p class="never__line">Never drop below 16 mm mark width — the guide's foil and emboss minimum.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="contact">
+    <div class="contact__col">
+      <p class="label">Set on the board</p>
+      <address class="address">
+        <strong>Monk Manthra Nutrition</strong><br>
+        A22/A Journalist Colony<br>
+        Near Akshaya Kalpa Organic, Road&nbsp;No.&nbsp;70<br>
+        Jubilee Hills, Hyderabad<br>
+        Telangana 500033, India
+      </address>
+    </div>
+
+    <div class="contact__col">
+      <p class="label">Colour references</p>
+      <p class="contact__line">#3A1F5C · RAL 4007 CLOSEST</p>
+      <p class="contact__line">#C2A053 · PANTONE 872 C</p>
+      <p class="contact__line">#F4F1EC · MATTE, UNCOATED</p>
+    </div>
+
+    <div class="contact__col">
+      <p class="label">Before you order</p>
+      <p class="contact__caveat">Confirm the registered name and address against the company filing — the board is the one place a wrong line is expensive. The plate carries no phone, no email and no licence number by design; if a municipal or FSSAI display requirement applies at this address, it goes on a separate compliance plate, never on this one.</p>
+    </div>
+  </footer>
+
+  <div class="colophon">
+    <p class="data data--sm">© 2026 MONK MANTHRA NUTRITION</p>
+    <p class="data data--sm">NAME BOARD SPEC · GUIDELINES V1.0</p>
+  </div>
+
+</div>

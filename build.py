@@ -28,6 +28,12 @@ SHOP = {
 }
 SHOP_CONFIGURED = "YOUR-STORE" not in SHOP["domain"] and "YOUR-" not in SHOP["token"]
 
+# Nothing is for sale yet: no FSSAI licence, and every facts panel is still
+# placeholder. Prices stay in PRODUCTS so they survive, but nothing renders
+# them and no buy button appears. Flip this to True the day both are real.
+ON_SALE = False
+NOTIFY = "mailto:hello@monkmanthra.com?subject=Tell%20me%20when%20it%20is%20ready"
+
 # --------------------------------------------------------------------------
 # THE MARK — gold seed, two purple rings, gold outer ring, gap at the top.
 # Arcs run 20° to 340°. Ring radii step 1.6×. Round caps, no gradients.
@@ -453,15 +459,19 @@ def card(p, rel=""):
           <span class="label card__ing">{p["ing"]}</span>
           <span class="card__foot">
             <span class="data">{p["dose"]} · {p["count"]}</span>
-            <span class="card__price">₹{p["price"]}</span>
+            <span class="card__soon">{"₹" + p["price"] if ON_SALE else "Coming soon"}</span>
           </span>
         </span>
       </a>'''
 
 
 def buy_button(item, rel="", label="Add to order"):
-    """A real cart when shopify_variant_id is set; today, a plain link to
-    start.html — identical to every other page until Shopify is configured."""
+    """Until ON_SALE, there is no button at all. A greyed-out button invites a
+    click that cannot work and fails the contrast check; a plain stated fact
+    does not. One notify label across the whole site, never two."""
+    if not ON_SALE:
+        return (f'<span class="soon-tag">Coming soon</span>'
+                f'<a class="textlink" href="{NOTIFY}">Tell me when it is ready</a>')
     vid = item.get("shopify_variant_id")
     if vid:
         return f'<a class="btn" href="{rel}start.html" data-buy data-variant-id="{vid}" data-qty="1">{label}</a>'
@@ -638,7 +648,7 @@ def page_index():
         <h2 class="display">{ev["name"]}</h2>
         <p class="lede">{ev["blurb"]}</p>
         <ul class="bundle__list">{ev_items}</ul>
-        <p class="data" style="margin-top:22px">₹{ev["price"]} · SAVES ₹{ev["saving"]}</p>
+        <p class="data" style="margin-top:22px">{f'₹{ev["price"]} · SAVES ₹{ev["saving"]}' if ON_SALE else "COMING SOON"}</p>
         <p style="margin-top:26px"><a class="textlink" href="bundles.html">See both bundles</a></p>
       </div>
     </div>
@@ -761,9 +771,7 @@ def page_product(p):
         <p>{p["blurb"]}</p>
 
         <div class="product__buy">
-          {buy_button(p, rel)}
-          <span class="price">₹{p["price"]}</span>
-          <a class="textlink" href="{rel}start.html">Or subscribe monthly</a>
+          {buy_button(p, rel)}{f'<span class="price">₹{p["price"]}</span>' if ON_SALE else ""}
         </div>
       </div>
     </div>
@@ -857,9 +865,7 @@ def page_bundles():
         <p>{b["blurb"]}</p>
         <ul class="bundle__list">{items}</ul>
         <div class="product__buy">
-          {buy_button(b)}
-          <span class="price" style="color:#F4F1EC">₹{b["price"]}</span>
-          <span class="data">SAVES ₹{b["saving"]}</span>
+          {buy_button(b)}{f'<span class="price" style="color:#F4F1EC">₹{b["price"]}</span><span class="data">SAVES ₹{b["saving"]}</span>' if ON_SALE else ""}
         </div>
       </div>
     </div>
@@ -1012,6 +1018,9 @@ def page_start():
     <p style="margin:26px auto 0">Most people notice something around week three. Set a
        reminder, keep the jar where you will see it, and give it a month before you
        decide.</p>
+    {"" if ON_SALE else '''<p class="soon-note">The range is not on sale yet. The formulas are
+       settled; the licence and the first production run are not. If you want to know
+       when that changes, <a href="''' + NOTIFY + '''">say so and we will tell you</a>.</p>'''}
   </div>
 </section>
 
@@ -1058,16 +1067,16 @@ def page_start():
     <div class="stack">
       <div class="table-scroll">
         <table class="dose-table">
-          <thead><tr><th scope="col">Interval</th><th scope="col">Suits</th><th scope="col">Price</th></tr></thead>
+          <thead><tr><th scope="col">Interval</th><th scope="col">Suits</th></tr></thead>
           <tbody>
-            <tr><td class="state">Monthly</td><td>90-capsule jars, or two a day</td><td class="num">−10%</td></tr>
-            <tr><td class="state">Two-monthly</td><td>60-capsule jars at one a day</td><td class="num">−10%</td></tr>
-            <tr><td class="state">One-off</td><td>Trying it</td><td class="num">Full</td></tr>
+            <tr><td class="state">Monthly</td><td>90-capsule jars, or two a day</td></tr>
+            <tr><td class="state">Two-monthly</td><td>60-capsule jars at one a day</td></tr>
+            <tr><td class="state">One-off</td><td>Trying it</td></tr>
           </tbody>
         </table>
       </div>
       <p class="data data--sm" style="color:#7A5CA8;margin-top:18px">
-        FREE SHIPPING OVER ₹1,500 · DISPATCHED IN 48 HOURS
+        {"FREE SHIPPING OVER ₹1,500 · DISPATCHED IN 48 HOURS" if ON_SALE else "INTERVALS AND PRICING ARE NOT SET YET"}
       </p>
       <p style="margin-top:22px"><a class="btn" href="range.html">See the range</a></p>
     </div>

@@ -78,10 +78,17 @@ background.
 - **Lot codes and expiry** (`MM-2604`, `best before end 2028-04`) are illustrative.
 - **`hello@monkmanthra.com` and the phone number** are taken from the guide's own
   stationery mock.
-- **Add to order / Subscribe** are links to `start.html`, not a cart — unless
-  Shopify is configured, see below.
+- **Nothing is for sale.** `ON_SALE = False` in `build.py` is the master switch:
+  no price renders anywhere, every buy button becomes a "Coming soon" state
+  plus one notify link, and the Start page carries an honest notice. Prices
+  still live in `PRODUCTS` so the work is not lost; flip `ON_SALE` to `True`
+  the day the FSSAI licence and the real facts panels both exist, and the
+  whole site turns back on in one commit.
 
 ## Selling on Shopify
+
+**Gated behind `ON_SALE` as well.** Even with a store, a token and variant IDs
+configured, nothing sells while `ON_SALE = False`. Both switches have to be on.
 
 The site stays headless: `build.py` keeps every product's copy, design and
 facts panel; Shopify holds price, stock, and checkout. Nothing on the page

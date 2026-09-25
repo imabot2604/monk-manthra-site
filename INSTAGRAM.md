@@ -26,12 +26,19 @@ crop can only ever remove purple.
 
 ## Bio (150 char limit)
 
+    Sleep, explained slowly.
+    Rhythm first. Supplements second.
+    Made in India
+
+72 characters. Sleep-only for now — the page leads with the sleep series,
+so the bio describes that and nothing else. Line two is the sleep-series
+sign-off word for word, so bio and captions say the same thing.
+
+Previous (product-led) bio, for when the range is live:
+
     Daily supplements for people who want to feel steady, not supercharged.
     Golden Milk first. The rest, coming soon.
     Made in India
-
-126 characters. Line one is the footer line from the site, word for word —
-the same sentence in both places rather than a second version of it.
 
 Deliberately makes **no health claim**. There is no FSSAI licence yet and
 the site carries a regulator disclaimer; a bio promising an effect would

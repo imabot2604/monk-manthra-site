@@ -1,0 +1,187 @@
+"""
+Turmeric — standalone 7-slide carousel, its own photo set (root + powder
+only, no milk), sleep-led narrative then the rest of the benefits.
+Structured like the reference post: split-panel slides (clean ivory
+ground + bold dark text, photo inset) alternating with full-bleed photo
++ scrim slides, closing on a plain gradient signature card.
+
+No "Golden Milk" mention. No dosage numbers. Structure-and-function
+disclaimer lives in the caption, not on the slides themselves (kept
+consistent with how the rest of the project's captions handle it).
+
+Usage:
+    python3 build_turmeric.py
+Output:
+    png/slide-1 ... png/slide-7
+"""
+import os
+import subprocess
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+BUILD = os.path.join(HERE, "_build")
+PNG = os.path.join(HERE, "png")
+PHOTOS = os.path.join(HERE, "photos")
+CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+
+MARK = """<svg class="mark" viewBox="0 0 100 100" role="img" aria-label="monk manthra" focusable="false">
+  <path class="ring ring--1" d="M 54.788 36.844 A 14.0 14.0 0 1 1 45.212 36.844"/>
+  <path class="ring ring--2" d="M 57.661 28.951 A 22.4 22.4 0 1 1 42.339 28.951"/>
+  <path class="ring ring--3" d="M 62.258 16.321 A 35.84 35.84 0 1 1 37.742 16.321"/>
+  <circle class="seed" cx="50" cy="50" r="5.2"/>
+</svg>"""
+
+CSS = """
+:root {
+  --deep-purple: #3A1F5C; --royal-purple: #7A5CA8; --pale-lilac: #CBBFE0;
+  --gold: #C2A053; --light-gold: #E0C88C; --half-white: #F4F1EC; --ink: #241B33;
+  --display: "Fraunces", serif; --body: "Karla", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1080px; height: 1080px; }
+body { font-family: var(--body); }
+
+/* ---- split panel: clean ground + bold dark text, photo inset ---- */
+.split-slide { width: 1080px; height: 1080px; display: flex; flex-direction: column; background: var(--half-white); }
+.split-slide .panel-text { height: 428px; flex: none; padding: 72px 84px 0; display: flex; flex-direction: column; }
+.split-slide .panel-photo { flex: 1; position: relative; overflow: hidden; }
+.split-slide .panel-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+.split-slide .corner-patch { position: absolute; right: 0; bottom: 0; width: 220px; height: 190px;
+  background: radial-gradient(circle at 100% 100%, rgba(20,14,30,1) 0%, rgba(20,14,30,0.9) 40%, rgba(20,14,30,0) 78%); }
+.split-slide .corner-mark { position: absolute; top: 40px; right: 40px; }
+.split-slide .corner-mark .mark { width: 40px; height: 40px; display: block; }
+.split-slide .corner-mark .mark .ring { fill: none; stroke-linecap: round; stroke-width: 2.6; }
+.split-slide .corner-mark .mark .ring--1 { stroke: var(--deep-purple); }
+.split-slide .corner-mark .mark .ring--2 { stroke: var(--royal-purple); }
+.split-slide .corner-mark .mark .ring--3 { stroke: var(--gold); }
+.split-slide .corner-mark .mark .seed { fill: var(--gold); }
+.split-slide .label { font-family: var(--body); font-weight: 700; font-size: 19px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--royal-purple); margin: 0 0 22px; }
+.split-slide h1 { font-family: var(--body); font-weight: 800; font-size: 52px; line-height: 1.22; letter-spacing: -0.015em; color: var(--ink); margin: 0; max-width: 15ch; }
+
+/* ---- full-bleed photo + bold bottom-anchored text ---- */
+.photo-slide { width: 1080px; height: 1080px; position: relative; display: flex; align-items: flex-end; justify-content: center;
+  background-size: cover; background-position: center; padding-bottom: 96px; }
+.photo-slide::before { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(20,14,30,0) 34%, rgba(20,14,30,0.88) 72%, rgba(20,14,30,0.97) 100%); }
+.photo-slide .corner-patch { content: ""; position: absolute; right: 0; bottom: 0; width: 260px; height: 220px;
+  background: radial-gradient(circle at 100% 100%, rgba(20,14,30,1) 0%, rgba(20,14,30,1) 45%, rgba(20,14,30,0) 78%); }
+.photo-slide .corner-mark { position: absolute; top: 40px; left: 40px; z-index: 1;
+  filter: drop-shadow(0 0 3px rgba(0,0,0,0.85)) drop-shadow(0 0 8px rgba(0,0,0,0.6)); }
+.photo-slide .corner-mark .mark { width: 46px; height: 46px; display: block; }
+.photo-slide .corner-mark .mark .ring { fill: none; stroke-linecap: round; stroke-width: 2.6; }
+.photo-slide .corner-mark .mark .ring--1 { stroke: var(--half-white); }
+.photo-slide .corner-mark .mark .ring--2 { stroke: var(--pale-lilac); }
+.photo-slide .corner-mark .mark .ring--3 { stroke: var(--light-gold); }
+.photo-slide .corner-mark .mark .seed { fill: var(--light-gold); }
+.photo-slide .copy { position: relative; z-index: 1; text-align: center; width: 880px; }
+.photo-slide h1 { font-family: var(--body); font-weight: 700; font-size: 46px; line-height: 1.3; letter-spacing: -0.01em; color: var(--half-white); margin: 0; text-shadow: 0 2px 18px rgba(0,0,0,0.5); }
+.photo-slide .sub { font-family: var(--body); font-weight: 400; font-size: 25px; line-height: 1.55; color: rgba(244,241,236,0.9); width: 660px; margin: 20px auto 0; text-shadow: 0 2px 14px rgba(0,0,0,0.5); }
+
+/* ---- gradient closer ---- */
+.gradient-slide { width: 1080px; height: 1080px; background: radial-gradient(circle at 50% 45%, #4A2A73 0%, #3A1F5C 45%, #7A5230 130%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.gradient-slide .mark { width: 64px; height: 64px; margin-bottom: 40px; }
+.gradient-slide .mark .ring { fill: none; stroke-linecap: round; stroke-width: 2.2; }
+.gradient-slide .mark .ring--1 { stroke: var(--half-white); }
+.gradient-slide .mark .ring--2 { stroke: var(--pale-lilac); }
+.gradient-slide .mark .ring--3 { stroke: var(--light-gold); }
+.gradient-slide .mark .seed { fill: var(--light-gold); }
+.gradient-slide .wordmark { font-family: var(--display); font-weight: 200; text-transform: lowercase; letter-spacing: 0.15em; font-size: 26px; color: var(--half-white); margin: 0 0 48px; }
+.gradient-slide .copy { text-align: center; width: 760px; }
+.gradient-slide p { font-family: var(--display); font-weight: 300; font-style: italic; font-size: 40px; line-height: 1.85; color: var(--half-white); margin: 0; white-space: pre-line; }
+"""
+
+HEAD = """<!doctype html><html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,200;9..144,300;9..144,400&family=Karla:wght@300;400;500;700;800&display=swap">
+<style>{css}</style></head><body>"""
+
+
+def render(html_path, png_path):
+    subprocess.run([
+        CHROME, "--headless", "--disable-gpu",
+        "--virtual-time-budget=4000",
+        f"--screenshot={png_path}",
+        "--window-size=1080,1080",
+        f"file://{html_path}",
+    ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+
+def split_slide(label, headline, photo_path):
+    return HEAD.format(css=CSS) + f"""
+<div class="split-slide">
+  <div class="panel-text"><p class="label">{label}</p><h1>{headline}</h1></div>
+  <div class="panel-photo"><img src="file://{photo_path}">
+    <span class="corner-patch"></span>
+    <div class="corner-mark">{MARK}</div>
+  </div>
+</div></body></html>"""
+
+
+def photo_slide(headline, sub, photo_path):
+    sub_html = f'<p class="sub">{sub}</p>' if sub else ""
+    return HEAD.format(css=CSS) + f"""
+<div class="photo-slide" style="background-image:url('file://{photo_path}')">
+  <span class="corner-patch"></span>
+  <div class="corner-mark">{MARK}</div>
+  <div class="copy"><h1>{headline}</h1>{sub_html}</div>
+</div></body></html>"""
+
+
+def gradient_slide(lines):
+    text = "<br>".join(lines)
+    return HEAD.format(css=CSS) + f"""
+<div class="gradient-slide">
+  {MARK}
+  <p class="wordmark">monk manthra</p>
+  <div class="copy"><p>{text}</p></div>
+</div></body></html>"""
+
+
+SLIDES = [
+    ("slide-1-root", lambda: split_slide(
+        "Turmeric",
+        "Restless nights, and nothing in the evening routine built for it.",
+        os.path.join(PHOTOS, "slide-1.jpg"))),
+    ("slide-2-mound", lambda: photo_slide(
+        "Turmeric's oldest reputation? Calm evenings.",
+        "Stirred into warm milk as the day winds down — a ritual older than any supplement aisle.",
+        os.path.join(PHOTOS, "slide-2.jpg"))),
+    ("slide-3-slices", lambda: split_slide(
+        "The honest part",
+        "But curcumin isn't a sedative.",
+        os.path.join(PHOTOS, "slide-3.jpg"))),
+    ("slide-4-falling", lambda: photo_slide(
+        "It works quietly, in the background — not tonight, but over time.",
+        None,
+        os.path.join(PHOTOS, "slide-4.jpg"))),
+    ("slide-5-rootpowder", lambda: split_slide(
+        "Absorption",
+        "Paired with black pepper. Turmeric barely absorbs without it.",
+        os.path.join(PHOTOS, "slide-5.jpg"))),
+    ("slide-6-texture", lambda: photo_slide(
+        "The rest of what it does —",
+        "Contributes to the normal function of joints. Supports the body's normal antioxidant processes. Supports normal digestive comfort.",
+        os.path.join(PHOTOS, "slide-6.jpg"))),
+    ("slide-7-closer", lambda: gradient_slide([
+        "An evening ritual.",
+        "Not a shortcut.",
+        "Not a sedative.",
+    ])),
+]
+
+
+def main():
+    os.makedirs(BUILD, exist_ok=True)
+    os.makedirs(PNG, exist_ok=True)
+    for name, fn in SLIDES:
+        html_path = os.path.join(BUILD, f"{name}.html")
+        png_path = os.path.join(PNG, f"{name}.png")
+        with open(html_path, "w") as f:
+            f.write(fn())
+        render(html_path, png_path)
+        print(f"{name}  done")
+
+
+if __name__ == "__main__":
+    main()

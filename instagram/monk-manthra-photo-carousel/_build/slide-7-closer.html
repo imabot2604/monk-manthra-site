@@ -1,0 +1,61 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;1,9..144,300;9..144,400&family=Karla:wght@300;400;500&display=swap">
+<style>
+:root {
+  --deep-purple: #3A1F5C; --royal-purple: #7A5CA8; --pale-lilac: #CBBFE0;
+  --gold: #C2A053; --light-gold: #E0C88C; --half-white: #F4F1EC;
+  --display: "Fraunces", serif; --body: "Karla", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1080px; height: 1080px; }
+body { font-family: var(--body); }
+
+/* ---- photo slide: full-bleed image + centered headline ---- */
+.photo-slide {
+  width: 1080px; height: 1080px; position: relative;
+  display: flex; align-items: center; justify-content: center;
+  background-size: cover; background-position: center;
+}
+.photo-slide::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(36,27,51,0.15) 0%, rgba(36,27,51,0.55) 100%);
+}
+.photo-slide .copy {
+  position: relative; z-index: 1; text-align: center; padding: 0 100px;
+}
+.photo-slide h1 {
+  font-family: var(--display); font-weight: 300; font-size: 54px;
+  line-height: 1.28; color: var(--half-white); margin: 0;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.35);
+}
+.photo-slide .heading-kicker {
+  font-family: var(--body); font-weight: 500; font-size: 20px;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--light-gold);
+  margin: 0 0 22px;
+}
+.photo-slide .sub {
+  font-family: var(--body); font-weight: 300; font-size: 26px; line-height: 1.6;
+  color: rgba(244,241,236,0.88); max-width: 32ch; margin: 24px auto 0;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.4);
+}
+
+/* ---- slide 7: pure gradient, centered mantra ---- */
+.gradient-slide {
+  width: 1080px; height: 1080px;
+  background: radial-gradient(circle at 50% 45%, #4A2A73 0%, #3A1F5C 45%, #7A5230 130%);
+  display: flex; align-items: center; justify-content: center;
+}
+.gradient-slide .copy { text-align: center; width: 760px; }
+.gradient-slide p {
+  font-family: var(--display); font-weight: 300; font-style: italic;
+  font-size: 44px; line-height: 1.85; color: var(--half-white); margin: 0;
+  white-space: pre-line;
+}
+</style></head><body>
+<div class="gradient-slide">
+  <div class="copy">
+    <p>Nothing added for the label.<br>Nothing hidden from the panel.<br>That's the whole idea.</p>
+  </div>
+</div></body></html>

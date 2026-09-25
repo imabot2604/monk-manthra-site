@@ -588,8 +588,24 @@ body.cart-open { overflow: hidden; }
 .card__body { padding: 24px 26px 28px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .card__name { font-family: var(--display); font-weight: 300; font-size: 1.625rem; line-height: 1; letter-spacing: -0.012em; }
 .card__ing { margin-top: 2px; }
-.card__foot { margin-top: auto; padding-top: 18px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+/* "Coming soon" is wider than the price it stands in for, so the row wraps
+   rather than breaking the dose across two lines. The dose is the one thing
+   the guide insists stays legible, so it never wraps. */
+.card__foot {
+  margin-top: auto; padding-top: 18px;
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  justify-content: space-between; gap: 6px 12px;
+}
+.card__foot .data { white-space: nowrap; }
 .card__price { font-family: var(--mono); font-size: 0.8125rem; color: var(--deep-purple); }
+/* Nothing is on sale yet. The state sits exactly where the price will, so the
+   card does not reflow the day ON_SALE flips. Karla 500 caps, the same quiet
+   register as every other label on the site. */
+.card__soon {
+  font-family: var(--body); font-weight: 500;
+  font-size: 0.625rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--royal-purple); white-space: nowrap;
+}
 
 /* ------------------------------------------------- packaging renderings -- */
 /* Amber glass jar · deep purple cap · uncoated label, gold foil rule.
@@ -615,6 +631,25 @@ body.cart-open { overflow: hidden; }
 .product__meta .label { color: var(--royal-purple); margin-bottom: 4px; }
 .product__buy { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 28px; }
 .product__buy .price { font-family: var(--mono); font-size: 0.9375rem; }
+/* A stated fact, not a dead button. Square edges to match the one radius
+   system on the site (everything here is 0), and a rule-weight border so it
+   reads as a state rather than something to click. */
+.soon-tag {
+  display: inline-block;
+  font-family: var(--body); font-weight: 500;
+  font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--deep-purple);
+  border: var(--rule);
+  padding: 14px 24px;
+}
+.section--purple .soon-tag, .on-purple .soon-tag {
+  color: var(--half-white); border: var(--rule-dark);
+}
+.soon-note {
+  max-width: 52ch; margin: 26px auto 0;
+  font-size: 0.875rem; color: var(--half-white); opacity: 0.78;
+}
+.soon-note a { color: var(--light-gold); text-underline-offset: 4px; }
 
 /* ---------------------------------------------------------- facts panel -- */
 /* A legal document, not a design surface. Black on white, no tint,
@@ -763,6 +798,8 @@ a.visually-hidden:focus {
   .label, .lockup__sub, .step .n { color: var(--deep-purple); }
   .section--purple .label, .on-purple .lockup__sub { color: var(--light-gold); }
   .card::after { border-color: var(--deep-purple); }
+  .soon-tag { border-color: var(--deep-purple); }
+  .card__soon { color: var(--deep-purple); }
   .btn--quiet { border-color: var(--deep-purple); }
   .cart-toggle, .cart-step { border-color: var(--deep-purple); }
   .cart-drawer { border-left: 1px solid var(--deep-purple); box-shadow: none; }

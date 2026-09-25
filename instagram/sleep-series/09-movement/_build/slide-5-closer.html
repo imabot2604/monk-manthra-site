@@ -1,0 +1,126 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,100..900,0..100;1,9..144,100..900,0..100&family=Karla:wght@300;400;500;700;800&display=swap">
+<style>
+:root {
+  --deep-purple: #3A1F5C; --royal-purple: #7A5CA8; --pale-lilac: #CBBFE0;
+  --gold: #C2A053; --light-gold: #E0C88C; --half-white: #F4F1EC; --ink: #241B33;
+  --display: "Fraunces", serif; --body: "Karla", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1080px; height: 1080px; }
+body { font-family: var(--body); background: var(--half-white); }
+
+/* ============ photo_slide ============ */
+.photo-slide { width: 1080px; height: 1080px; position: relative; display: flex; align-items: flex-end; justify-content: center;
+  background-size: cover; background-position: center; padding-bottom: 96px; }
+.photo-slide::before { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(20,14,30,0) 34%, rgba(20,14,30,0.88) 72%, rgba(20,14,30,0.97) 100%); }
+/* Flow/Nano-Banana generated photos carry a small sparkle watermark,
+   almost always bottom-right. This patch blends it into the scrim. */
+.photo-slide .corner-patch { content: ""; position: absolute; right: 0; bottom: 0; width: 260px; height: 220px;
+  background: radial-gradient(circle at 100% 100%, rgba(20,14,30,1) 0%, rgba(20,14,30,1) 45%, rgba(20,14,30,0) 78%); }
+.photo-slide .corner-mark { position: absolute; top: 40px; left: 40px; z-index: 1;
+  filter: drop-shadow(0 0 3px rgba(0,0,0,0.85)) drop-shadow(0 0 8px rgba(0,0,0,0.6)); }
+.photo-slide .corner-mark .mark { width: 46px; height: 46px; display: block; }
+.photo-slide .corner-mark .mark .ring { fill: none; stroke-linecap: round; stroke-width: 2.6; }
+.photo-slide .corner-mark .mark .ring--1 { stroke: var(--half-white); }
+.photo-slide .corner-mark .mark .ring--2 { stroke: var(--pale-lilac); }
+.photo-slide .corner-mark .mark .ring--3 { stroke: var(--light-gold); }
+.photo-slide .corner-mark .mark .seed { fill: var(--light-gold); }
+.photo-slide .copy { position: relative; z-index: 1; text-align: center; width: 880px; }
+.photo-slide .kicker { font-family: var(--body); font-weight: 700; font-size: 20px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--light-gold); margin: 0 0 20px; }
+.photo-slide h1 { font-family: var(--display); font-weight: 800; font-size: 56px; line-height: 1.2; letter-spacing: -0.015em; font-variation-settings: "opsz" 144, "SOFT" 60; color: var(--half-white); margin: 0; text-shadow: 0 2px 18px rgba(0,0,0,0.5); }
+.photo-slide h1 strong { color: var(--light-gold); font-weight: 300; font-style: italic; font-variation-settings: "opsz" 144, "SOFT" 30; }
+.photo-slide .sub { font-family: var(--body); font-weight: 400; font-size: 29px; line-height: 1.55; color: rgba(244,241,236,0.92); width: 680px; margin: 22px auto 0; text-shadow: 0 2px 14px rgba(0,0,0,0.5); }
+.photo-slide .sub strong { color: var(--light-gold); font-weight: 700; }
+.photo-slide .bullets { text-align: left; width: 680px; margin: 22px auto 0; }
+.photo-slide .bullets .item { display: flex; gap: 12px; margin-bottom: 10px; color: rgba(244,241,236,0.92); font-size: 29px; text-shadow: 0 2px 14px rgba(0,0,0,0.5); }
+.photo-slide .bullets .dot { color: var(--light-gold); flex: none; }
+.photo-slide .bullets strong { color: var(--light-gold); font-weight: 700; }
+
+/* ============ split_slide ============ */
+.split-slide { width: 1080px; height: 1080px; display: flex; flex-direction: column; background: var(--half-white); }
+.split-slide .panel-text { height: 428px; flex: none; padding: 72px 84px 0; display: flex; flex-direction: column; }
+.split-slide .panel-photo { flex: 1; position: relative; overflow: hidden; }
+.split-slide .panel-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+.split-slide .corner-patch { position: absolute; right: 0; bottom: 0; width: 220px; height: 190px;
+  background: radial-gradient(circle at 100% 100%, rgba(20,14,30,1) 0%, rgba(20,14,30,0.9) 40%, rgba(20,14,30,0) 78%); }
+.split-slide .corner-mark { position: absolute; top: 40px; right: 40px; }
+.split-slide .corner-mark .mark { width: 40px; height: 40px; display: block; }
+.split-slide .corner-mark .mark .ring { fill: none; stroke-linecap: round; stroke-width: 2.6; }
+.split-slide .corner-mark .mark .ring--1 { stroke: var(--deep-purple); }
+.split-slide .corner-mark .mark .ring--2 { stroke: var(--royal-purple); }
+.split-slide .corner-mark .mark .ring--3 { stroke: var(--gold); }
+.split-slide .corner-mark .mark .seed { fill: var(--gold); }
+.split-slide .label { font-family: var(--body); font-weight: 700; font-size: 19px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--royal-purple); margin: 0 0 22px; }
+.split-slide h1 { font-family: var(--display); font-weight: 800; font-size: 62px; line-height: 1.15; letter-spacing: -0.015em; color: var(--deep-purple); margin: 0; max-width: 15ch; font-variation-settings: "opsz" 144, "SOFT" 60; }
+.split-slide h1 strong { font-weight: 300; font-style: italic; color: var(--ink); font-variation-settings: "opsz" 144, "SOFT" 30; }
+
+/* ============ info_slide ============ */
+.info-slide { width: 1080px; height: 1080px; background: var(--half-white); padding: 88px 96px; display: flex; flex-direction: column; }
+.info-slide .top { display: flex; align-items: flex-start; justify-content: space-between; }
+.info-slide .label { font-family: var(--body); font-weight: 700; font-size: 22px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--royal-purple); margin: 0; }
+.info-slide .mark { width: 34px; height: 34px; }
+.info-slide .mark .ring { fill: none; stroke-linecap: round; stroke-width: 2.6; }
+.info-slide .mark .ring--1 { stroke: var(--deep-purple); }
+.info-slide .mark .ring--2 { stroke: var(--royal-purple); }
+.info-slide .mark .ring--3 { stroke: var(--gold); }
+.info-slide .mark .seed { fill: var(--gold); }
+.info-slide h1 { font-size: 70px; line-height: 1.12; margin: 36px 0 0; letter-spacing: -0.015em; max-width: 14ch; font-variation-settings: "opsz" 144; }
+.info-slide h1 .serif { font-family: var(--display); font-weight: 300; font-style: italic; color: var(--ink); font-variation-settings: "opsz" 144, "SOFT" 30; }
+.info-slide h1 .bold { font-family: var(--display); font-weight: 800; color: var(--deep-purple); font-variation-settings: "opsz" 144, "SOFT" 60; }
+.info-slide .icon-wrap { flex: 1; display: flex; align-items: center; justify-content: center; }
+.info-slide .icon { width: 140px; height: 140px; color: var(--gold); }
+.info-slide .bullets { display: flex; flex-direction: column; gap: 20px; margin: 0 0 20px; }
+.info-slide .bullets .item { display: flex; gap: 16px; align-items: flex-start; }
+.info-slide .bullets .dot { flex: none; width: 9px; height: 9px; border-radius: 50%; background: var(--gold); margin-top: 18px; }
+.info-slide .bullets p { font-family: var(--body); font-weight: 400; font-size: 32px; line-height: 1.45; color: var(--ink); margin: 0; }
+.info-slide .bullets strong { font-weight: 800; color: var(--deep-purple); }
+.info-slide .foot { border-top: 1px solid rgba(122,92,168,0.25); padding-top: 20px; }
+.info-slide .foot .wordmark { font-family: var(--display); font-weight: 200; text-transform: lowercase; letter-spacing: 0.15em; font-size: 23px; color: var(--deep-purple); }
+
+/* ============ cover_slide ============ */
+/* Fully centered — the point is legibility as a small square thumbnail
+   on the Instagram profile grid, not just as a full-size feed post. */
+.cover-slide { width: 1080px; height: 1080px; background: var(--half-white); display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center; padding: 80px; }
+.cover-slide .label { font-family: var(--body); font-weight: 700; font-size: 23px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--royal-purple); margin: 0 0 34px; }
+.cover-slide .icon { width: 130px; height: 130px; color: var(--gold); margin: 0 0 34px; }
+.cover-slide h1 { font-size: 86px; line-height: 1.1; letter-spacing: -0.02em; margin: 0; max-width: 16ch; }
+.cover-slide h1 .serif { font-family: var(--display); font-weight: 300; font-style: italic; color: var(--ink); font-variation-settings: "opsz" 144, "SOFT" 30; }
+.cover-slide h1 .bold { font-family: var(--display); font-weight: 800; color: var(--deep-purple); font-variation-settings: "opsz" 144, "SOFT" 60; }
+.cover-slide .sub { font-family: var(--body); font-weight: 400; font-size: 33px; line-height: 1.45; color: var(--ink);
+  max-width: 22ch; margin: 30px 0 0; }
+.cover-slide .wordmark { font-family: var(--display); font-weight: 200; text-transform: lowercase; letter-spacing: 0.15em;
+  font-size: 23px; color: var(--royal-purple); margin: 48px 0 0; }
+
+/* ============ gradient_slide ============ */
+.gradient-slide { width: 1080px; height: 1080px; background: radial-gradient(circle at 50% 45%, #4A2A73 0%, #3A1F5C 45%, #7A5230 130%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.gradient-slide .mark { width: 64px; height: 64px; margin-bottom: 40px; }
+.gradient-slide .mark .ring { fill: none; stroke-linecap: round; stroke-width: 2.2; }
+.gradient-slide .mark .ring--1 { stroke: var(--half-white); }
+.gradient-slide .mark .ring--2 { stroke: var(--pale-lilac); }
+.gradient-slide .mark .ring--3 { stroke: var(--light-gold); }
+.gradient-slide .mark .seed { fill: var(--light-gold); }
+.gradient-slide .wordmark { font-family: var(--display); font-weight: 200; text-transform: lowercase; letter-spacing: 0.15em; font-size: 29px; color: var(--half-white); margin: 0 0 48px; }
+/* Width is set in real pixels, not `ch` — `ch` sizing here previously
+   caused every short line to wrap mid-phrase instead of breaking only
+   at the <br> tags, because `ch` is measured against the fallback font
+   before Fraunces loads. Keep this in px. */
+.gradient-slide .copy { text-align: center; width: 860px; }
+.gradient-slide p { font-family: var(--display); font-weight: 300; font-style: italic; font-size: 54px; line-height: 1.7; font-variation-settings: "opsz" 144, "SOFT" 30; color: var(--half-white); margin: 0; white-space: pre-line; }
+</style></head><body>
+<div class="gradient-slide">
+  <svg class="mark" viewBox="0 0 100 100" role="img" aria-label="monk manthra" focusable="false">
+  <path class="ring ring--1" d="M 54.788 36.844 A 14.0 14.0 0 1 1 45.212 36.844"/>
+  <path class="ring ring--2" d="M 57.661 28.951 A 22.4 22.4 0 1 1 42.339 28.951"/>
+  <path class="ring ring--3" d="M 62.258 16.321 A 35.84 35.84 0 1 1 37.742 16.321"/>
+  <circle class="seed" cx="50" cy="50" r="5.2"/>
+</svg>
+  <p class="wordmark">monk manthra</p>
+  <div class="copy"><p>Earn the night<br>during the day.</p></div>
+</div></body></html>

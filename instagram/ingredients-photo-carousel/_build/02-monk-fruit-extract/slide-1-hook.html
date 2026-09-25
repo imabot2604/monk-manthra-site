@@ -1,0 +1,95 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,200;9..144,300;9..144,400&family=Karla:wght@300;400;500;700;800&display=swap">
+<style>
+:root {
+  --deep-purple: #3A1F5C; --royal-purple: #7A5CA8; --pale-lilac: #CBBFE0;
+  --gold: #C2A053; --light-gold: #E0C88C; --half-white: #F4F1EC; --ink: #241B33;
+  --display: "Fraunces", serif; --body: "Karla", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1080px; height: 1080px; }
+body { font-family: var(--body); }
+
+/* ---- slide 1: photo + bold bottom-anchored headline ---- */
+.photo-slide {
+  width: 1080px; height: 1080px; position: relative;
+  display: flex; align-items: flex-end; justify-content: center;
+  background-size: cover; background-position: center;
+  padding-bottom: 96px;
+}
+.photo-slide::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(20,14,30,0) 38%, rgba(20,14,30,0.88) 74%, rgba(20,14,30,0.97) 100%);
+}
+/* The Flow/Gemini watermark sits bottom-right of every generated photo */
+.photo-slide .corner-patch {
+  content: ""; position: absolute; right: 0; bottom: 0; width: 260px; height: 220px;
+  background: radial-gradient(circle at 100% 100%, rgba(20,14,30,1) 0%, rgba(20,14,30,1) 45%, rgba(20,14,30,0) 78%);
+}
+.corner-mark {
+  position: absolute; top: 40px; left: 40px; z-index: 1;
+  filter: drop-shadow(0 0 3px rgba(0,0,0,0.85)) drop-shadow(0 0 8px rgba(0,0,0,0.6));
+}
+.corner-mark .mark { width: 46px; height: 46px; display: block; }
+.corner-mark .mark .ring { fill: none; stroke-linecap: round; stroke-width: 2.6; }
+.corner-mark .mark .ring--1 { stroke: var(--half-white); }
+.corner-mark .mark .ring--2 { stroke: var(--pale-lilac); }
+.corner-mark .mark .ring--3 { stroke: var(--light-gold); }
+.corner-mark .mark .seed { fill: var(--light-gold); }
+.photo-slide .copy { position: relative; z-index: 1; text-align: center; width: 860px; }
+.photo-slide h1 {
+  font-family: var(--body); font-weight: 700; font-size: 50px;
+  line-height: 1.28; letter-spacing: -0.01em; color: var(--half-white); margin: 0;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.5);
+}
+.photo-slide .reveal {
+  margin-top: 26px; display: flex; align-items: center; justify-content: center; gap: 16px;
+}
+.photo-slide .reveal .rule { width: 30px; height: 2px; background: var(--gold); }
+.photo-slide .reveal .name {
+  font-family: var(--body); font-weight: 700; font-size: 22px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--light-gold);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+}
+
+/* ---- slide 2: gradient + why ---- */
+.why-slide {
+  width: 1080px; height: 1080px; position: relative;
+  background: radial-gradient(circle at 50% 40%, #4A2A73 0%, #3A1F5C 45%, #2A1B45 100%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 0 120px;
+}
+.why-slide .mark { width: 52px; height: 52px; margin-bottom: 28px; }
+.why-slide .mark .ring { fill: none; stroke-linecap: round; stroke-width: 2.2; }
+.why-slide .mark .ring--1 { stroke: var(--half-white); }
+.why-slide .mark .ring--2 { stroke: var(--pale-lilac); }
+.why-slide .mark .ring--3 { stroke: var(--light-gold); }
+.why-slide .mark .seed { fill: var(--light-gold); }
+.why-slide .label {
+  font-family: var(--body); font-weight: 700; font-size: 20px; letter-spacing: 0.26em;
+  text-transform: uppercase; color: var(--light-gold); margin: 0 0 30px;
+}
+.why-slide h2 {
+  font-family: var(--display); font-weight: 300; font-size: 46px; line-height: 1.2;
+  color: var(--half-white); margin: 0 0 28px; text-align: center; max-width: 15ch;
+}
+.why-slide p {
+  font-family: var(--body); font-weight: 300; font-size: 27px; line-height: 1.65;
+  color: rgba(244,241,236,0.88); text-align: center; max-width: 30ch; margin: 0;
+}
+</style></head><body>
+<div class="photo-slide" style="background-image:url('file:///Users/karthikveeranki/monk-manthra-site/instagram/golden-milk-photo-carousel/photos/slide-2.jpg')">
+  <span class="corner-patch"></span>
+  <div class="corner-mark"><svg class="mark" viewBox="0 0 100 100" role="img" aria-label="monk manthra" focusable="false">
+  <path class="ring ring--1" d="M 54.788 36.844 A 14.0 14.0 0 1 1 45.212 36.844"/>
+  <path class="ring ring--2" d="M 57.661 28.951 A 22.4 22.4 0 1 1 42.339 28.951"/>
+  <path class="ring ring--3" d="M 62.258 16.321 A 35.84 35.84 0 1 1 37.742 16.321"/>
+  <circle class="seed" cx="50" cy="50" r="5.2"/>
+</svg></div>
+  <div class="copy">
+    <h1>Wanting something sweet without paying for it at 2am.</h1>
+    <div class="reveal"><span class="rule"></span><span class="name">Monk Fruit Extract</span></div>
+  </div>
+</div></body></html>

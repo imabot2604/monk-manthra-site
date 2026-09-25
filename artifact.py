@@ -51,7 +51,7 @@ def card(p):
           <span class="label card__ing">{p["ing"]}</span>
           <span class="card__foot">
             <span class="data">{p["dose"]} · {p["count"]}</span>
-            <span class="card__price">₹{p["price"]}</span>
+            <span class="card__soon">{"₹" + p["price"] if B.ON_SALE else "Coming soon"}</span>
           </span>
         </span>
       </a>'''
@@ -194,10 +194,11 @@ def main():
           <div><p class="label">When</p><p class="data">{calm["when"]}</p></div>
         </div>
         <p>{calm["blurb"]}</p>
-        <div class="product__buy">
-          <a class="btn" href="#start">Add to order</a>
-          <span class="price">₹{calm["price"]}</span>
-        </div>
+        <div class="product__buy">{
+          f'<a class="btn" href="#start">Add to order</a><span class="price">₹{calm["price"]}</span>'
+          if B.ON_SALE else
+          f'<span class="soon-tag">Coming soon</span><a class="textlink" href="{B.NOTIFY}">Tell me when it is ready</a>'
+        }</div>
       </div>
     </div>
   </div>
@@ -230,7 +231,7 @@ def main():
         <h2 class="display">{ev["name"]}</h2>
         <p class="lede">{ev["blurb"]}</p>
         <ul class="bundle__list">{ev_items}</ul>
-        <p class="data" style="margin-top:22px">₹{ev["price"]} · SAVES ₹{ev["saving"]}</p>
+        <p class="data" style="margin-top:22px">{f'₹{ev["price"]} · SAVES ₹{ev["saving"]}' if B.ON_SALE else "COMING SOON"}</p>
         <p style="margin-top:20px" class="data data--sm">BUNDLES ARE NAMED FOR A TIME OF DAY, NEVER A BENEFIT</p>
       </div>
     </div>

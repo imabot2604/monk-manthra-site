@@ -4,7 +4,13 @@
     {
       "name": "monk-manthra",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4321"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4321",
+        "--directory",
+        "/Users/karthikveeranki/monk-manthra-site"
+      ],
       "port": 4321
     }
   ]

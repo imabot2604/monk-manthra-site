@@ -1,0 +1,54 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,200;9..144,300;9..144,400&family=Karla:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --deep-purple: #3A1F5C; --royal-purple: #7A5CA8; --pale-lilac: #CBBFE0;
+  --gold: #C2A053; --light-gold: #E0C88C; --half-white: #F4F1EC;
+  --ink: #241B33; --paper: #FFFFFF;
+  --display: "Fraunces", serif; --body: "Karla", sans-serif; --mono: "IBM Plex Mono", monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1080px; height: 1080px; }
+body { font-family: var(--body); font-weight: 300; -webkit-font-smoothing: antialiased; }
+.slide { width: 1080px; height: 1080px; padding: 88px; display: flex; flex-direction: column; }
+.label { font-family: var(--body); font-weight: 500; font-size: 20px; letter-spacing: 0.2em; text-transform: uppercase; margin: 0; }
+
+/* ---- cover slide: pain point is the headline, ingredient is the reveal ---- */
+.slide--cover { background: var(--deep-purple); color: var(--half-white); justify-content: space-between; }
+.slide--cover .label { color: var(--light-gold); }
+.slide--cover .cover__mid { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.slide--cover h1.pain { font-family: var(--display); font-weight: 200; font-size: 84px; line-height: 1.08; letter-spacing: -0.02em; margin: 0; max-width: 15ch; }
+.slide--cover .reveal { display: flex; align-items: center; gap: 18px; margin-top: 44px; }
+.slide--cover .reveal .rule { width: 34px; height: 2px; background: var(--gold); flex: none; }
+.slide--cover .reveal .ing-name { font-family: var(--body); font-weight: 500; font-size: 28px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--light-gold); }
+.slide--cover .foot { display: flex; align-items: center; justify-content: space-between; }
+.slide--cover .foot .wordmark { font-family: var(--display); font-weight: 200; text-transform: lowercase; letter-spacing: 0.15em; font-size: 28px; color: var(--half-white); }
+.slide--cover .dots { display: flex; gap: 10px; }
+.slide--cover .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(244,241,236,0.28); }
+.slide--cover .dot.is-on { background: var(--light-gold); }
+
+/* ---- why slide ---- */
+.slide--why { background: var(--half-white); color: var(--deep-purple); }
+.slide--why .label { color: var(--royal-purple); }
+.slide--why .why__mid { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.slide--why h2 { font-family: var(--display); font-weight: 300; font-size: 56px; line-height: 1.14; letter-spacing: -0.015em; margin: 0 0 36px; max-width: 15ch; }
+.slide--why p { font-family: var(--body); font-weight: 300; font-size: 34px; line-height: 1.6; margin: 0; max-width: 26ch; color: var(--ink); }
+.slide--why .foot { display: flex; align-items: center; justify-content: space-between; }
+.slide--why .foot .data { font-family: var(--mono); font-size: 20px; color: var(--royal-purple); }
+.slide--why .dots { display: flex; gap: 10px; }
+.slide--why .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(122,92,168,.28); }
+.slide--why .dot.is-on { background: var(--gold); }
+</style></head><body>
+<div class="slide slide--why">
+  <p class="label">Turmeric Extract</p>
+  <div class="why__mid">
+    <h2>Why it's here</h2>
+    <p>Turmeric is why golden milk is golden. We use an extract standardised for curcuminoids instead of raw powder, and pair it with black pepper — turmeric is poorly absorbed alone.</p>
+  </div>
+  <div class="foot">
+    <span class="data">GOLDEN MILK &middot; TURMERIC &middot; CINNAMON</span>
+    <div class="dots"><span class="dot"></span><span class="dot is-on"></span></div>
+  </div>
+</div></body></html>
