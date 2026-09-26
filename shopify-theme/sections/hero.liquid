@@ -6,7 +6,9 @@
   <div class="wrap">
     {% render 'mark', size: 104, draw: true, rings_lock: 3 %}
     <h1 class="display">{{ section.settings.heading }}</h1>
-    <p>{{ section.settings.subheading }}</p>
+    {%- if section.settings.subheading != blank -%}
+      <p>{{ section.settings.subheading }}</p>
+    {%- endif -%}
     {%- if section.settings.cta_url != blank -%}
       <a class="btn" href="{{ section.settings.cta_url }}">{{ section.settings.cta_label }}</a>
     {%- endif -%}

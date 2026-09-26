@@ -3,50 +3,15 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "heading": "Seven supplements. One habit.",
-        "subheading": "Single-ingredient formulas at doses you can check. We are not open yet.",
-        "cta_label": "Tell me when it opens",
-        "cta_url": "mailto:hello@monkmanthra.com?subject=Tell%20me%20when%20it%20opens",
-        "note": "7 FORMULAS \u00b7 0 PROPRIETARY BLENDS"
+        "heading": "Coming soon",
+        "subheading": "",
+        "cta_label": "",
+        "cta_url": "",
+        "note": ""
       }
-    },
-    "idea": {
-      "type": "principles",
-      "settings": {
-        "anchor": "idea"
-      },
-      "blocks": {
-        "b1": {
-          "type": "principle",
-          "settings": {
-            "title": "Repetition over intensity",
-            "body": "A dose you will actually take every evening beats a stronger one you take twice a week. We formulate for the boring version, because that is the version that works."
-          }
-        },
-        "b2": {
-          "type": "principle",
-          "settings": {
-            "title": "Show the dose",
-            "body": "Milligrams, serving size, lot, expiry \u2014 printed in full on the front of the pack and again on this page. Nothing sits behind the words proprietary blend."
-          }
-        },
-        "b3": {
-          "type": "principle",
-          "settings": {
-            "title": "Earn the calm",
-            "body": "White space is the product. We would rather leave a claim off the pack than crowd one onto it, and we would rather you read the panel than the poetry."
-          }
-        }
-      },
-      "block_order": [
-        "b1",
-        "b2",
-        "b3"
-      ]
     }
   },
   "order": [
-    "hero",
-    "idea"
+    "hero"
   ]
 }
