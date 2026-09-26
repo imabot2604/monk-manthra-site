@@ -49,7 +49,7 @@
 
         <div class="product__buy">
           {% render 'buy-button', product: product %}
-          <span class="price">{{ product.price | money }}</span>
+          {% render 'price-or-soon', product: product, class: 'price' %}
         </div>
       </div>
     </div>

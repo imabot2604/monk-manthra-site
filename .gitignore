@@ -10,3 +10,4 @@ artifact.html
 reels/reel-01/node_modules/
 reels/reel-01/.hyperframes/
 reels/reel-01/renders/
+.env.shopify

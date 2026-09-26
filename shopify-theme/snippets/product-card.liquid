@@ -23,6 +23,10 @@
   assign m = product.metafields.monkmanthra
   assign img = product.featured_image
   assign soon = m.coming_soon.value
+  # A theme-wide "nothing is for sale" switch overrides per-product state
+  if settings.store_coming_soon
+    assign soon = true
+  endif
   assign is_linked = true
   if linked == false
     assign is_linked = false

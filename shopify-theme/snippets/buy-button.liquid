@@ -11,6 +11,9 @@
 {%- liquid
   assign variant = product.selected_or_first_available_variant
   assign soon = product.metafields.monkmanthra.coming_soon.value
+  if settings.store_coming_soon
+    assign soon = true
+  endif
 -%}
 <button
   type="button"
@@ -18,15 +21,15 @@
   data-buy
   data-variant-id="{{ variant.id }}"
   data-qty="1"
-  {% unless variant.available %}disabled aria-disabled="true"{% endunless %}
+  {% if soon or variant.available == false %}disabled aria-disabled="true"{% endif %}
 >
   {%- liquid
     # Unreleased and sold out are not the same statement. A product that has
     # never shipped must not be described as having run out.
-    if variant.available
-      echo label | default: "Add to order"
-    elsif soon
+    if soon
       echo "Coming soon"
+    elsif variant.available
+      echo label | default: "Add to order"
     else
       echo "Sold out"
     endif

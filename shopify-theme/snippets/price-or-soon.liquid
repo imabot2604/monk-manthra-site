@@ -1,0 +1,29 @@
+{% comment %}
+  One place that decides whether a surface shows a price or says "Coming soon".
+
+  Two independent switches, either of which suppresses the price:
+
+    settings.store_coming_soon   theme-wide. Nothing in the shop is for sale.
+    product coming_soon metafield  per product, for a staggered launch.
+
+  Before this snippet existed the product card honoured the metafield but the
+  two product-detail surfaces printed {{ product.price | money }}
+  unconditionally, so flagging a product hid its button and left its price on
+  screen. Route every price through here so those cannot drift apart again.
+
+  Usage: {% render 'price-or-soon', product: product, class: 'price' %}
+{% endcomment %}
+{%- liquid
+  assign soon = false
+  if settings.store_coming_soon
+    assign soon = true
+  elsif product.metafields.monkmanthra.coming_soon.value
+    assign soon = true
+  endif
+  assign cls = class | default: 'price'
+-%}
+{%- if soon -%}
+  <span class="{{ cls }} {{ cls }}--soon label">Coming soon</span>
+{%- else -%}
+  <span class="{{ cls }}">{{ product.price | money }}</span>
+{%- endif -%}

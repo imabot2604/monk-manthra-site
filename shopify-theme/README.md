@@ -9,7 +9,7 @@ verified" below), same discipline as the rest of this repo.
 
 Theme id `189397303592`, name "monk manthra", role `unpublished` — the
 store's live Horizon theme is untouched. All 8 products, 2 collections and
-2 pages exist on `monkmanthra.myshopify.com`, created via the Admin API.
+2 pages exist on `k6rh1t-0y.myshopify.com` (custom domain `monkmanthra.com`), created via the Admin API.
 Products are **DRAFT** on purpose (placeholder facts panels, no FSSAI
 clearance), which is why storefront product/collection URLs 404 until they
 are activated behind a store password.
@@ -116,7 +116,7 @@ otherwise.
 
 ## Done
 
-1. ~~Store connected~~ — `monkmanthra.myshopify.com`, INR, professional plan
+1. ~~Store connected~~ — `k6rh1t-0y.myshopify.com` (custom domain `monkmanthra.com`), INR, professional plan
 2. ~~Products created~~ — 6 products + 2 bundles, DRAFT, with all metafields
    and prices, photography pulled from the GitHub Pages URLs
 3. ~~Collections~~ — `the-range` (6), `bundles` (2)
