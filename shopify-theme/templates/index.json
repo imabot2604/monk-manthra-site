@@ -1,17 +1,82 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero",
       "settings": {
-        "heading": "Coming soon",
-        "subheading": "",
-        "cta_label": "",
-        "cta_url": "",
-        "note": ""
+        "heading": "Seven supplements. One habit.",
+        "subheading": "Single-ingredient formulas at doses you can check. We are not open yet.",
+        "cta_label": "See the range",
+        "cta_url": "/#coming-soon",
+        "note": "7 FORMULAS \u00b7 0 PROPRIETARY BLENDS"
       }
+    },
+    "buy": {
+      "type": "featured-product",
+      "settings": {
+        "anchor": "buy",
+        "show_facts": true,
+        "product": "golden-milk"
+      }
+    },
+    "coming": {
+      "type": "coming-soon-grid",
+      "settings": {
+        "collection": "the-range",
+        "label": "Still in production",
+        "heading": "The rest of the range is coming.",
+        "body": "One formula at a time, in the order they are ready. Nothing goes on sale before the panel on the back of it is final.",
+        "anchor": "coming-soon",
+        "collection_2": "bundles"
+      }
+    },
+    "idea": {
+      "type": "principles",
+      "settings": {
+        "anchor": "idea"
+      },
+      "blocks": {
+        "b1": {
+          "type": "principle",
+          "settings": {
+            "title": "Repetition over intensity",
+            "body": "A dose you will actually take every evening beats a stronger one you take twice a week. We formulate for the boring version, because that is the version that works."
+          }
+        },
+        "b2": {
+          "type": "principle",
+          "settings": {
+            "title": "Show the dose",
+            "body": "Milligrams, serving size, lot, expiry \u2014 printed in full on the front of the pack and again on this page. Nothing sits behind the words proprietary blend."
+          }
+        },
+        "b3": {
+          "type": "principle",
+          "settings": {
+            "title": "Earn the calm",
+            "body": "White space is the product. We would rather leave a claim off the pack than crowd one onto it, and we would rather you read the panel than the poetry."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ]
     }
   },
   "order": [
-    "hero"
+    "hero",
+    "buy",
+    "coming",
+    "idea"
   ]
 }

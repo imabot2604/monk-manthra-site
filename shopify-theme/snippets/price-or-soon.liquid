@@ -11,6 +11,12 @@
   unconditionally, so flagging a product hid its button and left its price on
   screen. Route every price through here so those cannot drift apart again.
 
+  Pass beside_button: true where a buy button sits next to this. That button
+  already says "Coming soon", and printing it again in the price slot puts the
+  same two words twice on one line, which reads as a bug rather than a state.
+  Product cards have no button, so there the label is the only signal and
+  must stay.
+
   Usage: {% render 'price-or-soon', product: product, class: 'price' %}
 {% endcomment %}
 {%- liquid
@@ -23,7 +29,9 @@
   assign cls = class | default: 'price'
 -%}
 {%- if soon -%}
-  <span class="{{ cls }} {{ cls }}--soon label">Coming soon</span>
+  {%- unless beside_button -%}
+    <span class="{{ cls }} {{ cls }}--soon label">Coming soon</span>
+  {%- endunless -%}
 {%- else -%}
   <span class="{{ cls }}">{{ product.price | money }}</span>
 {%- endif -%}

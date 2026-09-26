@@ -25,6 +25,7 @@
           "menu": "main-menu"
         }
       }
-    }
+    },
+    "store_coming_soon": true
   }
 }
