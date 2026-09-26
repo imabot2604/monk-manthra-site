@@ -3,30 +3,11 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "heading": "One supplement. One habit.",
-        "subheading": "Golden Milk is out now. The rest of the range follows, one formula at a time, as each one is ready.",
-        "cta_label": "See Golden Milk",
-        "cta_url": "/#buy",
-        "note": "1 OF 7 FORMULAS \u00b7 0 PROPRIETARY BLENDS"
-      }
-    },
-    "buy": {
-      "type": "featured-product",
-      "settings": {
-        "anchor": "buy",
-        "show_facts": true,
-        "product": "golden-milk"
-      }
-    },
-    "coming": {
-      "type": "coming-soon-grid",
-      "settings": {
-        "collection": "the-range",
-        "label": "Still in production",
-        "heading": "The rest of the range is coming.",
-        "body": "One formula at a time, in the order they are ready. Nothing goes on sale before the panel on the back of it is final.",
-        "anchor": "coming-soon",
-        "collection_2": "bundles"
+        "heading": "Seven supplements. One habit.",
+        "subheading": "Single-ingredient formulas at doses you can check. We are not open yet.",
+        "cta_label": "Tell me when it opens",
+        "cta_url": "mailto:hello@monkmanthra.com?subject=Tell%20me%20when%20it%20opens",
+        "note": "7 FORMULAS \u00b7 0 PROPRIETARY BLENDS"
       }
     },
     "idea": {
@@ -66,8 +47,6 @@
   },
   "order": [
     "hero",
-    "buy",
-    "coming",
     "idea"
   ]
 }
