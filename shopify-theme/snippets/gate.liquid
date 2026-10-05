@@ -1,0 +1,10 @@
+{% comment %}
+  The mark, the wordmark, and two words. Used by the homepage and, if the
+  shop is password protected, by the password page as well, so both front
+  doors say the same thing in the same way.
+{% endcomment %}
+<main class="gate">
+  {% render 'mark', size: 104, draw: true, rings_lock: 3 %}
+  <span class="wordmark">monk manthra</span>
+  <p class="gate__soon">Coming soon</p>
+</main>
